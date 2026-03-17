@@ -1,0 +1,32 @@
+{
+  "cached_at": "2026-01-22T15:29:31.337975",
+  "comparison": {
+    "product_name": "Eggs",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 36.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=Eggs",
+        "image_url": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 425.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=Eggs",
+        "image_url": null
+      },
+      {
+        "platform": "zepto",
+        "price": 127.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=Eggs",
+        "image_url": null
+      }
+    ]
+  }
+}

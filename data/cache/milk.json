@@ -1,0 +1,32 @@
+{
+  "cached_at": "2026-01-22T15:24:46.012026",
+  "comparison": {
+    "product_name": "Milk",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": null,
+        "availability": false,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=Milk",
+        "image_url": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 55.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=Milk",
+        "image_url": null
+      },
+      {
+        "platform": "zepto",
+        "price": 95.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=Milk",
+        "image_url": null
+      }
+    ]
+  }
+}

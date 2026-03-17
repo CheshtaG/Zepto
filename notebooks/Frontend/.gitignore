@@ -1,0 +1,24 @@
+# Dependencies
+node_modules
+
+# Builds
+dist
+dist-ssr
+*.log
+
+# Editor & OS
+.DS_Store
+*.swp
+*.swo
+.vscode
+.idea
+
+# Env/config
+.env
+.env.*
+!.env.example
+
+# Cursor / tooling
+.cursor
+.cache
+

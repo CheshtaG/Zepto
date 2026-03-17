@@ -1,0 +1,32 @@
+{
+  "cached_at": "2026-01-22T15:22:06.324505",
+  "comparison": {
+    "product_name": "Bread",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 50.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=Bread",
+        "image_url": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 85.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=Bread",
+        "image_url": null
+      },
+      {
+        "platform": "zepto",
+        "price": 55.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=Bread",
+        "image_url": null
+      }
+    ]
+  }
+}
