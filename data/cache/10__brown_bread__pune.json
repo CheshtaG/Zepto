@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-27T15:37:23.478703",
+  "comparison": {
+    "product_name": "brown bread",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 250.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=brown%20bread",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/brown_bread_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 65.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=brown%20bread",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/brown_bread_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 1.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=brown+bread",
+        "image_url": null,
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

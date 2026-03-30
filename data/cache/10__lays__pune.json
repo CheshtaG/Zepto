@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-28T23:01:15.288689",
+  "comparison": {
+    "product_name": "lays",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 40.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=lays",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/lays_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 199.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=lays",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c117568a-af84-48c4-82ed-f9110ab59e4a.png",
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/lays_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 20.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=lays",
+        "image_url": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

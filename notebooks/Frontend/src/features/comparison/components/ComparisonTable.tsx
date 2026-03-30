@@ -10,13 +10,15 @@ const platformLabel: Record<Platform, string> = {
   zepto: 'Zepto',
   blinkit: 'Blinkit',
   zomato: 'Instamart',
+  instamart: 'Instamart',
 }
 
 export const ComparisonTable = ({ result, additionalItems = [], platforms }: Props) => {
   const selectedPlatforms: Platform[] = platforms?.length ? platforms : ['zepto', 'blinkit', 'zomato']
 
   const getPrice = (item: (typeof result.items)[number], platform: Platform) => {
-    const match = item.matches.find((m) => m.platform === platform)
+    const key = platform === 'zomato' ? 'instamart' : platform
+    const match = item.matches.find((m) => m.platform === key || (platform === 'zomato' && m.platform === 'zomato'))
     return match && match.price != null ? `₹${match.price}` : '—'
   }
 

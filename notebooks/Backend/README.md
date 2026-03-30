@@ -93,13 +93,6 @@ curl "http://localhost:8000/compare?product=Milk"
 }
 ```
 
-### Get Default Products
-```
-GET /products
-```
-
-Returns the list of default products available for comparison.
-
 ### Health Check
 ```
 GET /health
@@ -112,16 +105,6 @@ Returns the health status of the API.
 Once the server is running, you can access:
 - Interactive API docs: `http://localhost:8000/docs`
 - Alternative docs: `http://localhost:8000/redoc`
-
-## Default Products
-
-The following products are available by default:
-- Milk
-- Bread
-- Eggs
-- Rice
-- Tomatoes
-- Onions
 
 ## Caching
 

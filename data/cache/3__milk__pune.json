@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-25T17:39:12.267748",
+  "comparison": {
+    "product_name": "milk",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": null,
+        "availability": false,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=milk",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/milk_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 48.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=milk",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/milk_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 24.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=milk",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/zepto/milk_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

@@ -14,6 +14,7 @@ export const useComparisonJob = (jobId: string | undefined) => {
     if (!jobId) return
 
     let cancelled = false
+    let lastProgress = -1
 
     async function ensureStatusAndResult() {
       try {
@@ -24,11 +25,10 @@ export const useComparisonJob = (jobId: string | undefined) => {
           status,
           isPolling: status.status !== 'done' && status.status !== 'failed',
         })
-        if (status.status === 'done') {
-          const res = await api.getJobResult(jobId)
-          if (cancelled) return
-          setResult(jobId, res)
-        }
+        lastProgress = status.progress ?? 0
+        const res = await api.getJobResult(jobId)
+        if (cancelled) return
+        setResult(jobId, res)
       } catch (err: any) {
         if (cancelled) return
         logger.error('Failed to ensure job status/result', err)
@@ -48,15 +48,21 @@ export const useComparisonJob = (jobId: string | undefined) => {
           status,
           isPolling: status.status !== 'done' && status.status !== 'failed',
         })
-        if (status.status === 'done') {
+        // Fetch partial rows whenever the job is still running (each platform can finish separately).
+        if (
+          status.status === 'done' ||
+          status.status === 'failed' ||
+          status.status === 'capturing' ||
+          status.progress > lastProgress
+        ) {
+          lastProgress = status.progress ?? lastProgress
           const res = await api.getJobResult(jobId)
           if (cancelled) return
           setResult(jobId, res)
-          clearInterval(interval)
         }
-        if (status.status === 'failed') {
-          clearInterval(interval)
-        }
+        // Do not stop polling on `done`: add-items reuses the same jobId and sets status back to
+        // capturing; if we clearInterval here, the UI never updates until navigation/refresh.
+        if (status.status === 'failed') clearInterval(interval)
       } catch (err: any) {
         if (!cancelled) {
           logger.error('Error while polling job status', err)

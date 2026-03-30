@@ -11,6 +11,7 @@ from app.core.exceptions import validation_exception_handler, unhandled_exceptio
 from app.api.routes_compare import router as compare_router
 from app.api.routes_jobs import router as jobs_router
 from app.services.comparison import ComparisonService, JobManager
+from app.services.job_logger import JobLogger
 
 
 configure_logging()
@@ -19,7 +20,8 @@ logger = logging.getLogger("app")
 
 settings = get_settings()
 comparison_service = ComparisonService()
-job_manager = JobManager(comparison_service=comparison_service)
+job_logger = JobLogger()
+job_manager = JobManager(comparison_service=comparison_service, job_logger=job_logger)
 
 
 def create_app() -> FastAPI:
@@ -46,12 +48,11 @@ def create_app() -> FastAPI:
   # Attach shared services to state for future extensions
   app.state.comparison_service = comparison_service
   app.state.job_manager = job_manager
+  app.state.job_logger = job_logger
 
   return app
 
 
 app = create_app()
 
-# Keep this for backward compatibility with existing imports
-DEFAULT_PRODUCTS = ["Milk", "Bread", "Eggs", "Rice", "Tomatoes", "Onions"]
 

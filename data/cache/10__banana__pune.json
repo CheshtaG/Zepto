@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-27T15:39:49.361627",
+  "comparison": {
+    "product_name": "banana",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 47.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=banana",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/banana_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 75.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=banana",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/banana_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 12.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=banana",
+        "image_url": null,
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

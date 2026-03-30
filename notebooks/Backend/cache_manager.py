@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta
 from typing import Optional
 from models import ProductComparison
-from config import DATA_DIR, CACHE_EXPIRY_HOURS
+from config import DATA_DIR, CACHE_EXPIRY_MINUTES
 
 CACHE_DIR = os.path.join(DATA_DIR, "cache")
 
@@ -14,7 +14,12 @@ class CacheManager:
     
     def _get_cache_path(self, product_name: str) -> str:
         """Get the cache file path for a product."""
-        safe_name = product_name.replace(" ", "_").replace("/", "_")
+        safe_name = (
+            product_name.replace(" ", "_")
+            .replace("/", "_")
+            .replace(":", "_")
+            .replace("\\", "_")
+        )
         return os.path.join(CACHE_DIR, f"{safe_name}.json")
     
     def get(self, product_name: str) -> Optional[ProductComparison]:
@@ -30,7 +35,7 @@ class CacheManager:
             
             # Check if cache is expired
             cached_time = datetime.fromisoformat(data.get('cached_at', ''))
-            if datetime.now() - cached_time > timedelta(hours=CACHE_EXPIRY_HOURS):
+            if datetime.now() - cached_time > timedelta(minutes=CACHE_EXPIRY_MINUTES):
                 os.remove(cache_path)
                 return None
             

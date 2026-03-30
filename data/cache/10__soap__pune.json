@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-26T18:54:03.697848",
+  "comparison": {
+    "product_name": "soap",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 37.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=soap",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/soap_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": "Instamart price read from screenshot (Gemini or OCR; DOM had no price)."
+      },
+      {
+        "platform": "blinkit",
+        "price": 379.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=soap",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/soap_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": null,
+        "availability": false,
+        "error": "Error: Element is not an <input>, <textarea> or [contenteditable] element",
+        "product_url": null,
+        "image_url": null,
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

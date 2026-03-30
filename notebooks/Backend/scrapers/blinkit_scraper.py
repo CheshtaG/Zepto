@@ -44,11 +44,11 @@ class BlinkitScraper(BaseScraper):
                         # Try to search for Pune
                         search_input = await page.wait_for_selector('input[type="text"], input[type="search"]', timeout=3000)
                         if search_input:
-                            await search_input.fill("Pune")
+                            await search_input.fill(self.target_city or "Pune")
                             await asyncio.sleep(SEARCH_DELAY)
                             
                             # Click on Pune option
-                            pune_option = await page.wait_for_selector('text=Pune', timeout=3000)
+                            pune_option = await page.wait_for_selector(f"text={self.target_city or 'Pune'}", timeout=3000)
                             if pune_option:
                                 await pune_option.click()
                                 await asyncio.sleep(SEARCH_DELAY)
@@ -59,7 +59,7 @@ class BlinkitScraper(BaseScraper):
             
             # If location picker didn't work, try pincode
             if not location_set:
-                pune_pincode = DEFAULT_PINCODE
+                pune_pincode = self.target_pincode or DEFAULT_PINCODE
                 pincode_selectors = [
                     'input[placeholder*="pincode" i]',
                     'input[placeholder*="pin" i]',
@@ -74,7 +74,7 @@ class BlinkitScraper(BaseScraper):
                         if element:
                             await element.fill(pune_pincode)
                             await page.keyboard.press("Enter")
-                            await asyncio.sleep(3)
+                            await asyncio.sleep(1.2)
                             location_set = True
                             break
                     except:
@@ -91,6 +91,7 @@ class BlinkitScraper(BaseScraper):
         browser = None
         context = None
         page = None
+        screenshot_path = None
         try:
             print(f"[Blinkit] Starting search for: {product_name}")
             # Create fresh browser context for this operation
@@ -100,7 +101,7 @@ class BlinkitScraper(BaseScraper):
             
             # Add random delay before navigation to avoid detection
             import random
-            await asyncio.sleep(random.uniform(1, 3))
+            await asyncio.sleep(random.uniform(0.3, 0.9))
             
             # Use URL-based search directly
             search_url = f"{BLINKIT_SEARCH_URL}{product_name}"
@@ -112,11 +113,21 @@ class BlinkitScraper(BaseScraper):
                 # Simulate human-like behavior
                 try:
                     await page.mouse.move(random.randint(100, 500), random.randint(100, 500))
-                    await asyncio.sleep(random.uniform(0.5, 1.5))
+                    await asyncio.sleep(random.uniform(0.2, 0.7))
                 except:
                     pass
                 
-                await asyncio.sleep(5 + random.uniform(0, 2))  # Wait for results to load
+                await asyncio.sleep(1.2 + random.uniform(0, 0.8))  # Wait for results to load
+
+                # Blinkit often shows a "delivery location" modal overlay.
+                # Even when URL-search returns results, ensure we set location so
+                # the overlay doesn't block price/pack extraction.
+                try:
+                    print("[Blinkit] Attempting to set location (URL-search path)...")
+                    await self.set_location(page)
+                except Exception as loc_error:
+                    print(f"[Blinkit] Location setting failed (non-critical, URL path): {loc_error}")
+
                 # Check if we got results directly
                 product_check = await page.query_selector_all('[class*="product" i], [class*="Product" i], [data-testid*="product" i]')
                 if len(product_check) > 0:
@@ -161,7 +172,7 @@ class BlinkitScraper(BaseScraper):
                 print("[Blinkit] Using URL-based search results")
             else:
                 # Wait a bit more for page to fully load and handle any modals/popups
-                await asyncio.sleep(3)
+                await asyncio.sleep(1.2)
                 
                 # Try to close any popups/modals that might be blocking
                 try:
@@ -285,7 +296,7 @@ class BlinkitScraper(BaseScraper):
                     await asyncio.sleep(1)
                     print("[Blinkit] Pressing Enter to search...")
                     await page.keyboard.press("Enter")
-                    await asyncio.sleep(5)  # Wait longer for search results
+                    await asyncio.sleep(1.5)  # Wait for search results
                 except Exception as fill_error:
                     print(f"[Blinkit] Fill failed, trying type instead: {fill_error}")
                     try:
@@ -293,14 +304,14 @@ class BlinkitScraper(BaseScraper):
                         await page.keyboard.type(product_name, delay=100)
                         await asyncio.sleep(1)
                         await page.keyboard.press("Enter")
-                        await asyncio.sleep(5)
+                        await asyncio.sleep(1.5)
                     except:
                         print("[Blinkit] Search input interaction failed, will use screenshot method")
                 
                 # Wait for results to load
                 print("[Blinkit] Waiting for search results to load...")
                 try:
-                    await page.wait_for_load_state("networkidle", timeout=15000)
+                    await page.wait_for_load_state("domcontentloaded", timeout=5000)
                     await asyncio.sleep(SEARCH_DELAY)
                     print("[Blinkit] Page loaded, looking for products...")
                 except Exception as e:
@@ -311,7 +322,7 @@ class BlinkitScraper(BaseScraper):
             
             # Try to find first product result - wait longer and try more selectors
             print("[Blinkit] Searching for product elements...")
-            await asyncio.sleep(2)  # Give page more time to render
+            await asyncio.sleep(1)  # Give page more time to render
             
             product_selectors = [
                 '[data-testid*="product" i]',
@@ -359,8 +370,9 @@ class BlinkitScraper(BaseScraper):
             screenshot_dir = os.path.join(DATA_DIR, "blinkit")
             os.makedirs(screenshot_dir, exist_ok=True)
             
-            # Take screenshot of the page (focus on product listing area if possible)
-            screenshot_path = os.path.join(screenshot_dir, f"{product_name.replace(' ', '_')}_search.png")
+            safe_name = product_name.replace(" ", "_")
+            # Single screenshot per platform: full page (what you want to inspect + what LLM sees).
+            screenshot_path = os.path.join(screenshot_dir, f"{safe_name}_search.png")
             
             # Try to find product listing container for better screenshot
             product_container = None
@@ -388,30 +400,24 @@ class BlinkitScraper(BaseScraper):
                 except:
                     continue
             
-            # Take screenshot
-            if product_container:
-                # Screenshot just the product container
-                try:
-                    await product_container.screenshot(path=screenshot_path)
-                    print(f"[Blinkit] Screenshot saved: {screenshot_path}")
-                except:
-                    # Fallback to full page
-                    await page.screenshot(path=screenshot_path, full_page=True)
-                    print(f"[Blinkit] Full page screenshot saved: {screenshot_path}")
-            else:
-                # Full page screenshot
+            # Recovery loop: if we hit transient error pages, reload / try again.
+            await self._recover_from_error_page(page, max_attempts=3)
+
+            # Take the full page screenshot (single artifact per platform)
+            try:
                 await page.screenshot(path=screenshot_path, full_page=True)
                 print(f"[Blinkit] Full page screenshot saved: {screenshot_path}")
+            except Exception as exc:
+                print(f"[Blinkit] Failed full-page screenshot: {exc}")
             
-            # Extract text from screenshot using OCR
-            ocr_text = self._extract_text_from_screenshot(screenshot_path)
-            
-            # Extract price from OCR text
-            price = self._extract_price_from_ocr_text(ocr_text)
-            
-            # If OCR didn't find price, try traditional method as fallback
-            if price is None:
-                print("[Blinkit] OCR didn't find price, trying traditional extraction...")
+            # Prefer DOM/text extraction for speed (OCR + tesseract is slow and can confuse
+            # pack size with price). Only run OCR if DOM extraction doesn't find a price.
+            price = None
+
+            # Traditional DOM/text extraction. Prefer it when we can find a real ₹/Rs price.
+            # This avoids OCR confusion where quantity numbers (ml/g) can be mistaken for price.
+            dom_price = None
+            try:
                 if product_element:
                     price_selectors = [
                         '[class*="price" i]',
@@ -420,26 +426,26 @@ class BlinkitScraper(BaseScraper):
                         'div:has-text("₹")',
                         '[class*="ProductPrice" i]',
                         '[class*="amount" i]',
-                        '[class*="cost" i]'
+                        '[class*="cost" i]',
                     ]
-                    
+
                     price_text = None
                     # First try to find price within the product element
                     try:
-                        price_in_product = await product_element.query_selector_all('span, div, p')
+                        price_in_product = await product_element.query_selector_all("span, div, p")
                         for elem in price_in_product[:10]:
                             try:
                                 text = await elem.inner_text()
-                                if '₹' in text or 'Rs' in text.lower():
+                                if "₹" in text or "Rs" in text.lower():
                                     import re
-                                    if re.search(r'[₹Rs]?\s*\d+', text):
+                                    if re.search(r"[₹Rs]?\s*\d+", text):
                                         price_text = text
                                         break
-                            except:
+                            except Exception:
                                 continue
-                    except:
+                    except Exception:
                         pass
-                    
+
                     # If not found in product element, try page-wide
                     if not price_text:
                         for selector in price_selectors:
@@ -448,29 +454,47 @@ class BlinkitScraper(BaseScraper):
                                 for elem in price_elements[:10]:
                                     try:
                                         text = await elem.inner_text()
-                                        if '₹' in text or 'Rs' in text.lower():
+                                        if "₹" in text or "Rs" in text.lower():
                                             price_text = text
                                             break
-                                    except:
+                                    except Exception:
                                         continue
                                 if price_text:
                                     break
-                            except:
+                            except Exception:
                                 continue
-                    
-                    price = self._extract_price(price_text) if price_text else None
+
+                    dom_price = self._extract_price(price_text) if price_text else None
+
+            except Exception as exc:
+                print(f"[Blinkit] DOM price extraction failed: {exc}")
+
+            if dom_price is not None:
+                price = dom_price
+            else:
+                ocr_text = self._extract_text_from_screenshot(screenshot_path)
+                price = self._extract_price_from_ocr_text(ocr_text)
             
             # Check availability (if price is found, assume available)
             availability = price is not None
             
             # Get product URL
             product_url = page.url
-            
+            image_url = await self._extract_product_image_url(page, product_element)
+            if image_url:
+                print(f"[Blinkit] Product image URL: {image_url[:120]}...")
+            listing_title = await self._extract_listing_title(product_element)
+            if listing_title:
+                print(f"[Blinkit] Listing title: {listing_title[:100]}...")
+
             return ProductInfo(
                 platform=Platform.BLINKIT,
                 price=price,
                 availability=availability,
-                product_url=product_url
+                product_url=product_url,
+                listing_title=listing_title,
+                image_url=image_url,
+                screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
             )
             
         except Exception as e:
@@ -479,7 +503,8 @@ class BlinkitScraper(BaseScraper):
                 platform=Platform.BLINKIT,
                 price=None,
                 availability=False,
-                error=str(e)
+                error=str(e),
+                screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else None,
             )
         finally:
             # Always close browser context

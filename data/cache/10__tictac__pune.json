@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-26T22:16:36.501364",
+  "comparison": {
+    "product_name": "tictac",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 113.4,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=tictac",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/tictac_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 130.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=tictac",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/tictac_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 1.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=tictac",
+        "image_url": null,
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

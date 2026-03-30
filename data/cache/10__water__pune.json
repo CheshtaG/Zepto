@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-28T22:58:40.832724",
+  "comparison": {
+    "product_name": "water",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 70.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=water",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/water_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 20.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=water",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/65447df1-ae2f-4c1e-bd0f-7429d025ca87.png",
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/water_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 18.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=water",
+        "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/20618cb1-9d0a-47d3-80b3-c10c16a66ceb/Paper-Boat-Ginger-Lemon-Sparkling-Water.jpeg",
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

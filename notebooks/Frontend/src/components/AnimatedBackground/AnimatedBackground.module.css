@@ -1,0 +1,102 @@
+.wrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.purple {
+  opacity: var(--purpleOpacity, 0.16);
+  width: clamp(260px, 34vw, 560px);
+  height: clamp(260px, 34vw, 560px);
+  top: -10%;
+  left: -12%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(139, 92, 246, 1) 0%,
+    rgba(139, 92, 246, 0) 62%
+  );
+  animation: purpleDrift 24s ease-in-out infinite alternate;
+}
+
+.mint {
+  opacity: var(--mintOpacity, 0.16);
+  width: clamp(220px, 30vw, 500px);
+  height: clamp(220px, 30vw, 500px);
+  bottom: -12%;
+  right: -14%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(52, 211, 153, 1) 0%,
+    rgba(52, 211, 153, 0) 62%
+  );
+  animation: mintDrift 28s ease-in-out infinite alternate;
+}
+
+.lavender {
+  opacity: var(--lavenderOpacity, 0.14);
+  width: clamp(140px, 20vw, 340px);
+  height: clamp(140px, 20vw, 340px);
+  top: 26%;
+  left: 46%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(167, 139, 250, 1) 0%,
+    rgba(167, 139, 250, 0) 62%
+  );
+  animation: lavenderDrift 22s ease-in-out infinite alternate;
+}
+
+@keyframes purpleDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(28px, -18px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-20px, 22px, 0) scale(0.98);
+  }
+}
+
+@keyframes mintDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-26px, 24px, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(18px, -16px, 0) scale(0.99);
+  }
+}
+
+@keyframes lavenderDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(16px, 14px, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(-14px, -12px, 0) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .purple,
+  .mint,
+  .lavender {
+    animation: none !important;
+  }
+}
+

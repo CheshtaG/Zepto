@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-26T18:46:03.525111",
+  "comparison": {
+    "product_name": "atta",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": null,
+        "availability": false,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=atta",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/atta_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 375.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=atta",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/atta_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": null,
+        "availability": false,
+        "error": "Error: Element is not an <input>, <textarea> or [contenteditable] element",
+        "product_url": null,
+        "image_url": null,
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

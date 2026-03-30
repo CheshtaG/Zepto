@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-25T23:37:37.674831",
+  "comparison": {
+    "product_name": "kiwi",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": null,
+        "availability": false,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=kiwi",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/kiwi_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 135.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=kiwi",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/kiwi_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 78.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=kiwi",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/zepto/kiwi_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

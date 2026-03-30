@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-26T01:58:01.427139",
+  "comparison": {
+    "product_name": "watermelon",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": null,
+        "availability": false,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=watermelon",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/watermelon_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 89.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=watermelon",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/watermelon_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 45.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=watermelon",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/zepto/watermelon_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}

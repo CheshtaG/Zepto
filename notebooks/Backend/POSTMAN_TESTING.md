@@ -16,26 +16,7 @@ The FastAPI server is now running at: **http://localhost:8000**
 
 ---
 
-### 2. Get Default Products
-**GET** `http://localhost:8000/products`
-
-**Expected Response:**
-```json
-{
-  "products": [
-    "Milk",
-    "Bread",
-    "Eggs",
-    "Rice",
-    "Tomatoes",
-    "Onions"
-  ]
-}
-```
-
----
-
-### 3. Compare Product (Main Endpoint)
+### 2. Compare Product (Main Endpoint)
 **GET** `http://localhost:8000/compare?product=<product_name>`
 
 **Examples:**
@@ -95,11 +76,7 @@ You can create a Postman collection with these requests:
    - Method: GET
    - URL: `http://localhost:8000/health`
 
-2. **Get Products**
-   - Method: GET
-   - URL: `http://localhost:8000/products`
-
-3. **Compare Product**
+2. **Compare Product**
    - Method: GET
    - URL: `http://localhost:8000/compare?product={{product_name}}`
    - Variables: `product_name` (e.g., "Milk", "Bread", "Eggs")
@@ -109,12 +86,11 @@ You can create a Postman collection with these requests:
 ## Testing Tips
 
 1. **Start with Health Check**: Verify the server is running
-2. **Test Default Products**: Check the list of available products
-3. **Test Product Comparison**: 
+2. **Test Product Comparison**: 
    - Try: `Milk`, `Bread`, `Eggs`
    - First request will be slow (scraping)
    - Second request will be fast (cached)
-4. **Test Error Handling**: Try a product that doesn't exist to see error messages
+3. **Test Error Handling**: Try a product that doesn't exist to see error messages
 
 ---
 

@@ -15,7 +15,18 @@ class ProductInfo(BaseModel):
     availability: bool = False
     error: Optional[str] = None
     product_url: Optional[str] = None
+    # Visible product title on the listing card (as shown on that app).
+    listing_title: Optional[str] = None
     image_url: Optional[str] = None
+    # Local screenshot path (used for vision analysis; optional in API consumers)
+    screenshot_path: Optional[str] = None
+    # Quantity-normalized comparison (filled after Gemini vision pass when API key is set)
+    quantity_label: Optional[str] = None
+    quantity_base_value: Optional[float] = None
+    quantity_base_unit: Optional[str] = None
+    price_per_base_unit: Optional[float] = None
+    quantity_comparable: Optional[bool] = None
+    quantity_comparison_note: Optional[str] = None
 
 
 class ProductComparison(BaseModel):

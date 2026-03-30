@@ -1,0 +1,53 @@
+{
+  "cached_at": "2026-03-28T23:00:01.282491",
+  "comparison": {
+    "product_name": "apples",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 269.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=apples",
+        "image_url": null,
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/apples_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 155.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=apples",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0d2c88d8-efdf-4de6-b972-ef81c64ae7d4.png",
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/apples_search.png",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      },
+      {
+        "platform": "zepto",
+        "price": 37.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=apples",
+        "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/74d3e8a0-7b1e-42ba-b8c2-0ea85f9da8ee/Harpic-Bleach-Toilet-Cleaner-Liquid.jpeg",
+        "screenshot_path": null,
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null
+      }
+    ]
+  }
+}
