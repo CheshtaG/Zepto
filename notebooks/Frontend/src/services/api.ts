@@ -15,7 +15,7 @@ export interface LocationPayload {
 export interface CreateJobRequest {
   items: string[]
   platforms: Platform[]
-  location?: string | LocationPayload
+  metadata?: JobMetadata
 }
 
 export interface CreateJobResponse {
@@ -77,8 +77,16 @@ export interface JobResultResponse {
   summary?: JobResultSummary
 }
 
-export interface DetectLocationResponse {
-  location: LocationPayload | null
+export interface JobMetadata {
+  location?: LocationPayload
+  history?: Array<{
+    jobId: string
+    createdAt: string
+    items: string[]
+    platforms: Platform[]
+    location?: string
+  }>
+  [key: string]: unknown
 }
 
 export type ChatRole = 'user' | 'assistant' | 'system'
@@ -144,13 +152,6 @@ export const api = {
       path: '/chat',
       method: 'POST',
       body: JSON.stringify({ job_id: jobId, messages }),
-    })
-  },
-
-  async detectLocation(): Promise<DetectLocationResponse> {
-    return request<DetectLocationResponse>({
-      path: '/location/auto',
-      method: 'GET',
     })
   },
 }

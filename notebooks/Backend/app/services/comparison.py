@@ -412,7 +412,8 @@ class JobManager:
     self,
     items: List[str],
     platforms: List[str],
-    location: Optional[Union[LocationPayload, str]],
+    resolved_location: Optional[Union[LocationPayload, str]],
+    metadata: Optional[Dict[str, Any]] = None,
   ) -> str:
     clean_items = [s.strip() for s in items if s.strip()]
     job_id = str(uuid4())
@@ -425,11 +426,23 @@ class JobManager:
       id=job_id,
       items=clean_items,
       platforms=platforms,
-      location=location,
+      resolved_location=resolved_location,
+      metadata=metadata or {},
       status="capturing",
       progress=0,
       result=JobResultResponse(items=placeholder_results, summary=None),
     )
+    if self._job_logger:
+      self._job_logger.log_job_event_sync(
+        job_id=job_id,
+        event="job_created",
+        metadata={
+          "items": clean_items,
+          "platforms": platforms,
+          "location": resolved_location if isinstance(resolved_location, str) else (resolved_location.model_dump() if resolved_location else None),
+          "metadata": metadata or {},
+        },
+      )
     return job_id
 
   def has_job(self, job_id: str) -> bool:
@@ -459,7 +472,7 @@ class JobManager:
 
     async def compare_one_item(idx: int, item: str) -> Tuple[int, JobResultItem]:
       async with sem:
-        hydrated = await self._comparison.hydrate_cached_comparison(item, job.location)
+        hydrated = await self._comparison.hydrate_cached_comparison(item, job.resolved_location)
         if hydrated:
           row = JobResultItem(
             query=hydrated.product_name,
@@ -493,7 +506,7 @@ class JobManager:
           await self._job_logger.log_platform_attempt(
             job_id=job_id,
             item=item,
-            location=job.location,
+            location=job.resolved_location,
             platform=str(event.get("platform") or ""),
             query_used=str(event.get("query_used") or item),
             search_url=str(event.get("search_url") or ""),
@@ -507,7 +520,7 @@ class JobManager:
 
         comparison = await self._comparison.scrape_triple_as_completed(
           item,
-          job.location,
+          job.resolved_location,
           on_partial,
           on_platform_scrape=on_platform_scrape,
         )
@@ -547,10 +560,12 @@ class JobManager:
       job.status = "done"
       job.progress = 100
       summary = None
-      if job.location:
+      if job.resolved_location:
         summary = {
-          "location": job.location if isinstance(job.location, str) else job.location.model_dump()
+          "location": job.resolved_location if isinstance(job.resolved_location, str) else job.resolved_location.model_dump()
         }
+      if job.metadata:
+        summary = {**(summary or {}), "metadata": job.metadata}
       job.result = JobResultResponse(items=result_items, summary=summary)
       self._jobs[job_id] = job
     except Exception as e:
@@ -581,7 +596,7 @@ class JobManager:
 
     async def compare_new_item(global_idx: int, item: str) -> Tuple[int, JobResultItem]:
       async with sem:
-        hydrated = await self._comparison.hydrate_cached_comparison(item, job.location)
+        hydrated = await self._comparison.hydrate_cached_comparison(item, job.resolved_location)
         if hydrated:
           row = JobResultItem(
             query=hydrated.product_name,
@@ -615,7 +630,7 @@ class JobManager:
           await self._job_logger.log_platform_attempt(
             job_id=job_id,
             item=item,
-            location=job.location,
+            location=job.resolved_location,
             platform=str(event.get("platform") or ""),
             query_used=str(event.get("query_used") or item),
             search_url=str(event.get("search_url") or ""),
@@ -629,7 +644,7 @@ class JobManager:
 
         comparison = await self._comparison.scrape_triple_as_completed(
           item,
-          job.location,
+          job.resolved_location,
           on_partial,
           on_platform_scrape=on_platform_scrape,
         )
@@ -676,10 +691,12 @@ class JobManager:
         job.status = "done"
         job.progress = 100
         summary = None
-        if job.location:
+        if job.resolved_location:
           summary = {
-            "location": job.location if isinstance(job.location, str) else job.location.model_dump()
+            "location": job.resolved_location if isinstance(job.resolved_location, str) else job.resolved_location.model_dump()
           }
+        if job.metadata:
+          summary = {**(summary or {}), "metadata": job.metadata}
         job.result = JobResultResponse(items=job.result.items, summary=summary)  # type: ignore[union-attr]
         self._jobs[job_id] = job
     except Exception as e:
@@ -717,6 +734,13 @@ class JobManager:
     job.status = "capturing"
     # progress will be recalculated as tasks finish.
     self._jobs[job_id] = job
+
+    if self._job_logger:
+      self._job_logger.log_job_event_sync(
+        job_id=job_id,
+        event="job_items_added",
+        metadata={"items_added": to_add, "total_items": len(job.items)},
+      )
 
     asyncio.create_task(self._run_add_items(job_id, start_idx, to_add))
     return True

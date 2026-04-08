@@ -130,3 +130,36 @@ class JobLogger:
       round_tag=round_tag,
     )
 
+  def log_job_event_sync(
+    self,
+    *,
+    job_id: str,
+    event: str,
+    metadata: Optional[Dict[str, Any]] = None,
+  ) -> None:
+    record = {
+      "job_id": job_id,
+      "logged_at": _utc_now_iso(),
+      "event": event,
+      "metadata": metadata or {},
+    }
+    path = self._job_path(job_id)
+    line = json.dumps(record, ensure_ascii=False)
+    with self._lock:
+      with open(path, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
+  async def log_job_event(
+    self,
+    *,
+    job_id: str,
+    event: str,
+    metadata: Optional[Dict[str, Any]] = None,
+  ) -> None:
+    await asyncio.to_thread(
+      self.log_job_event_sync,
+      job_id=job_id,
+      event=event,
+      metadata=metadata,
+    )
+

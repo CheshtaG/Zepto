@@ -6,6 +6,7 @@ import type {
   JobStatusResponse,
   ChatMessage,
   AgentAction,
+  LocationPayload,
 } from '../services/api'
 
 export interface JobHistoryEntry {
@@ -34,6 +35,7 @@ interface CompareViewState {
 interface AppState {
   lastPlatforms: Platform[]
   lastLocation?: string
+  lastLocationPayload?: LocationPayload
   jobHistory: JobHistoryEntry[]
   chatsByJobId: Record<string, ChatMessage[]>
   resultsByJobId: Record<string, JobResultResponse | undefined>
@@ -43,6 +45,7 @@ interface AppState {
 
   setLastPlatforms: (platforms: Platform[]) => void
   setLastLocation: (loc: string) => void
+  setLastLocationPayload: (payload?: LocationPayload) => void
 
   addJobHistory: (entry: JobHistoryEntry) => void
 
@@ -65,6 +68,7 @@ export const useAppStore = create<AppState>()(
     (set, get) => ({
       lastPlatforms: ['blinkit', 'zepto', 'zomato'],
       lastLocation: 'Pune',
+      lastLocationPayload: undefined,
       jobHistory: [],
       chatsByJobId: {},
       resultsByJobId: {},
@@ -78,6 +82,10 @@ export const useAppStore = create<AppState>()(
 
       setLastLocation(loc) {
         set({ lastLocation: loc })
+      },
+
+      setLastLocationPayload(payload) {
+        set({ lastLocationPayload: payload })
       },
 
       addJobHistory(entry) {
@@ -159,6 +167,7 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         lastPlatforms: state.lastPlatforms,
         lastLocation: state.lastLocation,
+        lastLocationPayload: state.lastLocationPayload,
         jobHistory: state.jobHistory,
         chatsByJobId: state.chatsByJobId,
         resultsByJobId: state.resultsByJobId,

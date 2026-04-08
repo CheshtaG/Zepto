@@ -5,8 +5,6 @@ import { PlatformResults } from '../features/comparison/components/PlatformResul
 import { api, type ChatMessage, type Platform, type LocationPayload } from '../services/api'
 import { HttpError } from '../lib/http'
 import { useAppStore } from '../store/appStore'
-import quiksaveLogo from '../assets/quiksave-logo-transparent.png'
-import locationChevron from '../assets/location-chevron.svg'
 
 interface LocationState {
   userInput?: string
@@ -21,7 +19,7 @@ export const ComparePage = () => {
   const location = useLocation()
   const state = (location.state || {}) as LocationState
   const { result, status, isRunning } = useComparisonJob(jobId)
-  const { setToast, setResult, setPollingState } = useAppStore()
+  const { setToast, setResult, setPollingState, jobHistory } = useAppStore()
 
   const [chatInput, setChatInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -29,9 +27,6 @@ export const ComparePage = () => {
   const [isSending, setIsSending] = useState(false)
   const [splitPercent, setSplitPercent] = useState(30)
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null)
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false)
-  const [locationSearch, setLocationSearch] = useState('')
-  const [isDetectingLocation, setIsDetectingLocation] = useState(false)
   const isDragging = useRef(false)
   const chatAreaRef = useRef<HTMLDivElement>(null)
   const selectedPlatforms: Platform[] = state.platforms?.length
@@ -42,8 +37,6 @@ export const ComparePage = () => {
     typeof state.location === 'string'
       ? state.location
       : state.location?.name || [state.location?.city, state.location?.pincode].filter(Boolean).join(', ') || 'Unknown'
-  const [displayLocation, setDisplayLocation] = useState(selectedLocation)
-
   const extractItems = useCallback((content: string) => {
     return content
       .split(/[\n,]/)
@@ -63,10 +56,6 @@ export const ComparePage = () => {
     }
     return Array.from(byLower.values())
   }, [])
-
-  useEffect(() => {
-    setDisplayLocation(selectedLocation)
-  }, [selectedLocation])
 
   useEffect(() => {
     if (state.userInput && messages.length === 0) {
@@ -126,7 +115,13 @@ export const ComparePage = () => {
             const { job_id } = await api.createJob({
               items: mergedItems,
               platforms: selectedPlatforms,
-              location: selectedLocationPayload ?? selectedLocation,
+              metadata: {
+                location:
+                  typeof (selectedLocationPayload ?? selectedLocation) === 'string'
+                    ? { name: String(selectedLocationPayload ?? selectedLocation), source: 'manual' }
+                    : (selectedLocationPayload as LocationPayload | undefined),
+                history: jobHistory.slice(0, 5),
+              },
             })
             setToast({
               kind: 'info',
@@ -153,7 +148,13 @@ export const ComparePage = () => {
       const { job_id } = await api.createJob({
         items: mergedItems,
         platforms: selectedPlatforms,
-        location: selectedLocationPayload ?? selectedLocation,
+        metadata: {
+          location:
+            typeof (selectedLocationPayload ?? selectedLocation) === 'string'
+              ? { name: String(selectedLocationPayload ?? selectedLocation), source: 'manual' }
+              : (selectedLocationPayload as LocationPayload | undefined),
+          history: jobHistory.slice(0, 5),
+        },
       })
 
       navigate(`/compare/${job_id}`, {
@@ -220,45 +221,12 @@ export const ComparePage = () => {
     }
   }, [handleMouseMove, handleMouseUp])
 
-  const detectLocation = useCallback(async () => {
-    setIsDetectingLocation(true)
-    try {
-      const detected = await api.detectLocation()
-      if (detected.location) {
-        const payload = detected.location
-        const label =
-          payload.name || [payload.city, payload.pincode].filter(Boolean).join(', ') || 'Auto-detected'
-        setDisplayLocation(label)
-      }
-    } finally {
-      setIsDetectingLocation(false)
-    }
-  }, [])
-
   if (!jobId) {
     return null
   }
 
   return (
     <div className="compare-screen">
-      <header className="compare-top-row">
-        <div className="compare-top-row-inner">
-          <div className="input-logo-wrap">
-            <img src={quiksaveLogo} alt="Quiksave" className="input-logo-img" />
-          </div>
-          <button
-            type="button"
-            className="input-location-button"
-            aria-label="Select location"
-            onClick={() => setIsLocationModalOpen(true)}
-          >
-            <span className="input-location-label">Select Location</span>
-            <img src={locationChevron} alt="" className="input-location-caret-img" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="compare-gradient-rule" aria-hidden="true" />
-      </header>
-
       <div className="compare-page">
       {/* Left side: chat area + textbox */}
       <section className="compare-left" style={{ width: `${splitPercent}%` }}>
@@ -351,76 +319,10 @@ export const ComparePage = () => {
           result={result}
           additionalItems={additionalItems}
           platforms={selectedPlatforms}
-          isRunning={isRunning}
+          isRunning={Boolean(isRunning)}
         />
       </section>
       </div>
-
-      {isLocationModalOpen ? (
-        <div
-          className="location-modal-backdrop"
-          onClick={() => setIsLocationModalOpen(false)}
-          role="presentation"
-        >
-          <div
-            className="location-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Select your location"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="location-modal-header">
-              <h2>
-                <span className="location-title-pin" aria-hidden="true">
-                  📍
-                </span>
-                Your Location
-              </h2>
-              <button
-                type="button"
-                className="location-modal-close"
-                onClick={() => setIsLocationModalOpen(false)}
-                aria-label="Close location modal"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="location-modal-body">
-              <div className="location-search-row">
-                <span className="location-search-icon" aria-hidden="true">
-                  🔍
-                </span>
-                <input
-                  type="text"
-                  value={locationSearch}
-                  onChange={(e) => setLocationSearch(e.target.value)}
-                  placeholder="Search a new address"
-                  className="location-search-input"
-                />
-              </div>
-
-              <div className="location-current-card">
-                <div className="location-current-text">
-                  <p className="location-current-title">Use My Current Location</p>
-                  <p className="location-current-subtitle">
-                    {isDetectingLocation ? 'Detecting your location...' : `Current: ${displayLocation || 'Unavailable'} `}
-                    <span className="location-current-dot" aria-hidden="true" />
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  className="location-enable-button"
-                  onClick={detectLocation}
-                  disabled={isDetectingLocation}
-                >
-                  {isDetectingLocation ? 'Enabling...' : 'Enable'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   )
 }

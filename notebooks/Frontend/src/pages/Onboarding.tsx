@@ -1,103 +1,28 @@
-import { useState, useCallback, useEffect, type KeyboardEvent } from 'react'
+import { useState, useEffect, type KeyboardEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api, type Platform, type LocationPayload, type ClarificationQuestion } from '../services/api'
+import { api, type Platform, type ClarificationQuestion } from '../services/api'
 import { useAppStore } from '../store/appStore'
-import quiksaveLogo from '../../Images/quiksave logo.png'
-import locationChevron from '../assets/location-chevron.svg'
 import { AnimatedBackground } from '../components/AnimatedBackground/AnimatedBackground'
+import { logFrontendEvent } from '../lib/frontendLogger'
 
-export const InputPage = () => {
+export const Onboarding = () => {
   const [value, setValue] = useState('')
   const [isMenuOpen, setIsMenuOpen] = useState(true)
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false)
-  const [locationSearch, setLocationSearch] = useState('')
   const nav = useNavigate()
   const {
     lastPlatforms,
     lastLocation,
+    lastLocationPayload,
     jobHistory,
     setLastPlatforms,
-    setLastLocation,
     addJobHistory,
     setToast,
   } = useAppStore()
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(lastPlatforms)
-  const [selectedLocation, setSelectedLocation] = useState(lastLocation ?? 'Detecting...')
-  const [locationPayload, setLocationPayload] = useState<LocationPayload | undefined>(undefined)
-  const [isDetectingLocation, setIsDetectingLocation] = useState(true)
   const [clarificationQueue, setClarificationQueue] = useState<ClarificationQuestion[]>([])
   const [pendingSubmitItems, setPendingSubmitItems] = useState<string[] | null>(null)
   const [clarificationAnswers, setClarificationAnswers] = useState<Record<string, string>>({})
   const [isClarifying, setIsClarifying] = useState(false)
-
-  const detectLocation = useCallback(async () => {
-    setIsDetectingLocation(true)
-    try {
-      if (typeof navigator !== 'undefined' && navigator.geolocation) {
-        const coords = await new Promise<GeolocationCoordinates>((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (pos) => resolve(pos.coords),
-            (err) => reject(err),
-            { enableHighAccuracy: true, timeout: 8000, maximumAge: 5 * 60 * 1000 },
-          )
-        })
-
-        let city: string | undefined
-        let pincode: string | undefined
-        try {
-          const rev = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${coords.latitude}&longitude=${coords.longitude}&localityLanguage=en`,
-          )
-          if (rev.ok) {
-            const data = await rev.json()
-            city = data?.city || data?.locality || data?.principalSubdivision
-            pincode = data?.postcode
-          }
-        } catch {
-          // Reverse geocode can fail; coordinates are still useful for backend.
-        }
-
-        const label = [city, pincode].filter(Boolean).join(', ') || 'Detected from your device'
-        const payload: LocationPayload = {
-          name: label,
-          city,
-          pincode,
-          lat: coords.latitude,
-          lng: coords.longitude,
-          source: 'geolocation',
-        }
-        setLocationPayload(payload)
-        setSelectedLocation(label)
-        setLastLocation(label)
-        setIsDetectingLocation(false)
-        return
-      }
-    } catch {
-      // fall through to IP fallback
-    }
-
-    try {
-      const detected = await api.detectLocation()
-      if (detected.location) {
-        const payload = detected.location
-        const label =
-          payload.name || [payload.city, payload.pincode].filter(Boolean).join(', ') || 'Auto-detected'
-        setLocationPayload(payload)
-        setSelectedLocation(label)
-        setLastLocation(label)
-      } else {
-        setSelectedLocation(lastLocation ?? 'Location unavailable')
-      }
-    } catch {
-      setSelectedLocation(lastLocation ?? 'Location unavailable')
-    } finally {
-      setIsDetectingLocation(false)
-    }
-  }, [lastLocation, setLastLocation])
-
-  useEffect(() => {
-    detectLocation()
-  }, [detectLocation])
 
   const submit = async () => {
     const trimmed = value.trim()
@@ -132,12 +57,22 @@ export const InputPage = () => {
       })()
 
       setLastPlatforms(selectedPlatforms)
-      setLastLocation(selectedLocation)
 
       const { job_id } = await api.createJob({
         items: finalItems,
         platforms: selectedPlatforms,
-        location: locationPayload ?? selectedLocation,
+        metadata: {
+          location:
+            lastLocationPayload ??
+            (lastLocation ? { name: lastLocation, source: 'manual' } : undefined),
+          history: jobHistory.slice(0, 5),
+        },
+      })
+      logFrontendEvent('job_created_from_input', {
+        jobId: job_id,
+        itemsCount: finalItems.length,
+        platforms: selectedPlatforms,
+        location: lastLocation,
       })
 
       addJobHistory({
@@ -145,14 +80,14 @@ export const InputPage = () => {
         createdAt: new Date().toISOString(),
         items: finalItems,
         platforms: selectedPlatforms,
-        location: selectedLocation,
+        location: lastLocation,
       })
 
       nav(`/compare/${job_id}`, {
         state: {
           items: finalItems,
           platforms: selectedPlatforms,
-          location: selectedLocation,
+          location: lastLocation,
           userInput: finalItems.join(', '),
         },
       })
@@ -196,10 +131,6 @@ export const InputPage = () => {
     }
   }
 
-  const handleEnableCurrentLocation = async () => {
-    await detectLocation()
-  }
-
   const formatHistoryTime = (iso: string) =>
     new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
 
@@ -235,21 +166,6 @@ export const InputPage = () => {
       </aside>
 
       <div className="input-content">
-        <div className="input-top-row">
-          <div className="input-logo-wrap">
-            <img src={quiksaveLogo} alt="Quiksave" className="input-logo-img" />
-          </div>
-          <button
-            type="button"
-            className="input-location-button"
-            aria-label="Select location"
-            onClick={() => setIsLocationModalOpen(true)}
-          >
-            <span className="input-location-label">Select Location</span>
-            <img src={locationChevron} alt="" className="input-location-caret-img" aria-hidden="true" />
-          </button>
-        </div>
-
         <div className="input-main-block">
           <div className="input-heading-row">
             <div className="input-heading-block">
@@ -289,7 +205,7 @@ export const InputPage = () => {
           <div className="input-textarea-wrapper">
             <textarea
               className="input-textarea"
-              placeholder="Example: 2L milk, brown bread, eggs, apples..."
+              placeholder="Example; toned milk, brown bread, eggs, apples"
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -308,75 +224,6 @@ export const InputPage = () => {
           </div>
         </div>
       </div>
-
-      {isLocationModalOpen ? (
-        <div
-          className="location-modal-backdrop"
-          onClick={() => setIsLocationModalOpen(false)}
-          role="presentation"
-        >
-          <div
-            className="location-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Select your location"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="location-modal-header">
-              <h2>
-                <span className="location-title-pin" aria-hidden="true">
-                  📍
-                </span>
-                Your Location
-              </h2>
-              <button
-                type="button"
-                className="location-modal-close"
-                onClick={() => setIsLocationModalOpen(false)}
-                aria-label="Close location modal"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="location-modal-body">
-              <div className="location-search-row">
-                <span className="location-search-icon" aria-hidden="true">
-                  🔍
-                </span>
-                <input
-                  type="text"
-                  value={locationSearch}
-                  onChange={(e) => setLocationSearch(e.target.value)}
-                  placeholder="Search a new address"
-                  className="location-search-input"
-                />
-              </div>
-
-              <div className="location-current-card">
-                <div className="location-current-text">
-                  <p className="location-current-title">Use My Current Location</p>
-                  <p className="location-current-subtitle">
-                    {isDetectingLocation
-                      ? 'Detecting your location...'
-                      : `Current: ${selectedLocation || 'Unavailable'} `}
-                    <span className="location-current-dot" aria-hidden="true" />
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  className="location-enable-button"
-                  onClick={handleEnableCurrentLocation}
-                  disabled={isDetectingLocation}
-                >
-                  {isDetectingLocation ? 'Enabling...' : 'Enable'}
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      ) : null}
 
       {isClarifying && currentQuestion ? (
         <div className="clarify-modal-backdrop" role="presentation">
@@ -408,4 +255,3 @@ export const InputPage = () => {
     </div>
   )
 }
-

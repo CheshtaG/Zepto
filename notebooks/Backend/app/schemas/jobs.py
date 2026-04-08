@@ -14,7 +14,7 @@ class LocationPayload(BaseModel):
 class CreateJobRequest(BaseModel):
   items: List[str]
   platforms: List[str]
-  location: Optional[Union[LocationPayload, str]] = None
+  metadata: Optional[Dict[str, Any]] = None
 
 
 class AddItemsRequest(BaseModel):
@@ -89,7 +89,8 @@ class JobState(BaseModel):
   id: str
   items: List[str]
   platforms: List[str]
-  location: Optional[Union[LocationPayload, str]] = None
+  resolved_location: Optional[Union[LocationPayload, str]] = None
+  metadata: Optional[Dict[str, Any]] = None
   status: Literal["capturing", "extracting", "done", "failed"] = "capturing"
   progress: int = 0
   result: Optional[JobResultResponse] = None

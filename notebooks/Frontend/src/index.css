@@ -11,6 +11,12 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  /* Fixed app header: content row + 1px gradient line */
+  --app-header-inner-height: calc(1.28in - 50px);
+  /* Logo cap kept independent of inner height (was inner + 30px at 1.28in inner) */
+  --app-header-logo-max-height: calc(1.28in + 30px);
+  --app-header-offset: calc(var(--app-header-inner-height) + 1px);
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -51,8 +57,49 @@
 }
 
 /* Input page: white background, centered content */
-.input-page {
+.app-body-with-header {
+  padding-top: var(--app-header-offset);
   min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  z-index: 60;
+  overflow: visible;
+}
+
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.7cm;
+  box-sizing: border-box;
+  height: var(--app-header-inner-height);
+  padding: 4px 36px;
+  margin-left: -0.8cm;
+  overflow: visible;
+}
+
+.app-header .input-logo-img {
+  height: auto;
+  max-height: var(--app-header-logo-max-height);
+  width: auto;
+  max-width: min(320px, 58vw);
+  object-fit: contain;
+}
+
+.app-header-divider {
+  height: 1px;
+  background: linear-gradient(90deg, #8b5cf6, #34d399);
+}
+
+.input-page {
+  min-height: calc(100vh - var(--app-header-offset));
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
@@ -77,6 +124,8 @@
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+  margin-top: 0;
+  height: calc(100vh - var(--app-header-offset));
   border-right: 1px solid rgba(139, 92, 246, 0.14);
   background: #fbfbff;
   transition: width 0.22s ease;
@@ -189,20 +238,14 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.7cm;
-  margin-left: -0.7cm;
+  margin-left: -2.2cm;
   margin-top: -1.6cm;
   padding-bottom: 1px;
   position: relative;
 }
 
 .input-top-row::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  bottom: 1cm;
-  background: linear-gradient(90deg, #8b5cf6, #34d399);
+  content: none;
 }
 
 .input-logo-wrap {
@@ -582,16 +625,8 @@
   margin: 0;
 }
 
-.platform-chip.zepto.selected {
-  border-color: #34d399;
-  box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.16);
-}
-
-.platform-chip.blinkit.selected {
-  border-color: #8b5cf6;
-  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.16);
-}
-
+.platform-chip.zepto.selected,
+.platform-chip.blinkit.selected,
 .platform-chip.instamart.selected {
   border-color: transparent;
   background:
@@ -919,7 +954,7 @@
 
 /* Compare page layout: full-screen split with moveable center divider */
 .compare-screen {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--app-header-offset));
   display: flex;
   flex-direction: column;
   background:
