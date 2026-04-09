@@ -380,58 +380,63 @@ class ZeptoScraper(BaseScraper):
                 await page.screenshot(path=screenshot_path, full_page=True)
                 print(f"[Zepto] Full page screenshot saved: {screenshot_path}")
 
-            ocr_text = self._extract_text_from_screenshot(screenshot_path)
+            extraction_method = "none"
+            price = None
+            price_selectors = [
+                '[class*="price" i]',
+                '[class*="Price" i]',
+                'span:has-text("₹")',
+                'div:has-text("₹")',
+                '[class*="ProductPrice" i]',
+                '[class*="amount" i]',
+                '[class*="cost" i]',
+            ]
 
-            price = self._extract_price_from_ocr_text(ocr_text)
+            price_text = None
+            if product_element:
+                try:
+                    price_in_product = await product_element.query_selector_all("span, div, p")
+                    for elem in price_in_product[:10]:
+                        try:
+                            text = await elem.inner_text()
+                            if "₹" in text or "Rs" in text.lower():
+                                import re
 
-            if price is None:
-                print("[Zepto] OCR didn't find price, trying traditional extraction...")
-                if product_element:
-                    price_selectors = [
-                        '[class*="price" i]',
-                        '[class*="Price" i]',
-                        'span:has-text("₹")',
-                        'div:has-text("₹")',
-                        '[class*="ProductPrice" i]',
-                        '[class*="amount" i]',
-                        '[class*="cost" i]',
-                    ]
+                                if re.search(r"[₹Rs]?\s*\d+", text):
+                                    price_text = text
+                                    break
+                        except Exception:
+                            continue
+                except Exception:
+                    pass
 
-                    price_text = None
+            if not price_text:
+                for selector in price_selectors:
                     try:
-                        price_in_product = await product_element.query_selector_all("span, div, p")
-                        for elem in price_in_product[:10]:
+                        price_elements = await page.query_selector_all(selector)
+                        for elem in price_elements[:10]:
                             try:
                                 text = await elem.inner_text()
                                 if "₹" in text or "Rs" in text.lower():
-                                    import re
-
-                                    if re.search(r"[₹Rs]?\s*\d+", text):
-                                        price_text = text
-                                        break
-                            except Exception:
-                                continue
-                    except Exception:
-                        pass
-
-                    if not price_text:
-                        for selector in price_selectors:
-                            try:
-                                price_elements = await page.query_selector_all(selector)
-                                for elem in price_elements[:10]:
-                                    try:
-                                        text = await elem.inner_text()
-                                        if "₹" in text or "Rs" in text.lower():
-                                            price_text = text
-                                            break
-                                    except Exception:
-                                        continue
-                                if price_text:
+                                    price_text = text
                                     break
                             except Exception:
                                 continue
+                        if price_text:
+                            break
+                    except Exception:
+                        continue
 
-                    price = self._extract_price(price_text) if price_text else None
+            price = self._extract_price(price_text) if price_text else None
+            if price is not None:
+                extraction_method = "dom"
+
+            if price is None:
+                print("[Zepto] DOM didn't find price, trying OCR fallback...")
+                ocr_text = self._extract_text_from_screenshot(screenshot_path)
+                price = self._extract_price_from_ocr_text(ocr_text)
+                if price is not None:
+                    extraction_method = "ocr_fallback_after_dom"
 
             availability = price is not None
 
@@ -451,6 +456,7 @@ class ZeptoScraper(BaseScraper):
                 product_url=product_url,
                 listing_title=listing_title,
                 image_url=image_url,
+                price_extraction_method=extraction_method,
             )
 
         except Exception as e:
@@ -460,6 +466,7 @@ class ZeptoScraper(BaseScraper):
                 price=None,
                 availability=False,
                 error=str(e),
+                price_extraction_method=None,
             )
         finally:
             try:

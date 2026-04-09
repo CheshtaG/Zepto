@@ -20,6 +20,8 @@ class ProductInfo(BaseModel):
     image_url: Optional[str] = None
     # Local screenshot path (used for vision analysis; optional in API consumers)
     screenshot_path: Optional[str] = None
+    # How price was extracted in scraper (e.g. dom, ocr, dom_fallback_after_ocr).
+    price_extraction_method: Optional[str] = None
     # Quantity-normalized comparison (filled after Gemini vision pass when API key is set)
     quantity_label: Optional[str] = None
     quantity_base_value: Optional[float] = None

@@ -365,6 +365,7 @@ class InstamartScraper(BaseScraper):
             # Generic page-wide text tends to pick small numbers (delivery/fees), causing
             # errors like ₹2 instead of the actual product price.
             price = None
+            extraction_method = "none"
 
             # Strategy 0: query-aware extraction directly from rendered page text.
             # This survives dynamic layouts where product-card selectors can return zero elements.
@@ -413,6 +414,7 @@ class InstamartScraper(BaseScraper):
                     )
                     if js_price is not None:
                         price = float(js_price)
+                        extraction_method = "dom_query_text"
                         print(f"[Instamart] Selected price from query-aware page-text strategy: ₹{price}")
                 except Exception as e:
                     print(f"[Instamart] Query-aware page-text strategy failed: {e}")
@@ -503,6 +505,7 @@ class InstamartScraper(BaseScraper):
                         if price_candidates:
                             # Choose the last candidate (price is typically below quantity info).
                             price = price_candidates[-1]
+                            extraction_method = "dom_product_selector"
                             print(
                                 f"[Instamart] Selected price from product element candidates: ₹{price}"
                             )
@@ -541,6 +544,7 @@ class InstamartScraper(BaseScraper):
                             if found_prices:
                                 # Choose the last ₹ occurrence in the tile text.
                                 price = max(found_prices, key=lambda x: x[1])[0]
+                                extraction_method = "dom_product_text"
                                 print(f"[Instamart] Selected price from product text: ₹{price}")
                     except Exception as e:
                         print(f"[Instamart] Error extracting price from product element: {e}")
@@ -621,6 +625,7 @@ class InstamartScraper(BaseScraper):
                     if price_candidates:
                         # Choose the last candidate (most likely the discounted price).
                         price = price_candidates[-1]
+                        extraction_method = "dom_scoped_selector"
                         print(f"[Instamart] Selected best price from scoped DOM scan: ₹{price}")
 
                 # Strategy 2.5: First visible Instamart product link innerText (covers shadow-less React tiles).
@@ -646,6 +651,7 @@ class InstamartScraper(BaseScraper):
                             rupee_vals = _prices_from_rupee_text(tile_blob)
                             if rupee_vals:
                                 price = rupee_vals[-1]
+                                extraction_method = "dom_link_tile"
                                 print(f"[Instamart] Selected price from link tile text: ₹{price}")
                     except Exception as e:
                         print(f"[Instamart] Evaluate link-tile extraction failed: {e}")
@@ -696,6 +702,7 @@ class InstamartScraper(BaseScraper):
                                     continue
                             if vals:
                                 price = vals[-1]
+                                extraction_method = "dom_js_card"
                                 print(f"[Instamart] Selected price from JS card fallback: ₹{price}")
                     except Exception as e:
                         print(f"[Instamart] JS card fallback failed: {e}")
@@ -757,6 +764,7 @@ class InstamartScraper(BaseScraper):
                         if candidates:
                             # Price on Instamart tiles is typically the last relevant rupee value.
                             price = candidates[-1]
+                            extraction_method = "dom_numeric_heuristic"
                             print(f"[Instamart] Selected price from numeric tile heuristic: ₹{price}")
                     except Exception as e:
                         print(f"[Instamart] Error extracting numeric heuristic from tile text: {e}")
@@ -804,6 +812,7 @@ class InstamartScraper(BaseScraper):
                         )
                         if js_price is not None:
                             price = float(js_price)
+                            extraction_method = "dom_query_card"
                             print(f"[Instamart] Selected price from query-targeted JS fallback: ₹{price}")
                     except Exception as e:
                         print(f"[Instamart] Query-targeted JS fallback failed: {e}")
@@ -854,6 +863,7 @@ class InstamartScraper(BaseScraper):
                 listing_title=listing_title,
                 image_url=image_url,
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
+                price_extraction_method=extraction_method,
             )
             
         except Exception as e:
@@ -867,6 +877,7 @@ class InstamartScraper(BaseScraper):
                 availability=False,
                 error=error_msg,
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else None,
+                price_extraction_method=None,
             )
         finally:
             # Always close browser context

@@ -413,6 +413,7 @@ class BlinkitScraper(BaseScraper):
             # Prefer DOM/text extraction for speed (OCR + tesseract is slow and can confuse
             # pack size with price). Only run OCR if DOM extraction doesn't find a price.
             price = None
+            extraction_method = "none"
 
             # Traditional DOM/text extraction. Prefer it when we can find a real ₹/Rs price.
             # This avoids OCR confusion where quantity numbers (ml/g) can be mistaken for price.
@@ -471,9 +472,12 @@ class BlinkitScraper(BaseScraper):
 
             if dom_price is not None:
                 price = dom_price
+                extraction_method = "dom"
             else:
                 ocr_text = self._extract_text_from_screenshot(screenshot_path)
                 price = self._extract_price_from_ocr_text(ocr_text)
+                if price is not None:
+                    extraction_method = "ocr"
             
             # Check availability (if price is found, assume available)
             availability = price is not None
@@ -495,6 +499,7 @@ class BlinkitScraper(BaseScraper):
                 listing_title=listing_title,
                 image_url=image_url,
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
+                price_extraction_method=extraction_method,
             )
             
         except Exception as e:
@@ -505,6 +510,7 @@ class BlinkitScraper(BaseScraper):
                 availability=False,
                 error=str(e),
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else None,
+                price_extraction_method=None,
             )
         finally:
             # Always close browser context

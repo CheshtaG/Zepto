@@ -41,8 +41,10 @@ CACHE_EXPIRY_HOURS = CACHE_EXPIRY_MINUTES / 60.0
 _DATA_DIR_DEFAULT = "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data"
 DATA_DIR = os.environ.get("COMPARE_DATA_DIR", _DATA_DIR_DEFAULT)
 
-# Logs directory (structured JSONL per job, per platform scrape attempt)
+# Logs directory (structured JSONL logs)
 # Override with env COMPARE_LOGS_DIR if needed.
 _LOGS_DIR_DEFAULT = os.path.join(DATA_DIR, "logs")
 LOGS_DIR = os.environ.get("COMPARE_LOGS_DIR", _LOGS_DIR_DEFAULT)
 LOGS_JOBS_DIR = os.path.join(LOGS_DIR, "jobs")
+# Single append-only log file containing events across all jobs.
+LOGS_JOBS_FILE = os.environ.get("COMPARE_LOGS_JOBS_FILE", os.path.join(LOGS_DIR, "jobs.jsonl"))

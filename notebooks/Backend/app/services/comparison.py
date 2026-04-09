@@ -281,6 +281,7 @@ class ComparisonService:
               "elapsed_ms": elapsed_ms,
               "success": True,
               "error": None,
+              "price_extraction_method": getattr(info, "price_extraction_method", None) if info else None,
             }
           )
         return info
@@ -311,6 +312,7 @@ class ComparisonService:
               "elapsed_ms": elapsed_ms,
               "success": False,
               "error": str(e) or "Scraper exception",
+              "price_extraction_method": None,
             }
           )
         return None
@@ -516,6 +518,7 @@ class JobManager:
             success=bool(event.get("success")),
             error=event.get("error"),
             round_tag=event.get("round"),
+            price_extraction_method=event.get("price_extraction_method"),
           )
 
         comparison = await self._comparison.scrape_triple_as_completed(
@@ -640,6 +643,7 @@ class JobManager:
             success=bool(event.get("success")),
             error=event.get("error"),
             round_tag=event.get("round"),
+            price_extraction_method=event.get("price_extraction_method"),
           )
 
         comparison = await self._comparison.scrape_triple_as_completed(

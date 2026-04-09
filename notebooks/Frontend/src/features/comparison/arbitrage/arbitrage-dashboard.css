@@ -1,0 +1,556 @@
+/* Arbitrage dashboard — right panel only (prefix: arb-) */
+
+.arb-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+  flex: 1;
+  padding-bottom: 8px;
+}
+
+/* ——— Top header ——— */
+.arb-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.arb-top-header__search-wrap {
+  flex: 1;
+  min-width: min(100%, 220px);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.compare-right .arb-top-header__search-wrap {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+@media (min-width: 900px) {
+  .compare-right .arb-top-header__search-wrap {
+    margin-left: auto;
+    margin-right: 0;
+    transform: translateX(-12px);
+  }
+}
+
+.arb-top-header__search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+  display: flex;
+}
+
+.arb-top-header__search {
+  width: 100%;
+  border: 1px solid #e8e6ef;
+  background: #faf9fc;
+  border-radius: 999px;
+  padding: 11px 16px 11px 44px;
+  font-size: 14px;
+  color: #1a1625;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.arb-top-header__search::placeholder {
+  color: #a8a3b5;
+}
+
+.arb-top-header__search:focus {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  background: #fff;
+}
+
+.arb-top-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.arb-icon-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #6b6375;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.arb-icon-btn:hover {
+  background: #f3f0fa;
+  color: #4c4468;
+}
+
+/* ——— Status ——— */
+.arb-status-strip {
+  margin: -8px 0 0;
+  font-size: 12px;
+  color: #8b8499;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.arb-status-strip__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d1cce0;
+}
+
+/* ——— Savings banner ——— */
+.arb-savings-banner {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 38%, #a78bfa 100%);
+  box-shadow:
+    0 18px 40px -12px rgba(109, 40, 217, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.arb-savings-banner--skeleton {
+  background: linear-gradient(135deg, #e9e4f7 0%, #f0ecfb 100%);
+  box-shadow: none;
+  min-height: 120px;
+}
+
+.arb-savings-banner__main {
+  flex: 1;
+  min-width: 200px;
+}
+
+.arb-savings-banner__eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  opacity: 0.92;
+}
+
+.arb-savings-banner__row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.arb-savings-banner__amount {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.arb-savings-banner__pct {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #86efac;
+}
+
+.arb-savings-banner__pct--muted {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.arb-savings-banner__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  text-align: right;
+}
+
+.arb-savings-banner__badges {
+  display: flex;
+  gap: 10px;
+}
+
+.arb-savings-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.arb-savings-badge--zepto {
+  background: linear-gradient(145deg, #7c3aed, #5b21b6);
+}
+
+.arb-savings-badge--blinkit {
+  background: linear-gradient(145deg, #fbbf24, #d97706);
+  color: #1c1917;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.arb-savings-badge--instamart {
+  background: linear-gradient(145deg, #f97316, #ea580c);
+}
+
+.arb-savings-banner__caption {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.88;
+  max-width: 180px;
+  line-height: 1.35;
+}
+
+/* ——— Grid section ——— */
+.arb-grid-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+.arb-grid-section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.arb-grid-section__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #14111d;
+  letter-spacing: -0.02em;
+}
+
+.arb-sort-pill {
+  border: 1px solid #e8e6ef;
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4c4468;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.arb-sort-pill:hover {
+  border-color: #ddd6fe;
+  background: #faf8ff;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.08);
+}
+
+.arb-grid-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ——— Product card ——— */
+.arb-product-card {
+  background: #fefeff;
+  border: 1px solid #efedf4;
+  border-radius: 20px;
+  padding: 18px 20px 16px;
+  box-shadow: 0 4px 24px rgba(20, 17, 29, 0.04);
+}
+
+.arb-product-card__top {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 14px 16px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+  .arb-product-card__top {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .arb-product-card__best {
+    grid-column: 1 / -1;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.arb-product-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #f4f2f8;
+}
+
+.arb-product-thumb--placeholder {
+  background: linear-gradient(135deg, #ede9f7, #f5f3fa);
+}
+
+.arb-product-card__info {
+  min-width: 0;
+}
+
+.arb-product-card__name {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #14111d;
+  line-height: 1.3;
+}
+
+.arb-product-card__subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: #8b8499;
+  line-height: 1.35;
+}
+
+.arb-product-card__best {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.arb-product-card__best-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #a8a3b5;
+}
+
+.arb-product-card__best-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #6d28d9;
+  letter-spacing: -0.02em;
+}
+
+.arb-product-card__pills {
+  display: grid;
+  gap: 10px;
+}
+
+/* ——— Platform pills ——— */
+.arb-platform-pill {
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #f3f1f8;
+  border: 1px solid #e8e6ef;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.arb-platform-pill--inactive {
+  opacity: 0.65;
+}
+
+.arb-platform-pill--winner {
+  background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #a7f3d0;
+  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.12);
+}
+
+.arb-platform-pill__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #6b6375;
+  margin-bottom: 6px;
+}
+
+.arb-platform-pill--winner .arb-platform-pill__label {
+  color: #047857;
+}
+
+.arb-platform-pill__winner-tag {
+  font-weight: 800;
+}
+
+.arb-platform-pill__price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #14111d;
+  letter-spacing: -0.02em;
+}
+
+.arb-platform-pill--winner .arb-platform-pill__price {
+  color: #065f46;
+}
+
+/* ——— Bottom CTA ——— */
+.arb-bottom-cta-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+  margin-top: auto;
+}
+
+.arb-bottom-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%);
+  box-shadow:
+    0 12px 28px -8px rgba(91, 33, 182, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.arb-bottom-cta:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 16px 32px -8px rgba(91, 33, 182, 0.5),
+    0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.arb-bottom-cta__icon {
+  display: flex;
+  opacity: 0.95;
+}
+
+/* ——— Empty ——— */
+.arb-empty-card {
+  border-radius: 20px;
+  border: 1px dashed #ddd8e8;
+  background: #faf9fc;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.arb-empty-card__title {
+  font-weight: 700;
+  color: #14111d;
+  margin-bottom: 8px;
+}
+
+.arb-empty-card__subtitle {
+  font-size: 14px;
+  color: #8b8499;
+}
+
+/* ——— Skeletons ——— */
+.arb-product-card--skeleton {
+  pointer-events: none;
+}
+
+.arb-skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.arb-skeleton-line {
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ede9f7 0%, #f5f3fa 50%, #ede9f7 100%);
+  background-size: 200% 100%;
+  animation: arb-shimmer 1.2s ease-in-out infinite;
+}
+
+.arb-skeleton-line--lg {
+  width: 70%;
+  height: 14px;
+}
+
+.arb-skeleton-line--sm {
+  width: 45%;
+}
+
+.arb-skeleton-line--xs {
+  width: 56px;
+  height: 8px;
+}
+
+.arb-skeleton-line--price {
+  width: 72px;
+  height: 22px;
+}
+
+.arb-skeleton-line--banner-title {
+  width: 200px;
+  height: 12px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.arb-skeleton-line--banner-amount {
+  width: 160px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.arb-skeleton-best {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.arb-platform-pill--skeleton {
+  min-height: 68px;
+  background: linear-gradient(90deg, #ede9f7 0%, #f5f3fa 50%, #ede9f7 100%);
+  background-size: 200% 100%;
+  animation: arb-shimmer 1.2s ease-in-out infinite;
+  border: none;
+}
+
+@keyframes arb-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

@@ -1,7 +1,7 @@
-import { useState, useRef, useCallback, useEffect, type KeyboardEvent } from 'react'
+import { useState, useRef, useCallback, useEffect, useMemo, type KeyboardEvent } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useComparisonJob } from '../features/comparison/hooks/useComparisonJob'
-import { PlatformResults } from '../features/comparison/components/PlatformResults'
+import { ArbitrageDashboardRight } from '../features/comparison/arbitrage/ArbitrageDashboardRight'
 import { api, type ChatMessage, type Platform, type LocationPayload } from '../services/api'
 import { HttpError } from '../lib/http'
 import { useAppStore } from '../store/appStore'
@@ -73,6 +73,17 @@ export const ComparePage = () => {
   useEffect(() => {
     if (result) setLastUpdatedAt(Date.now())
   }, [result])
+
+  const knownItemQueries = useMemo(() => {
+    const s = new Set<string>()
+    if (!result) return s
+    for (const it of result.items) s.add(it.query.trim().toLowerCase())
+    return s
+  }, [result])
+
+  const pendingOnlyQueries = useMemo(() => {
+    return additionalItems.filter((item) => !knownItemQueries.has(item.trim().toLowerCase()))
+  }, [additionalItems, knownItemQueries])
 
   const handleSendMessage = useCallback(async () => {
     if (!chatInput.trim() || !jobId || isSending) return
@@ -288,38 +299,28 @@ export const ComparePage = () => {
         onMouseDown={handleMouseDown}
       />
 
-      {/* Right side: comparison table */}
+      {/* Right side: arbitrage dashboard */}
       <section className="compare-right" style={{ width: `${100 - splitPercent}%` }}>
-        <div className="compare-studio-header">
-          <div className="compare-studio-summary-card">
-            <div className="compare-studio-summary-platforms">
-              {selectedPlatforms.map((p) => (
-                <span key={p} className={`compare-studio-platform-chip ${p}`}>
-                  {p === 'zomato' ? 'Instamart' : p[0].toUpperCase() + p.slice(1)}
-                </span>
-              ))}
-            </div>
-
-            <div className="compare-studio-summary-bottom">
-              <span className="compare-studio-last-updated">
-                Last updated:{' '}
-                {lastUpdatedAt
-                  ? `${Math.max(0, Math.round((Date.now() - lastUpdatedAt) / 60000))} min ago`
-                  : '—'}
-              </span>
-
-              <span className="compare-studio-status">
-                {isRunning ? 'Fetching latest prices…' : status?.status === 'failed' ? 'Job failed' : 'Comparison ready.'}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <PlatformResults
+        <ArbitrageDashboardRight
           result={result}
-          additionalItems={additionalItems}
           platforms={selectedPlatforms}
           isRunning={Boolean(isRunning)}
+          pendingQueries={pendingOnlyQueries}
+          statusMessage={
+            isRunning
+              ? 'Fetching latest prices…'
+              : status?.status === 'failed'
+                ? 'Job failed'
+                : 'Comparison ready.'
+          }
+          lastUpdatedRelative={
+            lastUpdatedAt
+              ? `${Math.max(0, Math.round((Date.now() - lastUpdatedAt) / 60000))} min ago`
+              : '—'
+          }
+          onOptimizeDelivery={() =>
+            setToast({ kind: 'info', message: 'Delivery fee optimization is coming soon.' })
+          }
         />
       </section>
       </div>
