@@ -18,7 +18,7 @@ export const ComparePage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const state = (location.state || {}) as LocationState
-  const { result, status, isRunning } = useComparisonJob(jobId)
+  const { result, isRunning } = useComparisonJob(jobId)
   const { setToast, setResult, setPollingState, jobHistory } = useAppStore()
 
   const [chatInput, setChatInput] = useState('')
@@ -26,7 +26,6 @@ export const ComparePage = () => {
   const [additionalItems, setAdditionalItems] = useState<string[]>([])
   const [isSending, setIsSending] = useState(false)
   const [splitPercent, setSplitPercent] = useState(30)
-  const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null)
   const isDragging = useRef(false)
   const chatAreaRef = useRef<HTMLDivElement>(null)
   const selectedPlatforms: Platform[] = state.platforms?.length
@@ -69,10 +68,6 @@ export const ComparePage = () => {
       chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight
     }
   }, [messages])
-
-  useEffect(() => {
-    if (result) setLastUpdatedAt(Date.now())
-  }, [result])
 
   const knownItemQueries = useMemo(() => {
     const s = new Set<string>()
@@ -241,7 +236,8 @@ export const ComparePage = () => {
       <div className="compare-page">
       {/* Left side: chat area + textbox */}
       <section className="compare-left" style={{ width: `${splitPercent}%` }}>
-        <div className="compare-chat-area" ref={chatAreaRef}>
+        <div className="compare-left-scroll">
+          <div className="compare-chat-area" ref={chatAreaRef}>
           {messages.length === 0 && (
             <div className="chat-empty-state">
               <p>Ask me about:</p>
@@ -265,6 +261,7 @@ export const ComparePage = () => {
               <span></span><span></span><span></span>
             </div>
           )}
+          </div>
         </div>
 
         <div className="compare-textarea-wrapper">
@@ -306,21 +303,6 @@ export const ComparePage = () => {
           platforms={selectedPlatforms}
           isRunning={Boolean(isRunning)}
           pendingQueries={pendingOnlyQueries}
-          statusMessage={
-            isRunning
-              ? 'Fetching latest prices…'
-              : status?.status === 'failed'
-                ? 'Job failed'
-                : 'Comparison ready.'
-          }
-          lastUpdatedRelative={
-            lastUpdatedAt
-              ? `${Math.max(0, Math.round((Date.now() - lastUpdatedAt) / 60000))} min ago`
-              : '—'
-          }
-          onOptimizeDelivery={() =>
-            setToast({ kind: 'info', message: 'Delivery fee optimization is coming soon.' })
-          }
         />
       </section>
       </div>

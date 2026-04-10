@@ -4,120 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-height: 0;
-  flex: 1;
   padding-bottom: 8px;
-}
-
-/* ——— Top header ——— */
-.arb-top-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.arb-top-header__search-wrap {
-  flex: 1;
-  min-width: min(100%, 220px);
-  max-width: 420px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-}
-
-.compare-right .arb-top-header__search-wrap {
-  margin-left: 0;
-  margin-right: auto;
-}
-
-@media (min-width: 900px) {
-  .compare-right .arb-top-header__search-wrap {
-    margin-left: auto;
-    margin-right: 0;
-    transform: translateX(-12px);
-  }
-}
-
-.arb-top-header__search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af;
-  pointer-events: none;
-  display: flex;
-}
-
-.arb-top-header__search {
-  width: 100%;
-  border: 1px solid #e8e6ef;
-  background: #faf9fc;
-  border-radius: 999px;
-  padding: 11px 16px 11px 44px;
-  font-size: 14px;
-  color: #1a1625;
-  outline: none;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
-}
-
-.arb-top-header__search::placeholder {
-  color: #a8a3b5;
-}
-
-.arb-top-header__search:focus {
-  border-color: #c4b5fd;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
-  background: #fff;
-}
-
-.arb-top-header__actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.arb-icon-btn {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  color: #6b6375;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background 0.15s,
-    color 0.15s;
-}
-
-.arb-icon-btn:hover {
-  background: #f3f0fa;
-  color: #4c4468;
-}
-
-/* ——— Status ——— */
-.arb-status-strip {
-  margin: -8px 0 0;
-  font-size: 12px;
-  color: #8b8499;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.arb-status-strip__dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #d1cce0;
 }
 
 /* ——— Savings banner ——— */
@@ -240,7 +127,7 @@
 .arb-grid-section__head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -251,27 +138,6 @@
   font-weight: 700;
   color: #14111d;
   letter-spacing: -0.02em;
-}
-
-.arb-sort-pill {
-  border: 1px solid #e8e6ef;
-  background: #fff;
-  border-radius: 999px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #4c4468;
-  cursor: pointer;
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    box-shadow 0.15s;
-}
-
-.arb-sort-pill:hover {
-  border-color: #ddd6fe;
-  background: #faf8ff;
-  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.08);
 }
 
 .arb-grid-section__list {
@@ -417,46 +283,6 @@
 
 .arb-platform-pill--winner .arb-platform-pill__price {
   color: #065f46;
-}
-
-/* ——— Bottom CTA ——— */
-.arb-bottom-cta-wrap {
-  display: flex;
-  justify-content: center;
-  padding: 8px 0 4px;
-  margin-top: auto;
-}
-
-.arb-bottom-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: none;
-  border-radius: 999px;
-  padding: 14px 28px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%);
-  box-shadow:
-    0 12px 28px -8px rgba(91, 33, 182, 0.55),
-    0 4px 12px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.15s,
-    box-shadow 0.15s;
-}
-
-.arb-bottom-cta:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 16px 32px -8px rgba(91, 33, 182, 0.5),
-    0 6px 14px rgba(0, 0, 0, 0.08);
-}
-
-.arb-bottom-cta__icon {
-  display: flex;
-  opacity: 0.95;
 }
 
 /* ——— Empty ——— */
