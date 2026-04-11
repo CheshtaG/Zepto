@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo, type KeyboardEvent }
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useComparisonJob } from '../features/comparison/hooks/useComparisonJob'
 import { ArbitrageDashboardRight } from '../features/comparison/arbitrage/ArbitrageDashboardRight'
+import type { ArbitragePlatformKey } from '../features/comparison/arbitrage/types'
 import { api, type ChatMessage, type Platform, type LocationPayload } from '../services/api'
 import { HttpError } from '../lib/http'
 import { useAppStore } from '../store/appStore'
@@ -12,6 +13,8 @@ interface LocationState {
   platforms?: Platform[]
   location?: string | LocationPayload
 }
+
+const ARB_PLATFORM_KEYS: ArbitragePlatformKey[] = ['zepto', 'blinkit', 'instamart']
 
 export const ComparePage = () => {
   const { jobId } = useParams<{ jobId: string }>()
@@ -28,9 +31,45 @@ export const ComparePage = () => {
   const [splitPercent, setSplitPercent] = useState(30)
   const isDragging = useRef(false)
   const chatAreaRef = useRef<HTMLDivElement>(null)
-  const selectedPlatforms: Platform[] = state.platforms?.length
+  const jobPlatforms: Platform[] = state.platforms?.length
     ? state.platforms
     : ['zepto', 'blinkit', 'zomato']
+
+  const statePlatformsKey = useMemo(() => JSON.stringify(state.platforms ?? []), [state.platforms])
+
+  const [platformEnabled, setPlatformEnabled] = useState<Record<ArbitragePlatformKey, boolean>>({
+    zepto: true,
+    blinkit: true,
+    instamart: true,
+  })
+
+  useEffect(() => {
+    const sp = state.platforms?.length ? state.platforms : (['zepto', 'blinkit', 'zomato'] as Platform[])
+    setPlatformEnabled({
+      zepto: sp.includes('zepto'),
+      blinkit: sp.includes('blinkit'),
+      instamart: sp.includes('zomato') || sp.includes('instamart'),
+    })
+  }, [jobId, statePlatformsKey])
+
+  const visiblePlatforms = useMemo((): Platform[] => {
+    const o: Platform[] = []
+    if (platformEnabled.zepto) o.push('zepto')
+    if (platformEnabled.blinkit) o.push('blinkit')
+    if (platformEnabled.instamart) o.push('zomato')
+    if (o.length === 0) o.push('zepto')
+    return o
+  }, [platformEnabled])
+
+  const togglePlatform = useCallback((key: ArbitragePlatformKey) => {
+    setPlatformEnabled((prev) => {
+      const next = { ...prev, [key]: !prev[key] }
+      const on = ARB_PLATFORM_KEYS.filter((k) => next[k]).length
+      if (on === 0) return prev
+      return next
+    })
+  }, [])
+
   const selectedLocationPayload = state.location
   const selectedLocation =
     typeof state.location === 'string'
@@ -120,7 +159,7 @@ export const ComparePage = () => {
             if (!mergedItems.length) return
             const { job_id } = await api.createJob({
               items: mergedItems,
-              platforms: selectedPlatforms,
+              platforms: jobPlatforms,
               metadata: {
                 location:
                   typeof (selectedLocationPayload ?? selectedLocation) === 'string'
@@ -138,7 +177,7 @@ export const ComparePage = () => {
               state: {
                 userInput: mergedItems.join(', '),
                 items: mergedItems,
-                platforms: selectedPlatforms,
+                platforms: jobPlatforms,
                 location: selectedLocationPayload ?? selectedLocation,
               },
             })
@@ -153,7 +192,7 @@ export const ComparePage = () => {
 
       const { job_id } = await api.createJob({
         items: mergedItems,
-        platforms: selectedPlatforms,
+        platforms: jobPlatforms,
         metadata: {
           location:
             typeof (selectedLocationPayload ?? selectedLocation) === 'string'
@@ -167,7 +206,7 @@ export const ComparePage = () => {
         state: {
           userInput: mergedItems.join(', '),
           items: mergedItems,
-          platforms: selectedPlatforms,
+          platforms: jobPlatforms,
           location: selectedLocationPayload ?? selectedLocation,
         },
       })
@@ -189,7 +228,7 @@ export const ComparePage = () => {
     extractItems,
     mergeUniqueItems,
     result?.items,
-    selectedPlatforms,
+    jobPlatforms,
     selectedLocation,
     selectedLocationPayload,
     state.items,
@@ -300,7 +339,9 @@ export const ComparePage = () => {
       <section className="compare-right" style={{ width: `${100 - splitPercent}%` }}>
         <ArbitrageDashboardRight
           result={result}
-          platforms={selectedPlatforms}
+          platforms={visiblePlatforms}
+          platformEnabled={platformEnabled}
+          onTogglePlatform={togglePlatform}
           isRunning={Boolean(isRunning)}
           pendingQueries={pendingOnlyQueries}
         />

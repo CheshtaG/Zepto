@@ -1,5 +1,15 @@
-import type { JobItemMatch, JobResultItem, JobResultResponse, Platform } from '../../../services/api'
-import type { ArbitragePlatformKey, ArbitrageProductRow, ArbitrageSavingsSummary } from './types'
+import type {
+  JobComparisonMode,
+  JobItemMatch,
+  JobResultItem,
+  JobResultResponse,
+  Platform,
+} from '../../../services/api'
+import type {
+  ArbitragePlatformKey,
+  ArbitrageProductRow,
+  ArbitrageSavingsSummary,
+} from './types'
 import { toArbitrageKey } from './types'
 
 function getMatch(item: JobResultItem, platform: Platform): JobItemMatch | undefined {
@@ -13,6 +23,61 @@ function getMatch(item: JobResultItem, platform: Platform): JobItemMatch | undef
 function effectivePrice(m: JobItemMatch | undefined): number | null {
   if (!m || !m.in_stock || m.price == null) return null
   return m.price
+}
+
+function firstMatchImage(item: JobResultItem): string {
+  const fromMatches =
+    item.matches.map((m) => m.image_url?.trim() || m.screenshot_url?.trim()).find(Boolean) || ''
+  return fromMatches
+}
+
+/** Mirrors backend `normalize_query_title` for older API payloads. */
+function normalizeQueryTitle(query: string): string {
+  const s = query.trim().replace(/\s+/g, ' ')
+  if (!s) return s
+  return s
+    .split(' ')
+    .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1).toLowerCase() : ''))
+    .join(' ')
+}
+
+function pricedCountForRow(
+  item: JobResultItem,
+  keys: ArbitragePlatformKey[],
+  selectedPlatforms: Platform[],
+): number {
+  let n = 0
+  for (const p of selectedPlatforms) {
+    const k = toArbitrageKey(p)
+    if (!k || !keys.includes(k)) continue
+    const m = getMatch(item, p)
+    if (effectivePrice(m) != null) n += 1
+  }
+  return n
+}
+
+function inferComparisonMode(item: JobResultItem, priced: number): JobComparisonMode {
+  if (item.comparison_mode) return item.comparison_mode
+  if (priced < 2) return 'weak_partial'
+  return 'exact'
+}
+
+function contributesToSavings(mode: JobComparisonMode, priced: number): boolean {
+  if (mode === 'weak_partial') return false
+  return priced >= 2
+}
+
+function platformForArbitrageKey(k: ArbitragePlatformKey): Platform {
+  if (k === 'instamart') return 'instamart'
+  return k
+}
+
+function compactMatchHint(m: JobItemMatch | undefined): string {
+  if (!m) return ''
+  const t = (m.listing_title || '').trim()
+  const q = (m.quantity_label || '').trim()
+  const s = t && q ? `${t} · ${q}` : t || q || ''
+  return s.length > 58 ? `${s.slice(0, 55)}…` : s
 }
 
 /**
@@ -45,47 +110,40 @@ export function mapJobResultToArbitrageRows(
       platformPrices[k] = effectivePrice(m)
     }
 
-    const priced = keys
-      .map((k) => ({ k, v: platformPrices[k] }))
-      .filter((x): x is { k: ArbitragePlatformKey; v: number } => x.v != null)
+    const priced = pricedCountForRow(item, keys, selectedPlatforms)
+    const comparisonMode = inferComparisonMode(item, priced)
+
+    const pricedVals = keys
+      .map((k) => platformPrices[k])
+      .filter((v): v is number => v != null)
 
     let winningPlatform: ArbitragePlatformKey | null = null
     let bestPrice: number | null = null
-    if (priced.length) {
-      priced.sort((a, b) => a.v - b.v)
-      winningPlatform = priced[0].k
-      bestPrice = priced[0].v
+    if (pricedVals.length) {
+      const entries = keys
+        .map((k) => ({ k, v: platformPrices[k] }))
+        .filter((x): x is { k: ArbitragePlatformKey; v: number } => x.v != null)
+      entries.sort((a, b) => a.v - b.v)
+      winningPlatform = entries[0].k
+      bestPrice = entries[0].v
     }
 
-    const values = keys.map((k) => platformPrices[k]).filter((v): v is number => v != null)
     let savingsAmount = 0
-    if (values.length >= 2) {
-      savingsAmount = Math.max(...values) - Math.min(...values)
+    if (contributesToSavings(comparisonMode, priced) && pricedVals.length >= 2) {
+      savingsAmount = Math.max(...pricedVals) - Math.min(...pricedVals)
     }
 
-    const winnerUiPlatform: Platform | undefined = winningPlatform
-      ? winningPlatform === 'instamart'
-        ? selectedPlatforms.includes('zomato')
-          ? 'zomato'
-          : selectedPlatforms.includes('instamart')
-            ? 'instamart'
-            : 'zomato'
-        : winningPlatform
-      : undefined
-    const winnerMatch = winnerUiPlatform ? getMatch(item, winnerUiPlatform) : undefined
+    const name = item.canonical_title?.trim() || normalizeQueryTitle(item.query)
+    const subtitle =
+      item.canonical_subtitle?.trim() ||
+      (comparisonMode === 'weak_partial' ? 'Limited comparable results found' : 'Compare across apps')
+    const imageUrl = firstMatchImage(item)
 
-    const titleFromWinner = winnerMatch?.listing_title?.trim()
-    const anyTitle = item.matches.map((m) => m.listing_title?.trim()).find(Boolean)
-    const name = titleFromWinner || anyTitle || item.query
-
-    const subtitleParts = [winnerMatch?.quantity_label].filter(Boolean)
-    const subtitle = subtitleParts.length ? String(subtitleParts[0]) : 'Compare across apps'
-
-    const imageUrl =
-      winnerMatch?.image_url?.trim() ||
-      winnerMatch?.screenshot_url?.trim() ||
-      item.matches.map((m) => m.image_url || m.screenshot_url).find(Boolean) ||
-      ''
+    const platformHints: Partial<Record<ArbitragePlatformKey, string>> = {}
+    for (const k of keys) {
+      const hint = compactMatchHint(getMatch(item, platformForArbitrageKey(k)))
+      if (hint) platformHints[k] = hint
+    }
 
     rows.push({
       id: item.query,
@@ -97,17 +155,79 @@ export function mapJobResultToArbitrageRows(
       platformPrices,
       savingsAmount,
       activePlatforms: keys.length ? keys : ['zepto', 'blinkit', 'instamart'],
+      comparisonMode,
+      matchConfidence: item.match_confidence ?? null,
+      platformHints: Object.keys(platformHints).length ? platformHints : undefined,
     })
   }
 
   return rows
 }
 
+/**
+ * Recompute winner/savings/hints when the UI shows a subset of platforms (toggle filters).
+ */
+export function sliceRowToPlatforms(
+  row: ArbitrageProductRow,
+  keys: ArbitragePlatformKey[],
+): ArbitrageProductRow {
+  const platformPrices: Record<ArbitragePlatformKey, number | null> = {
+    zepto: null,
+    blinkit: null,
+    instamart: null,
+  }
+  for (const k of keys) {
+    platformPrices[k] = row.platformPrices[k]
+  }
+
+  const entries = keys
+    .map((k) => ({ k, v: platformPrices[k] }))
+    .filter((x): x is { k: ArbitragePlatformKey; v: number } => x.v != null)
+
+  let winningPlatform: ArbitragePlatformKey | null = null
+  let bestPrice: number | null = null
+  if (entries.length) {
+    entries.sort((a, b) => a.v - b.v)
+    winningPlatform = entries[0].k
+    bestPrice = entries[0].v
+  }
+
+  const priced = entries.map((e) => e.v)
+  let savingsAmount = 0
+  if (row.comparisonMode !== 'weak_partial' && priced.length >= 2) {
+    savingsAmount = Math.max(...priced) - Math.min(...priced)
+  }
+
+  const platformHints = row.platformHints
+    ? Object.fromEntries(
+        Object.entries(row.platformHints).filter(([k]) =>
+          keys.includes(k as ArbitragePlatformKey),
+        ),
+      )
+    : undefined
+
+  return {
+    ...row,
+    platformPrices,
+    winningPlatform,
+    bestPrice,
+    savingsAmount,
+    activePlatforms: keys.length ? keys : row.activePlatforms,
+    platformHints:
+      platformHints && Object.keys(platformHints).length ? platformHints : undefined,
+  }
+}
+
 export function computeSavingsSummary(rows: ArbitrageProductRow[]): ArbitrageSavingsSummary {
-  const totalSavings = rows.reduce((s, r) => s + r.savingsAmount, 0)
+  const eligible = rows.filter((r) => {
+    if (r.comparisonMode === 'weak_partial') return false
+    const vals = r.activePlatforms.map((k) => r.platformPrices[k]).filter((v): v is number => v != null)
+    return vals.length >= 2
+  })
+  const totalSavings = eligible.reduce((s, r) => s + r.savingsAmount, 0)
   let sumMax = 0
   let comparable = 0
-  for (const r of rows) {
+  for (const r of eligible) {
     const vals = r.activePlatforms.map((k) => r.platformPrices[k]).filter((v): v is number => v != null)
     if (vals.length >= 2) {
       sumMax += Math.max(...vals)

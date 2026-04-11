@@ -41,10 +41,11 @@ class ZeptoScraper(BaseScraper):
 
                         search_input = await page.wait_for_selector('input[type="text"], input[type="search"]', timeout=3000)
                         if search_input:
-                            await search_input.fill("Pune")
+                            city = self.target_city or "Pune"
+                            await search_input.fill(city)
                             await asyncio.sleep(SEARCH_DELAY)
 
-                            pune_option = await page.wait_for_selector("text=Pune", timeout=3000)
+                            pune_option = await page.wait_for_selector(f"text={city}", timeout=3000)
                             if pune_option:
                                 await pune_option.click()
                                 await asyncio.sleep(SEARCH_DELAY)
@@ -54,7 +55,7 @@ class ZeptoScraper(BaseScraper):
                     continue
 
             if not location_set:
-                pune_pincode = DEFAULT_PINCODE
+                pune_pincode = self.target_pincode or DEFAULT_PINCODE
                 pincode_selectors = [
                     'input[placeholder*="pincode" i]',
                     'input[placeholder*="pin" i]',
@@ -148,6 +149,13 @@ class ZeptoScraper(BaseScraper):
 
             if search_input == "URL_SEARCH":
                 print("[Zepto] Using URL-based search results")
+                # Same as Blinkit: URL search can still leave a location modal; without an address,
+                # listings/prices often never hydrate in the DOM.
+                try:
+                    print("[Zepto] Attempting to set location (URL-search path)...")
+                    await self.set_location(page)
+                except Exception as loc_error:
+                    print(f"[Zepto] Location setting failed (non-critical, URL path): {loc_error}")
             else:
                 await asyncio.sleep(3)
 
@@ -448,6 +456,14 @@ class ZeptoScraper(BaseScraper):
                 print(f"[Zepto] Listing title: {listing_title[:100]}...")
             if image_url:
                 print(f"[Zepto] Product image URL: {image_url[:120]}...")
+            quantity_label = await self._extract_quantity_label(product_element, listing_title)
+            candidate_listings = await self._candidate_listings_with_primary(
+                page, Platform.ZEPTO, product_selectors, product_element, 10
+            )
+            if product_element:
+                link = await self._product_link_from_root(product_element)
+                if link:
+                    product_url = link
 
             return ProductInfo(
                 platform=Platform.ZEPTO,
@@ -457,6 +473,8 @@ class ZeptoScraper(BaseScraper):
                 listing_title=listing_title,
                 image_url=image_url,
                 price_extraction_method=extraction_method,
+                quantity_label=quantity_label,
+                candidate_listings=candidate_listings or None,
             )
 
         except Exception as e:

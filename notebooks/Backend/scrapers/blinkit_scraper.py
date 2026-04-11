@@ -490,6 +490,14 @@ class BlinkitScraper(BaseScraper):
             listing_title = await self._extract_listing_title(product_element)
             if listing_title:
                 print(f"[Blinkit] Listing title: {listing_title[:100]}...")
+            quantity_label = await self._extract_quantity_label(product_element, listing_title)
+            candidate_listings = await self._candidate_listings_with_primary(
+                page, Platform.BLINKIT, product_selectors, product_element, 10
+            )
+            if product_element:
+                link = await self._product_link_from_root(product_element)
+                if link:
+                    product_url = link
 
             return ProductInfo(
                 platform=Platform.BLINKIT,
@@ -500,6 +508,8 @@ class BlinkitScraper(BaseScraper):
                 image_url=image_url,
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
                 price_extraction_method=extraction_method,
+                quantity_label=quantity_label,
+                candidate_listings=candidate_listings or None,
             )
             
         except Exception as e:

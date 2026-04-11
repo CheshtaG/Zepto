@@ -6,6 +6,8 @@ export interface PlatformPricePillProps {
   price: number | null
   isWinner: boolean
   isActive: boolean
+  /** Matched listing snippet (title · qty) for transparency. */
+  matchHint?: string
 }
 
 function formatPrice(price: number | null) {
@@ -13,7 +15,13 @@ function formatPrice(price: number | null) {
   return `₹${price}`
 }
 
-export function PlatformPricePill({ platform, price, isWinner, isActive }: PlatformPricePillProps) {
+export function PlatformPricePill({
+  platform,
+  price,
+  isWinner,
+  isActive,
+  matchHint,
+}: PlatformPricePillProps) {
   const label = platformDisplayLabel(platform)
   const classes = [
     'arb-platform-pill',
@@ -30,6 +38,11 @@ export function PlatformPricePill({ platform, price, isWinner, isActive }: Platf
         {isWinner ? <span className="arb-platform-pill__winner-tag"> (WINNER)</span> : null}
       </div>
       <div className="arb-platform-pill__price">{formatPrice(price)}</div>
+      {matchHint ? (
+        <div className="arb-platform-pill__hint" title={matchHint}>
+          {matchHint}
+        </div>
+      ) : null}
     </div>
   )
 }

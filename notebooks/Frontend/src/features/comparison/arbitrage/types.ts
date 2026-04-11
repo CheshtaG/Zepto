@@ -1,4 +1,4 @@
-import type { Platform } from '../../../services/api'
+import type { JobComparisonMode, Platform } from '../../../services/api'
 
 /** Canonical keys for the three-column UI (Instamart only, not zomato alias). */
 export type ArbitragePlatformKey = 'zepto' | 'blinkit' | 'instamart'
@@ -15,6 +15,10 @@ export interface ArbitrageProductRow {
   savingsAmount: number
   /** Selected platforms for this job (subset of three). */
   activePlatforms: ArbitragePlatformKey[]
+  comparisonMode: JobComparisonMode
+  matchConfidence?: number | null
+  /** Matched listing title · quantity per column (from API matches). */
+  platformHints?: Partial<Record<ArbitragePlatformKey, string>>
 }
 
 export interface ArbitrageSavingsSummary {
@@ -34,6 +38,7 @@ export const ARBITRAGE_MOCK_ROWS: ArbitrageProductRow[] = [
     platformPrices: { zepto: 28, blinkit: 32, instamart: 31 },
     savingsAmount: 4,
     activePlatforms: ['zepto', 'blinkit', 'instamart'],
+    comparisonMode: 'exact',
   },
   {
     id: 'mock-2',
@@ -45,6 +50,7 @@ export const ARBITRAGE_MOCK_ROWS: ArbitrageProductRow[] = [
     platformPrices: { zepto: 48, blinkit: 45, instamart: 47 },
     savingsAmount: 3,
     activePlatforms: ['zepto', 'blinkit', 'instamart'],
+    comparisonMode: 'exact',
   },
 ]
 

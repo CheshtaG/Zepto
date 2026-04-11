@@ -36,9 +36,11 @@ export interface ProductArbitrageCardProps {
 
 export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
   const keys = ORDER.filter((k) => row.activePlatforms.includes(k))
+  const cardClass =
+    'arb-product-card' + (row.comparisonMode === 'weak_partial' ? ' arb-product-card--weak' : '')
 
   return (
-    <article className="arb-product-card">
+    <article className={cardClass}>
       <div className="arb-product-card__top">
         <ProductThumb url={row.imageUrl} />
         <div className="arb-product-card__info">
@@ -50,7 +52,9 @@ export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
           <span className="arb-product-card__best-price">{formatBest(row.bestPrice)}</span>
         </div>
       </div>
-      <div className="arb-product-card__pills" style={{ gridTemplateColumns: `repeat(${keys.length}, minmax(0, 1fr))` }}>
+      <div
+        className={`arb-product-card__pills arb-product-card__pills--cols-${Math.min(keys.length, 3) || 1}`}
+      >
         {keys.map((platform) => (
           <PlatformPricePill
             key={platform}
@@ -58,6 +62,7 @@ export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
             price={row.platformPrices[platform]}
             isWinner={row.winningPlatform === platform}
             isActive={row.activePlatforms.includes(platform)}
+            matchHint={row.platformHints?.[platform]}
           />
         ))}
       </div>

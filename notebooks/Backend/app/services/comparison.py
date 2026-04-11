@@ -25,6 +25,8 @@ from app.services.gemini_quantity import (
 )
 from app.services.cross_platform_matcher import unified_search_after_first_pass
 from app.services.job_logger import JobLogger
+from app.services.product_matching import build_job_row
+from app.services.product_matching.intent import normalize_query_title
 from config import BLINKIT_SEARCH_URL, INSTAMART_SEARCH_URL, ZEPTO_SEARCH_URL
 
 
@@ -58,6 +60,11 @@ def _failed_job_row(query: str) -> JobResultItem:
         quantity_comparison_note=note,
       ),
     ],
+    canonical_title=normalize_query_title(query),
+    canonical_subtitle="Limited comparable results found",
+    comparison_mode="weak_partial",
+    high_confidence=False,
+    match_confidence=None,
   )
 
 
@@ -476,10 +483,7 @@ class JobManager:
       async with sem:
         hydrated = await self._comparison.hydrate_cached_comparison(item, job.resolved_location)
         if hydrated:
-          row = JobResultItem(
-            query=hydrated.product_name,
-            matches=self._comparison.job_matches_from_infos(hydrated.platforms),
-          )
+          row = build_job_row(hydrated.product_name, hydrated.platforms)
           async with progress_lock:
             platform_done[0] += 3
             job.progress = min(99, int(platform_done[0] / max(total * 3, 1) * 100))
@@ -495,10 +499,7 @@ class JobManager:
               platform_done[0] += 1
             job.progress = min(99, int(platform_done[0] / max(total * 3, 1) * 100))
             if idx < len(result_items):
-              result_items[idx] = JobResultItem(
-                query=item,
-                matches=self._comparison.job_matches_from_infos(infos),
-              )
+              result_items[idx] = build_job_row(item, infos)
             job.result = JobResultResponse(items=list(result_items), summary=None)
             self._jobs[job_id] = job
 
@@ -527,10 +528,7 @@ class JobManager:
           on_partial,
           on_platform_scrape=on_platform_scrape,
         )
-        row = JobResultItem(
-          query=comparison.product_name,
-          matches=self._comparison.job_matches_from_infos(comparison.platforms),
-        )
+        row = build_job_row(comparison.product_name, comparison.platforms)
       return idx, row
 
     try:
@@ -601,10 +599,7 @@ class JobManager:
       async with sem:
         hydrated = await self._comparison.hydrate_cached_comparison(item, job.resolved_location)
         if hydrated:
-          row = JobResultItem(
-            query=hydrated.product_name,
-            matches=self._comparison.job_matches_from_infos(hydrated.platforms),
-          )
+          row = build_job_row(hydrated.product_name, hydrated.platforms)
           async with progress_lock:
             platform_done[0] += 3
             job.progress = min(99, int(platform_done[0] / max(total * 3, 1) * 100))
@@ -620,10 +615,7 @@ class JobManager:
               platform_done[0] += 1
             job.progress = min(99, int(platform_done[0] / max(total * 3, 1) * 100))
             if global_idx < len(result_items):
-              result_items[global_idx] = JobResultItem(
-                query=item,
-                matches=self._comparison.job_matches_from_infos(infos),
-              )
+              result_items[global_idx] = build_job_row(item, infos)
             job.result = JobResultResponse(items=list(result_items), summary=None)
             self._jobs[job_id] = job
 
@@ -652,10 +644,7 @@ class JobManager:
           on_partial,
           on_platform_scrape=on_platform_scrape,
         )
-        row = JobResultItem(
-          query=comparison.product_name,
-          matches=self._comparison.job_matches_from_infos(comparison.platforms),
-        )
+        row = build_job_row(comparison.product_name, comparison.platforms)
       return global_idx, row
 
     try:

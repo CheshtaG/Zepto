@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin
 
 from playwright.async_api import async_playwright, Browser, ElementHandle, Page, Playwright
@@ -271,6 +271,197 @@ class BaseScraper(ABC):
             return None
         t = text.strip()
         return t[:500] if t else None
+
+    def _extract_quantity_from_text(self, text: Optional[str]) -> Optional[str]:
+        """Extract a pack/quantity snippet from plain text."""
+        if not text or not isinstance(text, str):
+            return None
+        s = re.sub(r"\s+", " ", text).strip()
+        if not s:
+            return None
+        patterns = [
+            r"\b\d+\s?x\s?\d+(?:\.\d+)?\s?(?:ml|l|g|kg|mg)\b",
+            r"\b\d+(?:\.\d+)?\s?(?:ml|l|g|kg|mg)\b",
+            r"\b\d+\s?(?:pcs?|pieces?|pack(?:\s*of)?\s*\d*|units?)\b",
+            r"\bpack\s*of\s*\d+\b",
+        ]
+        for p in patterns:
+            m = re.search(p, s, re.IGNORECASE)
+            if m:
+                return m.group(0).strip()
+        return None
+
+    async def _extract_quantity_label(self, root: Optional[ElementHandle], listing_title: Optional[str] = None) -> Optional[str]:
+        q = self._extract_quantity_from_text(listing_title)
+        if q:
+            return q
+        if root is None:
+            return None
+        try:
+            raw = await root.evaluate(
+                """(el) => {
+                  const rows = [];
+                  const selectors = [
+                    '[class*="qty" i]', '[class*="quantity" i]', '[class*="pack" i]',
+                    '[class*="size" i]', '[class*="weight" i]', '[class*="variant" i]',
+                    '[data-testid*="quantity" i]', '[data-testid*="pack" i]',
+                    'span', 'div', 'p'
+                  ];
+                  for (const sel of selectors) {
+                    for (const n of el.querySelectorAll(sel)) {
+                      const t = (n.textContent || '').replace(/\\s+/g, ' ').trim();
+                      if (!t || t.length > 80) continue;
+                      rows.push(t);
+                    }
+                  }
+                  return [...new Set(rows)].slice(0, 40);
+                }"""
+            )
+        except Exception:
+            return None
+        if isinstance(raw, list):
+            for candidate in raw:
+                q2 = self._extract_quantity_from_text(candidate if isinstance(candidate, str) else None)
+                if q2:
+                    return q2
+        return None
+
+    def _extract_brand_from_title(self, title: Optional[str]) -> Optional[str]:
+        if not title:
+            return None
+        s = re.sub(r"\s+", " ", title).strip()
+        if not s:
+            return None
+        stop = {"pack", "combo", "x", "ml", "l", "g", "kg", "mg", "pcs", "piece", "of", "the", "and"}
+        variant_skip = {
+            "toned", "full", "whole", "skim", "low", "fat", "double", "single",
+            "brown", "white", "multigrain", "organic", "a2",
+        }
+        parts = [p for p in re.split(r"[\s,/()-]+", s) if p]
+        if not parts:
+            return None
+        brand_tokens: List[str] = []
+        for t in parts[:5]:
+            tl = t.lower()
+            if tl in stop or tl in variant_skip or re.search(r"\d", t):
+                if brand_tokens:
+                    break
+                continue
+            brand_tokens.append(t)
+            if len(brand_tokens) >= 2:
+                break
+        if not brand_tokens:
+            return parts[0][:48]
+        return " ".join(brand_tokens)[:48]
+
+    async def _product_link_from_root(self, root: ElementHandle) -> Optional[str]:
+        try:
+            href = await root.evaluate(
+                """(el) => {
+                  const a = el.closest('a[href]') || el.querySelector('a[href]');
+                  return a && a.href ? String(a.href) : null;
+                }"""
+            )
+            return href if isinstance(href, str) and href.startswith("http") else None
+        except Exception:
+            return None
+
+    async def _listing_candidate_dict(
+        self,
+        page: Page,
+        platform: Platform,
+        root: ElementHandle,
+        idx: int,
+    ) -> Dict[str, Any]:
+        raw_title = await self._extract_listing_title(root)
+        title = (raw_title or "").strip()
+        quantity_label = await self._extract_quantity_label(root, raw_title)
+        card_text = ""
+        try:
+            card_text = await root.inner_text()
+        except Exception:
+            card_text = title
+        price = self._extract_price(card_text or "")
+        image_url = await self._extract_product_image_url(page, root)
+        product_url = await self._product_link_from_root(root) or page.url
+        brand = self._extract_brand_from_title(title)
+        return {
+            "id": f"{platform.value}-{idx}",
+            "title": title or None,
+            "rawTitle": raw_title or title or None,
+            "brand": brand,
+            "quantityLabel": quantity_label,
+            "normalizedQuantity": None,
+            "normalizedUnit": None,
+            "variant": None,
+            "category": None,
+            "price": float(price) if price is not None else None,
+            "inStock": price is not None,
+            "imageUrl": image_url,
+            "productUrl": product_url,
+            "platform": platform.value,
+        }
+
+    async def _collect_listing_candidates(
+        self,
+        page: Page,
+        platform: Platform,
+        product_selectors: List[str],
+        max_candidates: int = 8,
+    ) -> List[Dict[str, Any]]:
+        seen: set = set()
+        roots: List[ElementHandle] = []
+        for selector in product_selectors:
+            try:
+                elements = await page.query_selector_all(selector)
+                for elem in elements[:24]:
+                    try:
+                        if not await elem.is_visible():
+                            continue
+                        key = await elem.evaluate("el => (el.innerText || '').slice(0, 120)")
+                        key = (key or "").strip()
+                        if not key or key in seen:
+                            continue
+                        seen.add(key)
+                        roots.append(elem)
+                        if len(roots) >= max_candidates:
+                            break
+                    except Exception:
+                        continue
+                if len(roots) >= max_candidates:
+                    break
+            except Exception:
+                continue
+
+        out: List[Dict[str, Any]] = []
+        for i, root in enumerate(roots[:max_candidates]):
+            try:
+                out.append(await self._listing_candidate_dict(page, platform, root, i))
+            except Exception:
+                continue
+        return out
+
+    async def _candidate_listings_with_primary(
+        self,
+        page: Page,
+        platform: Platform,
+        product_selectors: List[str],
+        product_element: Optional[ElementHandle],
+        max_candidates: int = 10,
+    ) -> List[Dict[str, Any]]:
+        collected = await self._collect_listing_candidates(
+            page, platform, product_selectors, max_candidates
+        )
+        if not product_element:
+            return collected[:max_candidates]
+        try:
+            prim = await self._listing_candidate_dict(page, platform, product_element, 0)
+            key = (prim.get("title") or "")[:100]
+            rest = [c for c in collected if (c.get("title") or "")[:100] != key]
+            merged = [prim] + rest
+            return merged[:max_candidates]
+        except Exception:
+            return collected[:max_candidates]
 
     @abstractmethod
     async def set_location(self, page: Page):

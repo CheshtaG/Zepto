@@ -63,6 +63,11 @@ class JobItemMatch(BaseModel):
 class JobResultItem(BaseModel):
   query: str
   matches: List[JobItemMatch]
+  canonical_title: Optional[str] = None
+  canonical_subtitle: Optional[str] = None
+  match_confidence: Optional[float] = None
+  high_confidence: Optional[bool] = None
+  comparison_mode: Optional[Literal["exact", "generic_comparable", "weak_partial"]] = None
 
 
 class JobResultResponse(BaseModel):

@@ -90,6 +90,7 @@
   padding: 4px 36px;
   margin-left: -0.8cm;
   overflow: visible;
+  min-width: 0;
 }
 
 .app-header .input-logo-img {
@@ -259,6 +260,7 @@
 .input-logo-wrap {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .input-logo-img {
@@ -274,7 +276,13 @@
   font-size: 12px;
   font-weight: 600;
   color: #6b7280;
-  line-height: 1;
+  line-height: 1.2;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .input-location-button {
@@ -289,6 +297,9 @@
   position: relative;
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
   margin-left: -0.5cm;
+  min-width: 0;
+  max-width: min(280px, 42vw);
+  flex-shrink: 1;
 }
 
 .input-location-button::before {
@@ -311,6 +322,7 @@
   height: 14px;
   display: block;
   transform: translateY(0);
+  flex-shrink: 0;
 }
 
 .input-main-block {

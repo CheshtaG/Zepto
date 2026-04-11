@@ -4,6 +4,7 @@ import locationChevron from '../assets/location-chevron.svg'
 import { useAppStore } from '../store/appStore'
 import { logFrontendEvent } from '../lib/frontendLogger'
 import type { LocationPayload } from '../services/api'
+import { formatLocationHeaderLabel } from '../lib/locationDisplay'
 
 export const AppHeader = () => {
   const lastLocation = useAppStore((s) => s.lastLocation)
@@ -74,6 +75,9 @@ export const AppHeader = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const locationButtonLabel =
+    formatLocationHeaderLabel(lastLocation, lastLocationPayload) || 'Select Location'
+
   return (
     <>
       <header className="app-header">
@@ -84,10 +88,12 @@ export const AppHeader = () => {
           <button
             type="button"
             className="input-location-button"
-            aria-label="Select location"
+            aria-label={locationButtonLabel === 'Select Location' ? 'Select location' : `Location: ${locationButtonLabel}. Change location`}
             onClick={() => setIsLocationModalOpen(true)}
           >
-            <span className="input-location-label">Select Location</span>
+            <span className="input-location-label" title={locationButtonLabel}>
+              {locationButtonLabel}
+            </span>
             <img src={locationChevron} alt="" className="input-location-caret-img" aria-hidden="true" />
           </button>
         </div>

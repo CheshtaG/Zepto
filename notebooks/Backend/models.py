@@ -29,6 +29,8 @@ class ProductInfo(BaseModel):
     price_per_base_unit: Optional[float] = None
     quantity_comparable: Optional[bool] = None
     quantity_comparison_note: Optional[str] = None
+    # Top search-result cards for cross-platform matching (DOM, best-effort).
+    candidate_listings: Optional[List[dict]] = None
 
 
 class ProductComparison(BaseModel):

@@ -1,22 +1,52 @@
 import type { ArbitragePlatformKey } from '../types'
+import { ARBITRAGE_PLATFORM_LOGO_SRC } from '../platformLogos'
+import { platformDisplayLabel } from '../types'
 
 export interface SavingsBannerProps {
   totalSavings: number
   percentImprovement: number
-  /** Platforms included in the job (for badge row). */
-  platforms: ArbitragePlatformKey[]
+  /** Fixed order for the three toggles (logos). */
+  platformOrder: ArbitragePlatformKey[]
+  enabled: Record<ArbitragePlatformKey, boolean>
+  onTogglePlatform: (key: ArbitragePlatformKey) => void
 }
 
-function PlatformBadge({ platform }: { platform: ArbitragePlatformKey }) {
-  const initial = platform === 'instamart' ? 'I' : platform[0].toUpperCase()
+function PlatformLogoToggle({
+  platform,
+  enabled,
+  onToggle,
+}: {
+  platform: ArbitragePlatformKey
+  enabled: boolean
+  onToggle: (key: ArbitragePlatformKey) => void
+}) {
+  const src = ARBITRAGE_PLATFORM_LOGO_SRC[platform]
+
   return (
-    <div className={`arb-savings-badge arb-savings-badge--${platform}`} title={platform}>
-      <span>{initial}</span>
-    </div>
+    <button
+      type="button"
+      className={`arb-savings-badge arb-savings-badge--${platform} arb-savings-badge--toggle${
+        enabled ? '' : ' arb-savings-badge--inactive'
+      }`}
+      aria-pressed={enabled}
+      aria-label={`${platformDisplayLabel(platform)}: ${enabled ? 'shown' : 'hidden'}. Click to toggle.`}
+      title={`${platformDisplayLabel(platform)} (${enabled ? 'on' : 'off'})`}
+      onClick={() => onToggle(platform)}
+    >
+      <span className="arb-savings-badge__logo-wrap" aria-hidden="true">
+        <img src={src} alt="" className="arb-savings-badge__logo" />
+      </span>
+    </button>
   )
 }
 
-export function SavingsBanner({ totalSavings, percentImprovement, platforms }: SavingsBannerProps) {
+export function SavingsBanner({
+  totalSavings,
+  percentImprovement,
+  platformOrder,
+  enabled,
+  onTogglePlatform,
+}: SavingsBannerProps) {
   const display =
     totalSavings > 0
       ? totalSavings.toLocaleString('en-IN', {
@@ -42,8 +72,13 @@ export function SavingsBanner({ totalSavings, percentImprovement, platforms }: S
       </div>
       <div className="arb-savings-banner__aside">
         <div className="arb-savings-banner__badges">
-          {platforms.map((p) => (
-            <PlatformBadge key={p} platform={p} />
+          {platformOrder.map((p) => (
+            <PlatformLogoToggle
+              key={p}
+              platform={p}
+              enabled={enabled[p] !== false}
+              onToggle={onTogglePlatform}
+            />
           ))}
         </div>
         <p className="arb-savings-banner__caption">Best platform mix achieved</p>

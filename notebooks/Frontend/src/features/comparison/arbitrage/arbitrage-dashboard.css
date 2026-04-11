@@ -77,12 +77,16 @@
 
 .arb-savings-banner__badges {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
 }
 
 .arb-savings-badge {
+  box-sizing: border-box;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -92,6 +96,72 @@
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.35);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease,
+    transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.arb-savings-badge--toggle {
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.arb-savings-badge--toggle:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.arb-savings-badge--toggle:not(.arb-savings-badge--inactive):hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.arb-savings-badge--toggle:active:not(.arb-savings-badge--inactive) {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.12s;
+}
+
+.arb-savings-badge--inactive {
+  background: rgba(30, 27, 40, 0.42) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+  opacity: 0.92;
+}
+
+.arb-savings-badge--inactive .arb-savings-badge__logo {
+  opacity: 0.5;
+  filter: grayscale(1) brightness(1.15);
+}
+
+.arb-savings-badge__logo-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.arb-savings-badge__logo {
+  width: 26px;
+  height: 26px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: opacity 0.22s ease, filter 0.22s ease;
 }
 
 .arb-savings-badge--zepto {
@@ -232,8 +302,28 @@
 }
 
 .arb-product-card__pills {
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: 10px;
+  width: 100%;
+}
+
+/* Equal columns for 2–3 platforms; single platform stays compact without dead grid tracks */
+.arb-product-card__pills--cols-1 {
+  justify-content: center;
+}
+
+.arb-product-card__pills--cols-1 > .arb-platform-pill {
+  flex: 0 1 100%;
+  max-width: min(360px, 100%);
+}
+
+.arb-product-card__pills--cols-2 > .arb-platform-pill,
+.arb-product-card__pills--cols-3 > .arb-platform-pill {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /* ——— Platform pills ——— */
@@ -242,6 +332,8 @@
   padding: 12px 14px;
   background: #f3f1f8;
   border: 1px solid #e8e6ef;
+  min-width: 0;
+  box-sizing: border-box;
   transition:
     background 0.15s,
     border-color 0.15s,
@@ -285,6 +377,18 @@
   color: #065f46;
 }
 
+.arb-platform-pill__hint {
+  margin-top: 8px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #8b8499;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ——— Empty ——— */
 .arb-empty-card {
   border-radius: 20px;
@@ -303,6 +407,11 @@
 .arb-empty-card__subtitle {
   font-size: 14px;
   color: #8b8499;
+}
+
+.arb-product-card--weak {
+  opacity: 0.95;
+  border: 1px dashed rgba(124, 58, 237, 0.28);
 }
 
 /* ——— Skeletons ——— */

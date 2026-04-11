@@ -62,9 +62,19 @@ export interface JobItemMatch {
   quantity_comparison_note?: string | null
 }
 
+export type JobComparisonMode = 'exact' | 'generic_comparable' | 'weak_partial'
+
 export interface JobResultItem {
   query: string
   matches: JobItemMatch[]
+  /** Display title from normalized user query (e.g. Apples). */
+  canonical_title?: string | null
+  /** Mode-specific subtitle from backend. */
+  canonical_subtitle?: string | null
+  match_confidence?: number | null
+  /** @deprecated Prefer comparison_mode; weak rows are still shown in the grid. */
+  high_confidence?: boolean | null
+  comparison_mode?: JobComparisonMode | null
 }
 
 export interface JobResultSummary {
