@@ -3,8 +3,19 @@
 .arb-dashboard {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
   padding-bottom: 8px;
+}
+
+/* Sticky header: stays visible while `.compare-right` scrolls */
+.arb-dashboard__sticky-head {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding-bottom: 20px;
+  margin-bottom: 0;
+  background-color: #fffdfb;
+  box-shadow: none;
 }
 
 /* ——— Savings banner ——— */
@@ -23,10 +34,37 @@
   flex-wrap: wrap;
 }
 
-.arb-savings-banner--skeleton {
-  background: linear-gradient(135deg, #e9e4f7 0%, #f0ecfb 100%);
-  box-shadow: none;
-  min-height: 120px;
+/* Full grid skeleton: same purple banner; shimmer bar in amount row (Lottie only on product cards) */
+.arb-savings-banner--amount-loading .arb-savings-banner__caption {
+  opacity: 0.92;
+}
+
+.arb-savings-banner__amount-loading-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: clamp(2rem, 4vw, 2.75rem);
+  padding: 2px 12px 2px 6px;
+  margin-left: -6px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.arb-savings-banner__amount-skeleton {
+  width: min(168px, 52vw);
+  height: clamp(2rem, 4vw, 2.65rem);
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.22) 100%
+  );
+  background-size: 200% 100%;
+  animation: arb-shimmer 1.2s ease-in-out infinite;
 }
 
 .arb-savings-banner__main {
@@ -42,11 +80,11 @@
   opacity: 0.92;
 }
 
-.arb-savings-banner__row {
+.arb-savings-banner__amount-block {
   display: flex;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .arb-savings-banner__amount {
@@ -57,9 +95,10 @@
 }
 
 .arb-savings-banner__pct {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #86efac;
+  line-height: 1.1;
 }
 
 .arb-savings-banner__pct--muted {
@@ -77,36 +116,53 @@
 
 .arb-savings-banner__badges {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
+.arb-savings-badge-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 52px;
+}
+
+.arb-savings-badge-stack__metric {
+  font-size: 10px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.86);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* White circular platform toggles (wordmarks; no image mats) */
 .arb-savings-badge {
   box-sizing: border-box;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
   border-radius: 50%;
-  display: flex;
+  overflow: hidden;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
   transition:
-    background 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    opacity 0.22s ease,
-    transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease,
+    color 0.2s ease;
 }
 
 .arb-savings-badge--toggle {
-  padding: 0;
-  margin: 0;
   cursor: pointer;
   font: inherit;
   appearance: none;
@@ -116,66 +172,96 @@
 .arb-savings-badge--toggle:focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 3px rgba(255, 255, 255, 0.45),
-    0 4px 12px rgba(0, 0, 0, 0.12);
+    0 0 0 3px rgba(255, 255, 255, 0.5),
+    0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
 .arb-savings-badge--toggle:not(.arb-savings-badge--inactive):hover {
-  transform: translateY(-1px) scale(1.04);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  border-color: rgba(15, 23, 42, 0.2);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
 }
 
 .arb-savings-badge--toggle:active:not(.arb-savings-badge--inactive) {
-  transform: translateY(0) scale(0.98);
-  transition-duration: 0.12s;
+  transform: translateY(0.5px);
+  transition-duration: 0.1s;
 }
 
 .arb-savings-badge--inactive {
-  background: rgba(30, 27, 40, 0.42) !important;
-  border-color: rgba(255, 255, 255, 0.22) !important;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.52);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: none;
   opacity: 0.92;
 }
 
-.arb-savings-badge--inactive .arb-savings-badge__logo {
-  opacity: 0.5;
-  filter: grayscale(1) brightness(1.15);
-}
-
-.arb-savings-badge__logo-wrap {
-  width: 100%;
-  height: 100%;
+.arb-savings-badge__mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
-  box-sizing: border-box;
+  text-align: center;
+  padding: 0 5px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   pointer-events: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-.arb-savings-badge__logo {
-  width: 26px;
-  height: 26px;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: center;
+.arb-savings-badge__mark-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  line-height: 1;
+}
+
+.arb-savings-badge__mark-line {
   display: block;
-  transition: opacity 0.22s ease, filter 0.22s ease;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.arb-savings-badge--zepto {
-  background: linear-gradient(145deg, #7c3aed, #5b21b6);
+/* — Zepto — */
+.arb-savings-badge--zepto:not(.arb-savings-badge--inactive) {
+  color: #5b21b6;
+  border-color: rgba(91, 33, 182, 0.35);
 }
 
-.arb-savings-badge--blinkit {
-  background: linear-gradient(145deg, #fbbf24, #d97706);
-  color: #1c1917;
-  border-color: rgba(255, 255, 255, 0.5);
+.arb-savings-badge--zepto:not(.arb-savings-badge--inactive) .arb-savings-badge__mark {
+  font-size: 13px;
 }
 
-.arb-savings-badge--instamart {
-  background: linear-gradient(145deg, #f97316, #ea580c);
+.arb-savings-badge--zepto.arb-savings-badge--inactive .arb-savings-badge__mark {
+  font-size: 12.5px;
+  color: rgba(15, 23, 42, 0.38);
+}
+
+/* — Blinkit — */
+.arb-savings-badge--blinkit:not(.arb-savings-badge--inactive) {
+  color: #c2410c;
+  border-color: rgba(194, 65, 12, 0.38);
+}
+
+.arb-savings-badge--blinkit:not(.arb-savings-badge--inactive) .arb-savings-badge__mark {
+  font-size: 12px;
+}
+
+.arb-savings-badge--blinkit.arb-savings-badge--inactive .arb-savings-badge__mark {
+  font-size: 12.5px;
+  color: rgba(15, 23, 42, 0.38);
+}
+
+/* — Instamart — */
+.arb-savings-badge--instamart:not(.arb-savings-badge--inactive) {
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.38);
+}
+
+.arb-savings-badge--instamart.arb-savings-badge--inactive .arb-savings-badge__mark,
+.arb-savings-badge--instamart.arb-savings-badge--inactive .arb-savings-badge__mark-line {
+  color: rgba(15, 23, 42, 0.38);
 }
 
 .arb-savings-banner__caption {
@@ -197,7 +283,7 @@
 .arb-grid-section__head {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -208,6 +294,14 @@
   font-weight: 700;
   color: #14111d;
   letter-spacing: -0.02em;
+}
+
+.arb-grid-section__progress {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7c748b;
+  letter-spacing: -0.01em;
 }
 
 .arb-grid-section__list {
@@ -221,16 +315,16 @@
   background: #fefeff;
   border: 1px solid #efedf4;
   border-radius: 20px;
-  padding: 18px 20px 16px;
+  padding: 14px 16px 13px;
   box-shadow: 0 4px 24px rgba(20, 17, 29, 0.04);
 }
 
 .arb-product-card__top {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
-  gap: 14px 16px;
+  grid-template-columns: 50px 1fr auto;
+  gap: 10px 12px;
   align-items: start;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 640px) {
@@ -249,9 +343,9 @@
 }
 
 .arb-product-thumb {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
   object-fit: cover;
   background: #f4f2f8;
 }
@@ -265,18 +359,18 @@
 }
 
 .arb-product-card__name {
-  margin: 0 0 4px;
-  font-size: 15px;
+  margin: 0 0 2px;
+  font-size: 14px;
   font-weight: 700;
   color: #14111d;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .arb-product-card__subtitle {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   color: #8b8499;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
 .arb-product-card__best {
@@ -284,21 +378,25 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 2px;
 }
 
 .arb-product-card__best-label {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #a8a3b5;
 }
 
 .arb-product-card__best-price {
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #6d28d9;
   letter-spacing: -0.02em;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  min-width: 0;
 }
 
 .arb-product-card__pills {
@@ -306,7 +404,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: stretch;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
@@ -329,7 +427,7 @@
 /* ——— Platform pills ——— */
 .arb-platform-pill {
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 10px 11px;
   background: #f3f1f8;
   border: 1px solid #e8e6ef;
   min-width: 0;
@@ -351,11 +449,11 @@
 }
 
 .arb-platform-pill__label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #6b6375;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .arb-platform-pill--winner .arb-platform-pill__label {
@@ -367,20 +465,77 @@
 }
 
 .arb-platform-pill__price {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
   color: #14111d;
   letter-spacing: -0.02em;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .arb-platform-pill--winner .arb-platform-pill__price {
   color: #065f46;
 }
 
+.arb-platform-pill--loading .arb-platform-pill__price {
+  min-height: 30px;
+  min-width: 0;
+  width: 100%;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: visible;
+}
+
+.arb-platform-pill__lottie {
+  margin: 0;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.arb-platform-pill__status-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a3b12;
+  letter-spacing: 0.01em;
+}
+
+.arb-platform-pill__status-text--muted {
+  font-size: 15px;
+  font-weight: 700;
+  color: #a8a3b5;
+}
+
+.arb-platform-pill__status-text--unavailable {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.01em;
+}
+
+.arb-platform-pill--oos {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.arb-platform-pill--na .arb-platform-pill__label {
+  color: #8b8499;
+}
+
+.arb-product-card__best-lottie {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 44px;
+  margin-left: auto;
+}
+
 .arb-platform-pill__hint {
-  margin-top: 8px;
-  font-size: 10px;
-  line-height: 1.35;
+  margin-top: 6px;
+  font-size: 9px;
+  line-height: 1.25;
   color: #8b8499;
   font-weight: 500;
   display: -webkit-box;
@@ -453,6 +608,10 @@
   height: 22px;
 }
 
+.arb-skeleton-line--in-card {
+  max-width: 100%;
+}
+
 .arb-skeleton-line--banner-title {
   width: 200px;
   height: 12px;
@@ -466,15 +625,8 @@
   border-radius: 10px;
 }
 
-.arb-skeleton-best {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
 .arb-platform-pill--skeleton {
-  min-height: 68px;
+  min-height: 58px;
   background: linear-gradient(90deg, #ede9f7 0%, #f5f3fa 50%, #ede9f7 100%);
   background-size: 200% 100%;
   animation: arb-shimmer 1.2s ease-in-out infinite;

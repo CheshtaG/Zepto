@@ -46,6 +46,8 @@ class Settings(BaseSettings):
     # When DOM misses Instamart price but a fallback screenshot exists, one small Gemini call
     # reads the first card price (no full 3-image quantity pass). Requires COMPARE_GOOGLE_API_KEY.
     enable_gemini_instamart_price_fallback: bool = True
+    # Product image resolution: use Gemini + Google Search only after DOM-card extraction fails/low confidence.
+    enable_gemini_image_fallback: bool = True
 
     # Concurrent shopping-list items per job (each item runs 3 scrapers in parallel).
     job_max_concurrent_items: int = 2

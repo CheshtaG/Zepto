@@ -305,7 +305,8 @@ class ZeptoScraper(BaseScraper):
                         await asyncio.sleep(SEARCH_DELAY)
 
             print("[Zepto] Searching for product elements...")
-            await asyncio.sleep(2)
+            await self._wait_for_spa_dom_commit(page)
+            await asyncio.sleep(0.5)
 
             product_selectors = [
                 '[data-testid*="product" i]',
@@ -345,11 +346,8 @@ class ZeptoScraper(BaseScraper):
                         raise Exception(f"Browser/page was closed while finding product: {e}")
                     continue
 
-            print("[Zepto] Using screenshot + OCR method to extract price...")
-
             screenshot_dir = os.path.join(DATA_DIR, "zepto")
             os.makedirs(screenshot_dir, exist_ok=True)
-
             screenshot_path = os.path.join(screenshot_dir, f"{product_name.replace(' ', '_')}_search.png")
 
             product_container = None
@@ -377,19 +375,6 @@ class ZeptoScraper(BaseScraper):
                 except Exception:
                     continue
 
-            if product_container:
-                try:
-                    await product_container.screenshot(path=screenshot_path)
-                    print(f"[Zepto] Screenshot saved: {screenshot_path}")
-                except Exception:
-                    await page.screenshot(path=screenshot_path, full_page=True)
-                    print(f"[Zepto] Full page screenshot saved: {screenshot_path}")
-            else:
-                await page.screenshot(path=screenshot_path, full_page=True)
-                print(f"[Zepto] Full page screenshot saved: {screenshot_path}")
-
-            extraction_method = "none"
-            price = None
             price_selectors = [
                 '[class*="price" i]',
                 '[class*="Price" i]',
@@ -400,47 +385,35 @@ class ZeptoScraper(BaseScraper):
                 '[class*="cost" i]',
             ]
 
-            price_text = None
-            if product_element:
-                try:
-                    price_in_product = await product_element.query_selector_all("span, div, p")
-                    for elem in price_in_product[:10]:
-                        try:
-                            text = await elem.inner_text()
-                            if "₹" in text or "Rs" in text.lower():
-                                import re
-
-                                if re.search(r"[₹Rs]?\s*\d+", text):
-                                    price_text = text
-                                    break
-                        except Exception:
-                            continue
-                except Exception:
-                    pass
-
-            if not price_text:
-                for selector in price_selectors:
-                    try:
-                        price_elements = await page.query_selector_all(selector)
-                        for elem in price_elements[:10]:
-                            try:
-                                text = await elem.inner_text()
-                                if "₹" in text or "Rs" in text.lower():
-                                    price_text = text
-                                    break
-                            except Exception:
-                                continue
-                        if price_text:
-                            break
-                    except Exception:
-                        continue
-
-            price = self._extract_price(price_text) if price_text else None
+            extraction_method = "none"
+            price = None
+            price = await self._extract_price_vdom_from_element(product_element)
             if price is not None:
-                extraction_method = "dom"
-
+                extraction_method = "vdom_element"
             if price is None:
-                print("[Zepto] DOM didn't find price, trying OCR fallback...")
+                price = await self._extract_price_vdom_first_product_card(page)
+                if price is not None:
+                    extraction_method = "vdom_first_card"
+            if price is None:
+                price = await self._extract_price_dom_playwright(
+                    page, product_element, price_selectors
+                )
+                if price is not None:
+                    extraction_method = "dom"
+
+            # Rest (unchanged): screenshot + OCR
+            if price is None:
+                print("[Zepto] VDOM/DOM didn't find price, trying OCR fallback...")
+                if product_container:
+                    try:
+                        await product_container.screenshot(path=screenshot_path)
+                        print(f"[Zepto] Screenshot saved: {screenshot_path}")
+                    except Exception:
+                        await page.screenshot(path=screenshot_path, full_page=True)
+                        print(f"[Zepto] Full page screenshot saved: {screenshot_path}")
+                else:
+                    await page.screenshot(path=screenshot_path, full_page=True)
+                    print(f"[Zepto] Full page screenshot saved: {screenshot_path}")
                 ocr_text = self._extract_text_from_screenshot(screenshot_path)
                 price = self._extract_price_from_ocr_text(ocr_text)
                 if price is not None:
@@ -451,12 +424,25 @@ class ZeptoScraper(BaseScraper):
             product_url = page.url
 
             listing_title = await self._extract_listing_title(product_element)
-            image_url = await self._extract_product_image_url(page, product_element)
             if listing_title:
                 print(f"[Zepto] Listing title: {listing_title[:100]}...")
-            if image_url:
-                print(f"[Zepto] Product image URL: {image_url[:120]}...")
             quantity_label = await self._extract_quantity_label(product_element, listing_title)
+            brand = self._extract_brand_from_title(listing_title or product_name)
+            image_resolution = await self._resolve_product_image(
+                page=page,
+                root=product_element,
+                platform=Platform.ZEPTO,
+                query=product_name,
+                listing_title=listing_title,
+                quantity_label=quantity_label,
+                brand=brand,
+                product_url=product_url,
+            )
+            image_url = image_resolution.get("image_url")
+            if image_url:
+                print(f"[Zepto] Product image URL ({image_resolution.get('image_source')}): {str(image_url)[:120]}...")
+            else:
+                print(f"[Zepto] No confident product image; source={image_resolution.get('image_source')}")
             candidate_listings = await self._candidate_listings_with_primary(
                 page, Platform.ZEPTO, product_selectors, product_element, 10
             )
@@ -472,6 +458,10 @@ class ZeptoScraper(BaseScraper):
                 product_url=product_url,
                 listing_title=listing_title,
                 image_url=image_url,
+                image_source=image_resolution.get("image_source"),
+                image_confidence=image_resolution.get("image_confidence"),
+                image_match_reason=image_resolution.get("image_match_reason"),
+                image_debug=image_resolution.get("image_debug"),
                 price_extraction_method=extraction_method,
                 quantity_label=quantity_label,
                 candidate_listings=candidate_listings or None,

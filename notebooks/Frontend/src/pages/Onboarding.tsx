@@ -7,7 +7,7 @@ import { logFrontendEvent } from '../lib/frontendLogger'
 
 export const Onboarding = () => {
   const [value, setValue] = useState('')
-  const [isMenuOpen, setIsMenuOpen] = useState(true)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const nav = useNavigate()
   const {
     lastPlatforms,
@@ -18,7 +18,9 @@ export const Onboarding = () => {
     addJobHistory,
     setToast,
   } = useAppStore()
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(lastPlatforms)
+  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(
+    lastPlatforms.length ? lastPlatforms : ['blinkit', 'zepto', 'zomato'],
+  )
   const [clarificationQueue, setClarificationQueue] = useState<ClarificationQuestion[]>([])
   const [pendingSubmitItems, setPendingSubmitItems] = useState<string[] | null>(null)
   const [clarificationAnswers, setClarificationAnswers] = useState<Record<string, string>>({})
@@ -144,7 +146,7 @@ export const Onboarding = () => {
           onClick={() => setIsMenuOpen((prev) => !prev)}
           aria-label={isMenuOpen ? 'Collapse side menu' : 'Expand side menu'}
         >
-          {isMenuOpen ? '‹' : '›'}
+          <span className="side-menu-toggle__icon" aria-hidden="true">{isMenuOpen ? '‹' : '›'}</span>
         </button>
         {isMenuOpen ? (
           <div className="side-menu-content">
@@ -166,61 +168,82 @@ export const Onboarding = () => {
       </aside>
 
       <div className="input-content">
-        <div className="input-main-block">
-          <div className="input-heading-row">
-            <div className="input-heading-block">
-              <h1 className="input-heading">
-                What would you like to <span className="input-heading-accent">order</span> today?
-              </h1>
-              <p className="input-subheading">Paste your list. We'll compare prices across apps.</p>
+        <div className="onboard-shell">
+          <div className="onboard-hero">
+            <h1 className="onboard-title">Market Pulse: Instant Comparison</h1>
+          </div>
+
+          <div className="onboard-card">
+            <p className="onboard-card-prompt">What’s on the list today?</p>
+
+            <div className="input-textarea-wrapper onboard-textarea-wrap">
+              <textarea
+                className="input-textarea onboard-textarea"
+                placeholder="Enter items comma-separated (e.g., Milk, Bread, Eggs)..."
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
             </div>
-            <div className="platform-checkbox-row">
-              <label className={`platform-chip zepto ${selectedPlatforms.includes('zepto') ? 'selected' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedPlatforms.includes('zepto')}
-                  onChange={() => togglePlatform('zepto')}
-                />
-                <span>Z</span>
-              </label>
-              <label className={`platform-chip blinkit ${selectedPlatforms.includes('blinkit') ? 'selected' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedPlatforms.includes('blinkit')}
-                  onChange={() => togglePlatform('blinkit')}
-                />
-                <span>B</span>
-              </label>
-              <label className={`platform-chip instamart ${selectedPlatforms.includes('zomato') ? 'selected' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedPlatforms.includes('zomato')}
-                  onChange={() => togglePlatform('zomato')}
-                />
-                <span>I</span>
-              </label>
+
+            <div className="onboard-card-footer">
+              <div className="onboard-platform-pills" aria-label="Platform selection">
+                <label className={`onboard-platform-pill ${selectedPlatforms.includes('blinkit') ? 'selected' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={selectedPlatforms.includes('blinkit')}
+                    onChange={() => togglePlatform('blinkit')}
+                  />
+                  <span className="onboard-platform-pill__check" aria-hidden="true">✓</span>
+                  <span>Blinkit</span>
+                </label>
+                <label className={`onboard-platform-pill ${selectedPlatforms.includes('zepto') ? 'selected' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={selectedPlatforms.includes('zepto')}
+                    onChange={() => togglePlatform('zepto')}
+                  />
+                  <span className="onboard-platform-pill__check" aria-hidden="true">✓</span>
+                  <span>Zepto</span>
+                </label>
+                <label className={`onboard-platform-pill ${selectedPlatforms.includes('zomato') ? 'selected' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={selectedPlatforms.includes('zomato')}
+                    onChange={() => togglePlatform('zomato')}
+                  />
+                  <span className="onboard-platform-pill__check" aria-hidden="true">✓</span>
+                  <span>Instamart</span>
+                </label>
+              </div>
+              <button
+                type="button"
+                className="onboard-cta"
+                onClick={submit}
+                aria-label="Compare now"
+                title="Compare Now"
+              >
+                Compare Now <span aria-hidden="true">→</span>
+              </button>
             </div>
           </div>
 
-          <div className="input-textarea-wrapper">
-            <textarea
-              className="input-textarea"
-              placeholder="Example; toned milk, brown bread, eggs, apples"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-
-            <button
-              type="button"
-              className="input-enter-button"
-              onClick={submit}
-              aria-label="Enter"
-              title="Compare prices"
-            >
-              ↑
-              <span className="input-enter-tooltip">Compare prices</span>
-            </button>
+          <div className="onboard-features">
+            <article className="onboard-feature-card">
+              <div className="onboard-feature-icon" aria-hidden="true">⚡</div>
+              <h3>Real-time Arbitrage</h3>
+              <p>Instantly spot price discrepancies across Blinkit, Zepto, and Instamart.</p>
+            </article>
+            <article className="onboard-feature-card">
+              <div className="onboard-feature-icon" aria-hidden="true">✓</div>
+              <h3>Verified Quality</h3>
+              <p>Our engine accounts for delivery fees and platform-specific hidden costs.</p>
+            </article>
+            <article className="onboard-feature-card">
+              <div className="onboard-feature-icon" aria-hidden="true">◷</div>
+              <h3>Smart History</h3>
+              <p>Access your past comparisons to build recurring smart grocery lists.</p>
+            </article>
           </div>
         </div>
       </div>

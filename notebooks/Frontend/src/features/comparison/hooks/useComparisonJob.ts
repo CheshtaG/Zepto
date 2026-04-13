@@ -80,7 +80,15 @@ export const useComparisonJob = (jobId: string | undefined) => {
   }, [jobId, setPollingState, setResult, setToast])
 
   const status = polling?.status
-  const isRunning = polling?.isPolling && status !== 'done' && status !== 'failed'
+  // `pollingByJobId` is not persisted; `resultsByJobId` is. After refresh we have a cached
+  // result but no polling row until the effect runs — treat as in-flight so pills show loading
+  // instead of empty dashes until status is known.
+  const isRunning =
+    Boolean(jobId) &&
+    (polling == null ||
+      Boolean(
+        polling.isPolling && status?.status !== 'done' && status?.status !== 'failed',
+      ))
 
   const derivedProgress = (() => {
     if (!status) return 10

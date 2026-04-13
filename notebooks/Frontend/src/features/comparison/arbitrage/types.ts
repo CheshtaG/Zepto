@@ -3,6 +3,9 @@ import type { JobComparisonMode, Platform } from '../../../services/api'
 /** Canonical keys for the three-column UI (Instamart only, not zomato alias). */
 export type ArbitragePlatformKey = 'zepto' | 'blinkit' | 'instamart'
 
+/** Per-column UI state for a platform (VDOM/API lifecycle). */
+export type PlatformSlotKind = 'loading' | 'priced' | 'out_of_stock' | 'unavailable'
+
 export interface ArbitrageProductRow {
   id: string
   name: string
@@ -19,12 +22,20 @@ export interface ArbitrageProductRow {
   matchConfidence?: number | null
   /** Matched listing title · quantity per column (from API matches). */
   platformHints?: Partial<Record<ArbitragePlatformKey, string>>
+  /** Per-platform display: loading (Lottie), priced, out of stock, or unavailable. */
+  platformSlots?: Partial<Record<ArbitragePlatformKey, PlatformSlotKind>>
 }
 
 export interface ArbitrageSavingsSummary {
   totalSavings: number
   percentVsMax: number
   itemCount: number
+}
+
+const allPricedSlots: Partial<Record<ArbitragePlatformKey, PlatformSlotKind>> = {
+  zepto: 'priced',
+  blinkit: 'priced',
+  instamart: 'priced',
 }
 
 export const ARBITRAGE_MOCK_ROWS: ArbitrageProductRow[] = [
@@ -39,6 +50,7 @@ export const ARBITRAGE_MOCK_ROWS: ArbitrageProductRow[] = [
     savingsAmount: 4,
     activePlatforms: ['zepto', 'blinkit', 'instamart'],
     comparisonMode: 'exact',
+    platformSlots: { ...allPricedSlots },
   },
   {
     id: 'mock-2',
@@ -51,6 +63,7 @@ export const ARBITRAGE_MOCK_ROWS: ArbitrageProductRow[] = [
     savingsAmount: 3,
     activePlatforms: ['zepto', 'blinkit', 'instamart'],
     comparisonMode: 'exact',
+    platformSlots: { ...allPricedSlots },
   },
 ]
 

@@ -1,8 +1,30 @@
 import { useEffect, useState } from 'react'
-import type { ArbitragePlatformKey, ArbitrageProductRow } from '../types'
+import { LoadingDotsBlue } from '../../../../components/LoadingDotsBlue'
+import type { ArbitragePlatformKey, ArbitrageProductRow, PlatformSlotKind } from '../types'
 import { PlatformPricePill } from './PlatformPricePill'
 
 const ORDER: ArbitragePlatformKey[] = ['zepto', 'blinkit', 'instamart']
+
+/** UI-facing slot: keep loading while job is in-flight for columns without a final state. */
+function resolvePlatformSlot(
+  row: ArbitrageProductRow,
+  platform: ArbitragePlatformKey,
+  jobInProgress: boolean,
+  jobFailed: boolean,
+): PlatformSlotKind {
+  const price = row.platformPrices[platform]
+  let slot: PlatformSlotKind =
+    row.platformSlots?.[platform] ?? (price != null ? 'priced' : 'unavailable')
+
+  if (slot === 'priced' && price == null) {
+    if (jobFailed) return 'unavailable'
+    return jobInProgress ? 'loading' : 'unavailable'
+  }
+  if (!jobFailed && jobInProgress && slot === 'unavailable') {
+    return 'loading'
+  }
+  return slot
+}
 
 function ProductThumb({ url }: { url: string }) {
   const [failed, setFailed] = useState(false)
@@ -32,12 +54,24 @@ function formatBest(price: number | null) {
 
 export interface ProductArbitrageCardProps {
   row: ArbitrageProductRow
+  jobInProgress?: boolean
+  jobFailed?: boolean
 }
 
-export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
+export function ProductArbitrageCard({
+  row,
+  jobInProgress = false,
+  jobFailed = false,
+}: ProductArbitrageCardProps) {
   const keys = ORDER.filter((k) => row.activePlatforms.includes(k))
   const cardClass =
     'arb-product-card' + (row.comparisonMode === 'weak_partial' ? ' arb-product-card--weak' : '')
+
+  const slotForPlatform = (platform: ArbitragePlatformKey) =>
+    resolvePlatformSlot(row, platform, jobInProgress, jobFailed)
+
+  const rowStillLoading = keys.some((k) => slotForPlatform(k) === 'loading')
+  const showBestLottie = row.bestPrice == null && rowStillLoading
 
   return (
     <article className={cardClass}>
@@ -49,7 +83,19 @@ export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
         </div>
         <div className="arb-product-card__best">
           <span className="arb-product-card__best-label">BEST PRICE FOUND</span>
-          <span className="arb-product-card__best-price">{formatBest(row.bestPrice)}</span>
+          <span className="arb-product-card__best-price">
+            {showBestLottie ? (
+              <LoadingDotsBlue
+                className="arb-product-card__best-lottie"
+                width={102}
+                height={36}
+                visualScale={2.2}
+                layoutAlign="end"
+              />
+            ) : (
+              formatBest(row.bestPrice)
+            )}
+          </span>
         </div>
       </div>
       <div
@@ -63,6 +109,7 @@ export function ProductArbitrageCard({ row }: ProductArbitrageCardProps) {
             isWinner={row.winningPlatform === platform}
             isActive={row.activePlatforms.includes(platform)}
             matchHint={row.platformHints?.[platform]}
+            slot={slotForPlatform(platform)}
           />
         ))}
       </div>

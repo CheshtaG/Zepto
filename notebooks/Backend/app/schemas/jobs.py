@@ -50,6 +50,10 @@ class JobItemMatch(BaseModel):
   image_url: Optional[str] = None
   # Legacy alias; same as image_url when populated from scrapers.
   screenshot_url: Optional[str] = None
+  image_source: Optional[str] = None
+  image_confidence: Optional[float] = None
+  image_match_reason: Optional[str] = None
+  image_debug: Optional[Dict[str, Any]] = None
   quantity_label: Optional[str] = None
   quantity_base_value: Optional[float] = None
   quantity_base_unit: Optional[str] = None

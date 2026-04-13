@@ -9,6 +9,7 @@ import type {
   ArbitragePlatformKey,
   ArbitrageProductRow,
   ArbitrageSavingsSummary,
+  PlatformSlotKind,
 } from './types'
 import { toArbitrageKey } from './types'
 
@@ -23,6 +24,48 @@ function getMatch(item: JobResultItem, platform: Platform): JobItemMatch | undef
 function effectivePrice(m: JobItemMatch | undefined): number | null {
   if (!m || !m.in_stock || m.price == null) return null
   return m.price
+}
+
+function hasListingSignal(m: JobItemMatch): boolean {
+  return Boolean(
+    (m.listing_title && m.listing_title.trim()) ||
+      (m.quantity_label && m.quantity_label.trim()) ||
+      (m.image_url && m.image_url.trim()) ||
+      (m.screenshot_url && m.screenshot_url.trim()),
+  )
+}
+
+/**
+ * Map API match to pill UI: loading while job runs without usable data,
+ * priced when in-stock with price, out_of_stock when listing exists but unavailable.
+ */
+export function derivePlatformSlot(
+  m: JobItemMatch | undefined,
+  opts: { jobInProgress: boolean; jobFailed: boolean; itemHasMatches: boolean },
+): PlatformSlotKind {
+  if (!opts.itemHasMatches) {
+    return opts.jobInProgress ? 'loading' : 'unavailable'
+  }
+  if (!m) {
+    return opts.jobInProgress ? 'loading' : 'unavailable'
+  }
+  if (m.price != null && m.in_stock) {
+    return 'priced'
+  }
+  const listed = hasListingSignal(m)
+  if (!m.in_stock && listed) {
+    return 'out_of_stock'
+  }
+  if (opts.jobInProgress && !listed) {
+    return 'loading'
+  }
+  if (!m.in_stock && !listed) {
+    return 'unavailable'
+  }
+  if (m.in_stock && m.price == null) {
+    return listed ? 'out_of_stock' : opts.jobInProgress ? 'loading' : 'unavailable'
+  }
+  return 'unavailable'
 }
 
 function firstMatchImage(item: JobResultItem): string {
@@ -80,14 +123,23 @@ function compactMatchHint(m: JobItemMatch | undefined): string {
   return s.length > 58 ? `${s.slice(0, 55)}…` : s
 }
 
+export interface MapArbitrageOptions {
+  jobInProgress: boolean
+  jobFailed: boolean
+}
+
 /**
  * Build row-level arbitrage data from API job result.
  */
 export function mapJobResultToArbitrageRows(
   result: JobResultResponse | undefined,
   selectedPlatforms: Platform[],
+  options?: MapArbitrageOptions,
 ): ArbitrageProductRow[] {
   if (!result?.items?.length) return []
+
+  const jobInProgress = options?.jobInProgress ?? false
+  const jobFailed = options?.jobFailed ?? false
 
   const keys: ArbitragePlatformKey[] = []
   if (selectedPlatforms.includes('zepto')) keys.push('zepto')
@@ -145,6 +197,17 @@ export function mapJobResultToArbitrageRows(
       if (hint) platformHints[k] = hint
     }
 
+    const itemHasMatches = Array.isArray(item.matches) && item.matches.length > 0
+    const platformSlots: Partial<Record<ArbitragePlatformKey, PlatformSlotKind>> = {}
+    for (const k of keys) {
+      const m = getMatch(item, platformForArbitrageKey(k))
+      platformSlots[k] = derivePlatformSlot(m, {
+        jobInProgress,
+        jobFailed,
+        itemHasMatches,
+      })
+    }
+
     rows.push({
       id: item.query,
       name,
@@ -158,6 +221,7 @@ export function mapJobResultToArbitrageRows(
       comparisonMode,
       matchConfidence: item.match_confidence ?? null,
       platformHints: Object.keys(platformHints).length ? platformHints : undefined,
+      platformSlots,
     })
   }
 
@@ -206,6 +270,14 @@ export function sliceRowToPlatforms(
       )
     : undefined
 
+  const platformSlots = row.platformSlots
+    ? Object.fromEntries(
+        Object.entries(row.platformSlots).filter(([k]) =>
+          keys.includes(k as ArbitragePlatformKey),
+        ),
+      )
+    : undefined
+
   return {
     ...row,
     platformPrices,
@@ -215,6 +287,8 @@ export function sliceRowToPlatforms(
     activePlatforms: keys.length ? keys : row.activePlatforms,
     platformHints:
       platformHints && Object.keys(platformHints).length ? platformHints : undefined,
+    platformSlots:
+      platformSlots && Object.keys(platformSlots).length ? platformSlots : undefined,
   }
 }
 

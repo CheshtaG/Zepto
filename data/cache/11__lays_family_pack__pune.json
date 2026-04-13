@@ -1,0 +1,689 @@
+{
+  "cached_at": "2026-04-13T19:48:12.321169",
+  "comparison": {
+    "product_name": "lays family pack",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 144.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=lays%20family%20pack",
+        "listing_title": null,
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 47.934819282s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 47\n}\n]"
+          }
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/lays_family_pack_search.png",
+        "price_extraction_method": "dom_numeric_heuristic",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 180.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=lays%20family%20pack",
+        "listing_title": "Showing results for \"lays family pack\"",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/afe101ba-8ed3-49b3-afdc-e34a2b9ce814.png",
+        "image_source": "dom_card",
+        "image_confidence": 0.81,
+        "image_match_reason": "DOM card candidate accepted (cdn_productish_url)",
+        "image_debug": {
+          "dom_candidates": [
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/afe101ba-8ed3-49b3-afdc-e34a2b9ce814.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8f1e1663-be14-440d-aabf-cfab5e7f247e.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6bd472f6-8baa-43d4-b8b0-ff250fdae2ba.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/bcfc6c5c-49b0-4097-88fc-3881365d7af9.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1dfb3c56-4dcb-40b6-813e-a93f7fe1b15a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f55e87f5-ecab-4d91-aca9-62883084374d.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774505017158-24.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774858847914-686.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e4a25547-0e12-4299-a2ab-3ee7d7ffbe66.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/3822bd0a-fc49-4309-afdd-76620edcc993.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774505017158-34.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f1b0951e-41ed-42cb-9ef2-bafcc7717a99.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f354fa2a-1df1-46aa-9e96-919e3231dc77.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775107293742-349.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774858847914-676.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b9fc8b85-43e8-4113-bbc2-31865639e723.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8bacb801-71e1-4094-870f-0c8fa329423d.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775740580866-439.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/871988d1-1b77-476f-8dec-922930ad2c4b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/61edcf2c-0371-4541-917c-866ac6f18b44.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8c4af7fa-b66d-42a3-9095-dc6e5ec88d9f.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5e254288-11fd-4e73-80b4-df858b92c98c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775803841373-145.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b1270555-2c46-4f4b-a170-9f0c03e8d925.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/717a1578-ae43-4ecc-a0c7-062a65e5a904.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5e00a8e9-549b-442f-88e3-860f8533a3a1.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/4e98b579-8a4a-4103-8b84-0bed6a0f11ad.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            }
+          ],
+          "selected_dom_candidate": {
+            "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/afe101ba-8ed3-49b3-afdc-e34a2b9ce814.png",
+            "score": 0.81,
+            "reason": "cdn_productish_url"
+          },
+          "dom_rejections": [],
+          "gemini_invoked": false,
+          "gemini_result": null
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/lays_family_pack_search.png",
+        "price_extraction_method": "vdom_element",
+        "quantity_label": "80 g",
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "blinkit-0",
+            "title": "Showing results for \"lays family pack\"",
+            "rawTitle": "Showing results for \"lays family pack\"",
+            "brand": "Showing results",
+            "quantityLabel": "80 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1773386521983-42.png",
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-2",
+            "title": "Lay's American Style Cream & Onion Flavour Potato Chips",
+            "rawTitle": "Lay's American Style Cream & Onion Flavour Potato Chips",
+            "brand": "Lay's American",
+            "quantityLabel": "80 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/afe101ba-8ed3-49b3-afdc-e34a2b9ce814.png",
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-3",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-4",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 9.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-5",
+            "title": "80 g",
+            "rawTitle": "80 g",
+            "brand": "80",
+            "quantityLabel": "80 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-6",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 39.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-7",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-8",
+            "title": "Lay's American Style Cream & Onion Potato Chips (143 g)",
+            "rawTitle": "Lay's American Style Cream & Onion Potato Chips (143 g)",
+            "brand": "Lay's American",
+            "quantityLabel": "143 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8f1e1663-be14-440d-aabf-cfab5e7f247e.png",
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-9",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=lays%20family%20pack",
+            "platform": "blinkit"
+          }
+        ]
+      },
+      {
+        "platform": "zepto",
+        "price": 30.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=lays+family+pack",
+        "listing_title": "Search",
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 45.922053171s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 45\n}\n]"
+          }
+        },
+        "screenshot_path": null,
+        "price_extraction_method": "dom",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "zepto-0",
+            "title": "Search",
+            "rawTitle": "Search",
+            "brand": "Search",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=lays+family+pack",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-1",
+            "title": "Login",
+            "rawTitle": "Login",
+            "brand": "Login",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=lays+family+pack",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-2",
+            "title": "Showing results for \"lays family pack\"",
+            "rawTitle": "Showing results for \"lays family pack\"",
+            "brand": "Showing results",
+            "quantityLabel": "80 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/lays-west-indies-hot-n-sweet-chilli-potato-chips/pvid/a74120ab-4099-42f5-b91e-74beb1f6ac5b",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-3",
+            "title": "Showing results for \"lays family pack\"",
+            "rawTitle": "Showing results for \"lays family pack\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=lays+family+pack",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-4",
+            "title": "Lay's West Indies Hot 'n' Sweet Chilli | Potato Chips",
+            "rawTitle": "Lay's West Indies Hot 'n' Sweet Chilli | Potato Chips",
+            "brand": "Lay's West",
+            "quantityLabel": "80 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/lays-west-indies-hot-n-sweet-chilli-potato-chips/pvid/a74120ab-4099-42f5-b91e-74beb1f6ac5b",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-5",
+            "title": "Let's Try Flying Chilli Chips",
+            "rawTitle": "Let's Try Flying Chilli Chips",
+            "brand": "Let's Try",
+            "quantityLabel": "45 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/lets-try-flying-chilli-chips/pvid/02c3edab-ab27-48be-89cc-902e879c942d",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-6",
+            "title": "Beyond Snack Kerala Banana Chips | Sour Cream, Onion & Parsley",
+            "rawTitle": "Beyond Snack Kerala Banana Chips | Sour Cream, Onion & Parsley",
+            "brand": "Beyond Snack",
+            "quantityLabel": "70 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/beyond-snack-kerala-banana-chips-sour-cream-onion-parsley/pvid/7dfcbb14-e5e6-4e72-8003-f3259c1c8c8e",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-7",
+            "title": "Lay's Chile Lemon Flavour | Crunchy Potato Chips",
+            "rawTitle": "Lay's Chile Lemon Flavour | Crunchy Potato Chips",
+            "brand": "Lay's Chile",
+            "quantityLabel": "48 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/lays-chile-lemon-flavour-crunchy-potato-chips/pvid/7ffb904c-6169-46a2-9c9f-bdfc287572c7",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-8",
+            "title": "Red Rock Deli Kettle Chips Basil Thai | No Palm Oil Snacks",
+            "rawTitle": "Red Rock Deli Kettle Chips Basil Thai | No Palm Oil Snacks",
+            "brand": "Red Rock",
+            "quantityLabel": "58 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/red-rock-deli-kettle-chips-basil-thai-no-palm-oil-snacks/pvid/781ebd0e-d659-4cbf-96b1-e2619fde7608",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-9",
+            "title": "Lay's India's Magic Masala | Crunchy Potato Chips",
+            "rawTitle": "Lay's India's Magic Masala | Crunchy Potato Chips",
+            "brand": "Lay's India's",
+            "quantityLabel": "82 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/lays-indias-magic-masala-crunchy-potato-chips/pvid/f320f879-7942-4ddd-8d08-e7a91915d213",
+            "platform": "zepto"
+          }
+        ]
+      }
+    ]
+  }
+}

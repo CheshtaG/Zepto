@@ -16,17 +16,22 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info/
+.eggs/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .venv/
 venv/
 env/
+.Python
 
 # Node / frontend
 node_modules/
 dist/
 dist-ssr/
+*.tsbuildinfo
+.vite/
 
 # Logs
 *.log

@@ -1,5 +1,5 @@
 {
-  "cached_at": "2026-04-11T11:29:46.419610",
+  "cached_at": "2026-04-13T19:46:07.089838",
   "comparison": {
     "product_name": "bread",
     "platforms": [
@@ -11,8 +11,21 @@
         "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=bread",
         "listing_title": null,
         "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 53.36415364s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 53\n}\n]"
+          }
+        },
         "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/bread_search.png",
-        "price_extraction_method": "dom_query_text",
+        "price_extraction_method": "vdom_query_aware_body",
         "quantity_label": null,
         "quantity_base_value": null,
         "quantity_base_unit": null,
@@ -23,15 +36,310 @@
       },
       {
         "platform": "blinkit",
-        "price": 55.0,
+        "price": 78.0,
         "availability": true,
         "error": null,
         "product_url": "https://blinkit.com/s/?q=bread",
         "listing_title": "Bread",
-        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c6103193-20ac-48f5-ad3c-51ecbe385fc7.png",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5b0b324b-9b14-4b97-9aef-c8045b734e95.png",
+        "image_source": "dom_card",
+        "image_confidence": 0.81,
+        "image_match_reason": "DOM card candidate accepted (cdn_productish_url)",
+        "image_debug": {
+          "dom_candidates": [
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/9b3e11ab-9a5d-463d-b098-379a04ce5b7e.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/df3666bc-c07b-4a71-909a-63d829ebaed0.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/ff8853fd-1be8-48cf-893a-3f1616af322c.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/7ed1504b-89a7-4479-8eb1-f25c088ed043.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/611ffbee-1b24-4db1-9772-d9b022cec155.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5b0b324b-9b14-4b97-9aef-c8045b734e95.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/ui/ad_without_bg.png",
+              "kind": "img.currentSrc",
+              "size": [
+                72,
+                48
+              ],
+              "score": 0.43,
+              "reason": "very_small_candidate"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9b3e11ab-9a5d-463d-b098-379a04ce5b7e.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/7ed1504b-89a7-4479-8eb1-f25c088ed043.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/81136a7e-0681-4376-a109-92550ae66877.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e2fd8af6-402d-415e-8b42-4ef1a29c7ede.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0b267148-c2c6-4eae-9ecd-1e9a83569e3a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ff8853fd-1be8-48cf-893a-3f1616af322c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9f363c60-8b58-4e1a-8c20-9647247b7227.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774351143403-179.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0d2fdea5-5af7-497d-8c09-d2e70dbe66f2.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/611ffbee-1b24-4db1-9772-d9b022cec155.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b3fd207b-031a-454f-aa04-236a1a1fb83d.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1769762440999-311.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/fb337791-9328-4c38-a2ee-bc3bb20d204a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/cb023633-b86d-44e2-81ae-18853ba53b8b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/19c57f7d-3960-43b8-9ac2-9cc9eaee229b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1769762440999-350.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c6103193-20ac-48f5-ad3c-51ecbe385fc7.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775446787912-604.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775446787912-601.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1769762440999-408.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            }
+          ],
+          "selected_dom_candidate": {
+            "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5b0b324b-9b14-4b97-9aef-c8045b734e95.png",
+            "score": 0.81,
+            "reason": "cdn_productish_url"
+          },
+          "dom_rejections": [],
+          "gemini_invoked": false,
+          "gemini_result": null
+        },
         "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/bread_search.png",
-        "price_extraction_method": "dom",
-        "quantity_label": "250 g",
+        "price_extraction_method": "vdom_element",
+        "quantity_label": "450 g",
         "quantity_base_value": null,
         "quantity_base_unit": null,
         "price_per_base_unit": null,
@@ -43,14 +351,14 @@
             "title": "Bread",
             "rawTitle": "Bread",
             "brand": "Bread",
-            "quantityLabel": "250 g",
+            "quantityLabel": "450 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
             "category": null,
             "price": null,
             "inStock": false,
-            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c6103193-20ac-48f5-ad3c-51ecbe385fc7.png",
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774351929739-35.png",
             "productUrl": "https://blinkit.com/s/?q=bread",
             "platform": "blinkit"
           },
@@ -72,17 +380,17 @@
           },
           {
             "id": "blinkit-3",
-            "title": "The Health Factory Zero Maida Whole Wheat Bread",
-            "rawTitle": "The Health Factory Zero Maida Whole Wheat Bread",
-            "brand": "Health Factory",
-            "quantityLabel": "250 g",
+            "title": "Harvest Gold 100% Atta Whole Wheat Bread",
+            "rawTitle": "Harvest Gold 100% Atta Whole Wheat Bread",
+            "brand": "Harvest Gold",
+            "quantityLabel": "450 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
             "category": null,
-            "price": 55.0,
-            "inStock": true,
-            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774351929739-4.png",
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5b0b324b-9b14-4b97-9aef-c8045b734e95.png",
             "productUrl": "https://blinkit.com/s/?q=bread",
             "platform": "blinkit"
           },
@@ -104,10 +412,10 @@
           },
           {
             "id": "blinkit-5",
-            "title": "250 g",
-            "rawTitle": "250 g",
-            "brand": "250",
-            "quantityLabel": "250 g",
+            "title": "450 g",
+            "rawTitle": "450 g",
+            "brand": "450",
+            "quantityLabel": "450 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
@@ -128,7 +436,7 @@
             "normalizedUnit": null,
             "variant": null,
             "category": null,
-            "price": 55.0,
+            "price": 60.0,
             "inStock": true,
             "imageUrl": null,
             "productUrl": "https://blinkit.com/s/?q=bread",
@@ -186,12 +494,25 @@
       },
       {
         "platform": "zepto",
-        "price": 60.0,
+        "price": 39.0,
         "availability": true,
         "error": null,
         "product_url": "https://www.zepto.com/search?query=bread",
         "listing_title": "Search",
         "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 16.56806129s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 16\n}\n]"
+          }
+        },
         "screenshot_path": null,
         "price_extraction_method": "dom",
         "quantity_label": null,
@@ -283,10 +604,10 @@
           },
           {
             "id": "zepto-5",
-            "title": "The Health Factory Zero Maida Whole Wheat Bread | Clean Label, Not Brown",
-            "rawTitle": "The Health Factory Zero Maida Whole Wheat Bread | Clean Label, Not Brown",
-            "brand": "Health Factory",
-            "quantityLabel": "350 g",
+            "title": "The Baker's Dozen Zero Maida Milk Bread | Atta Bread | Sandwich Bread | Gourmet | Clean Label",
+            "rawTitle": "The Baker's Dozen Zero Maida Milk Bread | Atta Bread | Sandwich Bread | Gourmet | Clean Label",
+            "brand": "Baker's Dozen",
+            "quantityLabel": "230 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
@@ -294,15 +615,15 @@
             "price": null,
             "inStock": false,
             "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
-            "productUrl": "https://www.zepto.com/pn/the-health-factory-zero-maida-whole-wheat-bread-clean-label-not-brown/pvid/58bd25ce-8f73-4031-96ed-7a1278834d2b",
+            "productUrl": "https://www.zepto.com/pn/the-bakers-dozen-zero-maida-milk-bread-atta-bread-sandwich-bread-gourmet-clean-label/pvid/c982e07b-b933-4a78-8f3c-23c3cc58901c",
             "platform": "zepto"
           },
           {
             "id": "zepto-6",
-            "title": "The Baker's Dozen Zero Maida Whole Wheat Bread | Atta Bread (Not Brown) | Sandwich Bread | Gourmet",
-            "rawTitle": "The Baker's Dozen Zero Maida Whole Wheat Bread | Atta Bread (Not Brown) | Sandwich Bread | Gourmet",
-            "brand": "Baker's Dozen",
-            "quantityLabel": "400 g",
+            "title": "Rich Butter Cookies by Sunfeast Baked Creations",
+            "rawTitle": "Rich Butter Cookies by Sunfeast Baked Creations",
+            "brand": "Rich Butter",
+            "quantityLabel": "180 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
@@ -310,7 +631,7 @@
             "price": null,
             "inStock": false,
             "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
-            "productUrl": "https://www.zepto.com/pn/the-bakers-dozen-zero-maida-whole-wheat-bread-atta-bread-not-brown-sandwich-bread-gourmet/pvid/2cae5364-c96d-4823-9531-96357c021208",
+            "productUrl": "https://www.zepto.com/pn/rich-butter-cookies-by-sunfeast-baked-creations/pvid/26a4e874-8c6e-47af-83ff-6796c2188165",
             "platform": "zepto"
           },
           {
@@ -331,10 +652,10 @@
           },
           {
             "id": "zepto-8",
-            "title": "Britannia Multigrain Bread (No Maida)",
-            "rawTitle": "Britannia Multigrain Bread (No Maida)",
-            "brand": "Britannia",
-            "quantityLabel": "400 g",
+            "title": "Nutty Cashew Cookies by Sunfeast Baked Creations",
+            "rawTitle": "Nutty Cashew Cookies by Sunfeast Baked Creations",
+            "brand": "Nutty Cashew",
+            "quantityLabel": "180 g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
@@ -342,15 +663,15 @@
             "price": null,
             "inStock": false,
             "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
-            "productUrl": "https://www.zepto.com/pn/britannia-multigrain-bread-no-maida/pvid/83b25257-105c-4c84-97dc-82ac18754c8f",
+            "productUrl": "https://www.zepto.com/pn/nutty-cashew-cookies-by-sunfeast-baked-creations/pvid/7a9c2ab7-8328-49d4-a065-0f60216f5498",
             "platform": "zepto"
           },
           {
             "id": "zepto-9",
-            "title": "Britannia Pure Whole Wheat Bread (No Maida)",
-            "rawTitle": "Britannia Pure Whole Wheat Bread (No Maida)",
-            "brand": "Britannia Pure",
-            "quantityLabel": "400 g",
+            "title": "Protein Chef 42g Protein Multigrain Bread, 5 Superfoods + Wheat",
+            "rawTitle": "Protein Chef 42g Protein Multigrain Bread, 5 Superfoods + Wheat",
+            "brand": "Protein Chef",
+            "quantityLabel": "42g",
             "normalizedQuantity": null,
             "normalizedUnit": null,
             "variant": null,
@@ -358,7 +679,7 @@
             "price": null,
             "inStock": false,
             "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
-            "productUrl": "https://www.zepto.com/pn/britannia-pure-whole-wheat-bread-no-maida/pvid/c58f1b83-4064-4b52-bdf6-c568a221dc11",
+            "productUrl": "https://www.zepto.com/pn/protein-chef-42g-protein-multigrain-bread-5-superfoods-wheat/pvid/bab4f67c-7c3a-4621-b3ac-e00df6314eca",
             "platform": "zepto"
           }
         ]

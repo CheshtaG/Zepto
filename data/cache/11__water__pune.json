@@ -1,55 +1,688 @@
 {
-  "cached_at": "2026-03-29T11:37:04.826332",
+  "cached_at": "2026-04-13T19:49:15.671475",
   "comparison": {
     "product_name": "water",
     "platforms": [
       {
         "platform": "instamart",
-        "price": 140.0,
+        "price": 344.0,
         "availability": true,
         "error": null,
         "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=water",
         "listing_title": null,
         "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 44.561143349s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 44\n}\n]"
+          }
+        },
         "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/water_search.png",
+        "price_extraction_method": "dom_numeric_heuristic",
         "quantity_label": null,
         "quantity_base_value": null,
         "quantity_base_unit": null,
         "price_per_base_unit": null,
         "quantity_comparable": null,
-        "quantity_comparison_note": null
+        "quantity_comparison_note": null,
+        "candidate_listings": null
       },
       {
         "platform": "blinkit",
-        "price": 160.0,
+        "price": 44.0,
         "availability": true,
         "error": null,
         "product_url": "https://blinkit.com/s/?q=water",
         "listing_title": "Water",
-        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d70b4572-5bbe-4f0d-8717-c40be501c5c6.png",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/723bbeb5-f5be-4646-8a7f-725761f332c2.png",
+        "image_source": "dom_card",
+        "image_confidence": 0.81,
+        "image_match_reason": "DOM card candidate accepted (cdn_productish_url)",
+        "image_debug": {
+          "dom_candidates": [
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/d926bd74-6357-420d-841f-092197f7de2c.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/2faf253a-7e5b-4d53-9774-350add8d50b5.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/rc-upload-1772165621532-12.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/89d218ae-2850-4616-9c75-7b74b36bb0c6.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/723bbeb5-f5be-4646-8a7f-725761f332c2.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/ui/ad_without_bg.png",
+              "kind": "img.currentSrc",
+              "size": [
+                72,
+                48
+              ],
+              "score": 0.43,
+              "reason": "very_small_candidate"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d926bd74-6357-420d-841f-092197f7de2c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/2faf253a-7e5b-4d53-9774-350add8d50b5.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b343c33b-9443-4455-970c-000f8d84608e.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/08c164eb-41d7-4fb5-b8df-55b05a23f6ec.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/52e0560a-de7b-4d27-b57a-c6bcf22945ec.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a08717f4-63cf-4b5a-8fab-c3b6be688fac.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8eef8cb2-f9e9-48a7-afdc-d7b841feed9a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/85ec4018-229e-4d51-87b8-2c939c6d5233.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/124f5d93-74ee-41ac-b8a3-71926a2c0690.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/55b8a3e0-92d6-47c3-b096-b6944d44067f.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e3c31c91-f4fb-4f6f-b6c3-81bfea3af4bd.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d778a42d-3bfc-442e-ab46-1bae25059c39.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b937d234-18cb-4185-ad4e-a848b697c8eb.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/81fa88a1-d45a-43dd-9792-cf74b551f9cd.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ea2401ce-c680-4835-94f5-baffffecae34.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/89d218ae-2850-4616-9c75-7b74b36bb0c6.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9fd45a28-5f56-4bb7-bdfe-c04ce949d37e.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1772084312898-231.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/92fd3d38-6cc1-4dcb-b501-063df6ff0df7.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1772078357878-365.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5813886d-e4ae-4d07-8b83-678d9b315d93.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            }
+          ],
+          "selected_dom_candidate": {
+            "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/723bbeb5-f5be-4646-8a7f-725761f332c2.png",
+            "score": 0.81,
+            "reason": "cdn_productish_url"
+          },
+          "dom_rejections": [],
+          "gemini_invoked": false,
+          "gemini_result": null
+        },
         "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/water_search.png",
+        "price_extraction_method": "vdom_element",
         "quantity_label": null,
         "quantity_base_value": null,
         "quantity_base_unit": null,
         "price_per_base_unit": null,
         "quantity_comparable": null,
-        "quantity_comparison_note": null
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "blinkit-0",
+            "title": "Water",
+            "rawTitle": "Water",
+            "brand": "Water",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/22772977-89c9-4920-9a50-44950acc146a.png",
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-2",
+            "title": "Showing results for \"water\"",
+            "rawTitle": "Showing results for \"water\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-3",
+            "title": "Clear Premium Drinking Packaged Water with Added Minerals",
+            "rawTitle": "Clear Premium Drinking Packaged Water with Added Minerals",
+            "brand": "Clear Premium",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 70.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/723bbeb5-f5be-4646-8a7f-725761f332c2.png",
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-4",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 12.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-5",
+            "title": "6 ltr",
+            "rawTitle": "6 ltr",
+            "brand": "ltr",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 6.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-6",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 70.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-7",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-8",
+            "title": "Bisleri Packaged Water",
+            "rawTitle": "Bisleri Packaged Water",
+            "brand": "Bisleri Packaged",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 125.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d926bd74-6357-420d-841f-092197f7de2c.png",
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-9",
+            "title": "10 ltr",
+            "rawTitle": "10 ltr",
+            "brand": "ltr",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 10.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=water",
+            "platform": "blinkit"
+          }
+        ]
       },
       {
         "platform": "zepto",
-        "price": 13.0,
+        "price": 30.0,
         "availability": true,
         "error": null,
         "product_url": "https://www.zepto.com/search?query=water",
         "listing_title": "Search",
         "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 10.450884646s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 10\n}\n]"
+          }
+        },
         "screenshot_path": null,
+        "price_extraction_method": "dom",
         "quantity_label": null,
         "quantity_base_value": null,
         "quantity_base_unit": null,
         "price_per_base_unit": null,
         "quantity_comparable": null,
-        "quantity_comparison_note": null
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "zepto-0",
+            "title": "Search",
+            "rawTitle": "Search",
+            "brand": "Search",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=water",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-1",
+            "title": "Login",
+            "rawTitle": "Login",
+            "brand": "Login",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=water",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-2",
+            "title": "Showing results for \"water\"",
+            "rawTitle": "Showing results for \"water\"",
+            "brand": "Showing results",
+            "quantityLabel": "2 L",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/20618cb1-9d0a-47d3-80b3-c10c16a66ceb/Paper-Boat-Ginger-Lemon-Sparkling-Water.jpeg",
+            "productUrl": "https://www.zepto.com/pn/bisleri-packaged-drinking-water-bottle/pvid/d565b64e-9cc5-4b0d-9189-35129776abdb",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-3",
+            "title": "Showing results for \"water\"",
+            "rawTitle": "Showing results for \"water\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=water",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-4",
+            "title": "Bisleri Packaged Drinking Water Bottle",
+            "rawTitle": "Bisleri Packaged Drinking Water Bottle",
+            "brand": "Bisleri Packaged",
+            "quantityLabel": "2 L",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 20.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1000-1000,pr-true,f-auto,q-40,dpr-2/cms/product_variant/47d205bd-542b-4fe3-9ac4-663662756e3a/Bisleri-Packaged-Drinking-Water.jpeg",
+            "productUrl": "https://www.zepto.com/pn/bisleri-packaged-drinking-water-bottle/pvid/d565b64e-9cc5-4b0d-9189-35129776abdb",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-5",
+            "title": "Aquafina Drinking Water Bottle",
+            "rawTitle": "Aquafina Drinking Water Bottle",
+            "brand": "Aquafina Drinking",
+            "quantityLabel": "1 L",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 18.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1000-1000,pr-true,f-auto,q-40,dpr-2/cms/product_variant/ee9d15f1-eef6-460a-aaa5-db5532b3ed44/Kinley-Packaged-Drinking-Water-Bottle.png",
+            "productUrl": "https://www.zepto.com/pn/aquafina-drinking-water-bottle/pvid/b9516bd7-27ab-44fd-86ef-2d4ed981fcb4",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-6",
+            "title": "Bisleri Packaged Drinking Water Bottle",
+            "rawTitle": "Bisleri Packaged Drinking Water Bottle",
+            "brand": "Bisleri Packaged",
+            "quantityLabel": "24 x 250 ml",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 60.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/39c007ee-1c11-48b2-9f2d-3626d9909cdf/Himalayan-Natural-Mineral-Water.jpeg",
+            "productUrl": "https://www.zepto.com/pn/bisleri-packaged-drinking-water-bottle/pvid/202fd691-9388-4c9f-9b4c-c22e1772a0a8",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-7",
+            "title": "Paper Boat Zero Sugar Mint Mojito Sparkling Water | Sugar Free Cocktail Mixer",
+            "rawTitle": "Paper Boat Zero Sugar Mint Mojito Sparkling Water | Sugar Free Cocktail Mixer",
+            "brand": "Paper Boat",
+            "quantityLabel": "600 ml",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-4167-4167,pr-true,f-auto,q-40,dpr-2/cms/product_variant/dd105fe9-cb61-47bc-9af5-dde796f21c4b/Jimmy-s-Zero-Sugar-Cranberry-Lime-Sparkling-Water.jpeg",
+            "productUrl": "https://www.zepto.com/pn/paper-boat-zero-sugar-mint-mojito-sparkling-water-sugar-free-cocktail-mixer/pvid/a04753fd-cbc4-4f97-a7d4-bddf59a1928d",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-8",
+            "title": "AAVA Organic Alkaline Mineral Water",
+            "rawTitle": "AAVA Organic Alkaline Mineral Water",
+            "brand": "AAVA",
+            "quantityLabel": "1 L",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/44afafbb-93b5-4671-afeb-c946427d0623/AAVA-Organic-Natural-Alkaline-Mineral-Water.jpeg",
+            "productUrl": "https://www.zepto.com/pn/aava-organic-alkaline-mineral-water/pvid/8d6836a0-f1d2-447f-b8d3-8c7305eae200",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-9",
+            "title": "Schweppes Zero Calories Flavoured Sparkling Water Peach",
+            "rawTitle": "Schweppes Zero Calories Flavoured Sparkling Water Peach",
+            "brand": "Schweppes Zero",
+            "quantityLabel": "600 ml",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/b6d60466-4244-4fb3-979f-c4eaf90b4bce/Paper-Boat-Zero-Sugar-Peach-Sparkling-Water-Sugar-Free-Cold-Drink.jpeg",
+            "productUrl": "https://www.zepto.com/pn/schweppes-zero-calories-flavoured-sparkling-water-peach/pvid/9ebac0c4-0935-45b8-88c7-c12855e22fc5",
+            "platform": "zepto"
+          }
+        ]
       }
     ]
   }

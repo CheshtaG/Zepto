@@ -18,6 +18,10 @@ class ProductInfo(BaseModel):
     # Visible product title on the listing card (as shown on that app).
     listing_title: Optional[str] = None
     image_url: Optional[str] = None
+    image_source: Optional[str] = None
+    image_confidence: Optional[float] = None
+    image_match_reason: Optional[str] = None
+    image_debug: Optional[dict] = None
     # Local screenshot path (used for vision analysis; optional in API consumers)
     screenshot_path: Optional[str] = None
     # How price was extracted in scraper (e.g. dom, ocr, dom_fallback_after_ocr).

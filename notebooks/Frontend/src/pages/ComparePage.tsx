@@ -21,7 +21,7 @@ export const ComparePage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const state = (location.state || {}) as LocationState
-  const { result, isRunning } = useComparisonJob(jobId)
+  const { result, isRunning, status } = useComparisonJob(jobId)
   const { setToast, setResult, setPollingState, jobHistory } = useAppStore()
 
   const [chatInput, setChatInput] = useState('')
@@ -343,6 +343,7 @@ export const ComparePage = () => {
           platformEnabled={platformEnabled}
           onTogglePlatform={togglePlatform}
           isRunning={Boolean(isRunning)}
+          jobFailed={status?.status === 'failed'}
           pendingQueries={pendingOnlyQueries}
         />
       </section>

@@ -1,0 +1,649 @@
+{
+  "cached_at": "2026-04-13T19:49:43.470177",
+  "comparison": {
+    "product_name": "kiwi",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 169.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=kiwi",
+        "listing_title": null,
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 16.754598477s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 16\n}\n]"
+          }
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/kiwi_search.png",
+        "price_extraction_method": "dom_numeric_heuristic",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 91.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=kiwi",
+        "listing_title": "Kiwi",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ac7c306f-db45-4b40-8948-9f76be4be97a.png",
+        "image_source": "dom_card",
+        "image_confidence": 0.81,
+        "image_match_reason": "DOM card candidate accepted (cdn_productish_url)",
+        "image_debug": {
+          "dom_candidates": [
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/d354b145-e461-41ef-9a1e-e23e13612d19.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/app/images/brands/logo/3552.png?dpr_multiplier=3.00&ts=1712133723",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/app/assets/products/sliding_images/jpeg/e4a63a17-508d-431a-bf2d-d3fe1e632d1b.jpg?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ac7c306f-db45-4b40-8948-9f76be4be97a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/ui/ad_without_bg.png",
+              "kind": "img.currentSrc",
+              "size": [
+                72,
+                48
+              ],
+              "score": 0.43,
+              "reason": "very_small_candidate"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d354b145-e461-41ef-9a1e-e23e13612d19.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/beda5d0a-c784-4298-8de9-28a6753afbfe.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/03cd496d-e3ae-4a51-b2e7-8b29522a5ea1.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1772078357878-365.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/312630d8-2a79-4e44-896c-d5eb72e35463.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6be782d8-b4cd-4004-ace1-01c3a1f12e5a.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/01a6c3e7-d7f3-45e0-a316-bd6858401678.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5c0356d3-3f76-47e6-a4ba-a2542ac3936f.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/00671750-3480-46b8-b897-76dfb01cd569.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/28d55442-cdea-4336-9148-c0c55e392e3b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/cf139842-03a4-4da6-843f-4e89a167f35e.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e40f9ec5-2a14-49a5-95f0-afd1ba437bea.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c825d13b-8d0f-4132-8397-31bc5d50e43b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1772078357878-431.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0d2c88d8-efdf-4de6-b972-ef81c64ae7d4.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/25f42deb-b64c-4142-b0ad-ad877c8fa91c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1775639625125-46.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/04c10d29-5674-43b4-b20f-a9e89bb2f3fa.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            }
+          ],
+          "selected_dom_candidate": {
+            "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ac7c306f-db45-4b40-8948-9f76be4be97a.png",
+            "score": 0.81,
+            "reason": "cdn_productish_url"
+          },
+          "dom_rejections": [],
+          "gemini_invoked": false,
+          "gemini_result": null
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/kiwi_search.png",
+        "price_extraction_method": "vdom_element",
+        "quantity_label": "1 pc",
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "blinkit-0",
+            "title": "Kiwi",
+            "rawTitle": "Kiwi",
+            "brand": "Kiwi",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/04c10d29-5674-43b4-b20f-a9e89bb2f3fa.png",
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-2",
+            "title": "Showing results for \"kiwi\"",
+            "rawTitle": "Showing results for \"kiwi\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-3",
+            "title": "Kiwi 2 in 1 Shoe Brush",
+            "rawTitle": "Kiwi 2 in 1 Shoe Brush",
+            "brand": "Kiwi",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 91.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ac7c306f-db45-4b40-8948-9f76be4be97a.png",
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-4",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 9.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-5",
+            "title": "1 pc",
+            "rawTitle": "1 pc",
+            "brand": "pc",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-6",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 91.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-7",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-8",
+            "title": "Out of Stock",
+            "rawTitle": "Out of Stock",
+            "brand": "Out",
+            "quantityLabel": "3 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 151.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d354b145-e461-41ef-9a1e-e23e13612d19.png",
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-9",
+            "title": "3 pcs",
+            "rawTitle": "3 pcs",
+            "brand": "3",
+            "quantityLabel": "3 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=kiwi",
+            "platform": "blinkit"
+          }
+        ]
+      },
+      {
+        "platform": "zepto",
+        "price": 80.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=kiwi",
+        "listing_title": "Search",
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 39.954761015s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 39\n}\n]"
+          }
+        },
+        "screenshot_path": null,
+        "price_extraction_method": "dom",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "zepto-0",
+            "title": "Search",
+            "rawTitle": "Search",
+            "brand": "Search",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=kiwi",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-1",
+            "title": "Login",
+            "rawTitle": "Login",
+            "brand": "Login",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=kiwi",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-2",
+            "title": "Showing results for \"kiwi\"",
+            "rawTitle": "Showing results for \"kiwi\"",
+            "brand": "Showing results",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-937-937,pr-true,f-auto,q-40,dpr-2/cms/product_variant/5a012ed0-ec43-4743-8a21-bf35c541ffbb/Organically-Grown-Chilli.png",
+            "productUrl": "https://www.zepto.com/pn/kiwi-express-shine-sponge-instant-shine-for-black-leather/pvid/f427c120-ca48-4f20-bcbd-6671ce293c79",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-3",
+            "title": "Showing results for \"kiwi\"",
+            "rawTitle": "Showing results for \"kiwi\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=kiwi",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-4",
+            "title": "Kiwi Express Shine Sponge | Instant Shine For Black Leather",
+            "rawTitle": "Kiwi Express Shine Sponge | Instant Shine For Black Leather",
+            "brand": "Kiwi Express",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1200-1200,pr-true,f-auto,q-40,dpr-2/cms/product_variant/eb9ad657-51bd-4c1f-89f4-8df62070a90d/Kiwi-Black-Wax-Shoe-Polish.jpeg",
+            "productUrl": "https://www.zepto.com/pn/kiwi-express-shine-sponge-instant-shine-for-black-leather/pvid/f427c120-ca48-4f20-bcbd-6671ce293c79",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-5",
+            "title": "Kiwi Black Instant Liquid Shoe Polish",
+            "rawTitle": "Kiwi Black Instant Liquid Shoe Polish",
+            "brand": "Kiwi Black",
+            "quantityLabel": "75 ml",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-657-657,pr-true,f-auto,q-40,dpr-2/cms/product_variant/95da582d-f957-408b-ba9c-98d4cf4ec28b/Kiwi-Green.png",
+            "productUrl": "https://www.zepto.com/pn/kiwi-black-instant-liquid-shoe-polish/pvid/2ac87214-9b0b-4fe3-8dc4-9b9de64f6e8e",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-6",
+            "title": "Snacky Kiwi",
+            "rawTitle": "Snacky Kiwi",
+            "brand": "Snacky Kiwi",
+            "quantityLabel": "2 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1080-1080,pr-true,f-auto,q-40,dpr-2/cms/product_variant/76b989a2-dd5b-4714-b881-cb94b54fb8bc/Kiwi-Dranex-Drain-Cleaner-Powder.jpeg",
+            "productUrl": "https://www.zepto.com/pn/snacky-kiwi/pvid/e61bf77e-2c25-4e89-b4df-6dce68ec2bb7",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-7",
+            "title": "Kiwi Shoe Shine Brush",
+            "rawTitle": "Kiwi Shoe Shine Brush",
+            "brand": "Kiwi Shoe",
+            "quantityLabel": "1 pc",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-3000-3000,pr-true,f-auto,q-40,dpr-2/cms/product_variant/1535b840-5a01-4ea8-976c-9c1339ae26eb/Pomegranate-Premium.jpeg",
+            "productUrl": "https://www.zepto.com/pn/kiwi-shoe-shine-brush/pvid/563a1f6c-b5a5-4ef7-a7cb-a77ce00d1244",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-8",
+            "title": "Blueberry Imported",
+            "rawTitle": "Blueberry Imported",
+            "brand": "Blueberry Imported",
+            "quantityLabel": "130 g",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-3000-3000,pr-true,f-auto,q-40,dpr-2/cms/product_variant/85ea6516-de09-455a-a332-cedcada09588/Guava-Thai.jpeg",
+            "productUrl": "https://www.zepto.com/pn/blueberry-imported/pvid/b7d27beb-b7da-4caa-b7a3-4e520062d9c7",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-9",
+            "title": "Apple Royal Gala Imported",
+            "rawTitle": "Apple Royal Gala Imported",
+            "brand": "Apple Royal",
+            "quantityLabel": "2 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1024-1024,pr-true,f-auto,q-40,dpr-2/cms/product_variant/7f9ddfbe-563f-424d-b8b2-250f44f8db99/Apple-Green-Granny-Smith-.jpeg",
+            "productUrl": "https://www.zepto.com/pn/apple-royal-gala-imported/pvid/55835f1d-aaa2-4331-8279-b3adf07dca3d",
+            "platform": "zepto"
+          }
+        ]
+      }
+    ]
+  }
+}

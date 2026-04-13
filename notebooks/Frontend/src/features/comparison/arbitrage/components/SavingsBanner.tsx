@@ -1,5 +1,4 @@
 import type { ArbitragePlatformKey } from '../types'
-import { ARBITRAGE_PLATFORM_LOGO_SRC } from '../platformLogos'
 import { platformDisplayLabel } from '../types'
 
 export interface SavingsBannerProps {
@@ -9,6 +8,11 @@ export interface SavingsBannerProps {
   platformOrder: ArbitragePlatformKey[]
   enabled: Record<ArbitragePlatformKey, boolean>
   onTogglePlatform: (key: ArbitragePlatformKey) => void
+  /** Initial comparison fetch: same purple banner; amount row uses a subtle shimmer (no card Lottie). */
+  amountLoading?: boolean
+  /** Shown under toggles while `amountLoading` (keeps layout parity with live banner). */
+  loadingHint?: string
+  platformSavings?: Partial<Record<ArbitragePlatformKey, string>>
 }
 
 function PlatformLogoToggle({
@@ -20,7 +24,16 @@ function PlatformLogoToggle({
   enabled: boolean
   onToggle: (key: ArbitragePlatformKey) => void
 }) {
-  const src = ARBITRAGE_PLATFORM_LOGO_SRC[platform]
+  const label = platformDisplayLabel(platform)
+  const mark =
+    platform === 'instamart' ? (
+      <span className="arb-savings-badge__mark-stack">
+        <span className="arb-savings-badge__mark-line">Insta</span>
+        <span className="arb-savings-badge__mark-line">mart</span>
+      </span>
+    ) : (
+      label
+    )
 
   return (
     <button
@@ -29,12 +42,12 @@ function PlatformLogoToggle({
         enabled ? '' : ' arb-savings-badge--inactive'
       }`}
       aria-pressed={enabled}
-      aria-label={`${platformDisplayLabel(platform)}: ${enabled ? 'shown' : 'hidden'}. Click to toggle.`}
-      title={`${platformDisplayLabel(platform)} (${enabled ? 'on' : 'off'})`}
+      aria-label={`${label}: ${enabled ? 'shown' : 'hidden'}. Click to toggle.`}
+      title={`${label} (${enabled ? 'on' : 'off'})`}
       onClick={() => onToggle(platform)}
     >
-      <span className="arb-savings-badge__logo-wrap" aria-hidden="true">
-        <img src={src} alt="" className="arb-savings-badge__logo" />
+      <span className="arb-savings-badge__mark" aria-hidden="true">
+        {mark}
       </span>
     </button>
   )
@@ -46,6 +59,9 @@ export function SavingsBanner({
   platformOrder,
   enabled,
   onTogglePlatform,
+  amountLoading = false,
+  loadingHint = 'Fetching prices across platforms…',
+  platformSavings = {},
 }: SavingsBannerProps) {
   const display =
     totalSavings > 0
@@ -60,12 +76,27 @@ export function SavingsBanner({
       : '(—)'
 
   return (
-    <div className="arb-savings-banner">
+    <div className={`arb-savings-banner${amountLoading ? ' arb-savings-banner--amount-loading' : ''}`}>
       <div className="arb-savings-banner__main">
         <p className="arb-savings-banner__eyebrow">OPTIMIZED TOTAL SAVINGS</p>
-        <div className="arb-savings-banner__row">
-          <span className="arb-savings-banner__amount">₹{display}</span>
-          <span className={`arb-savings-banner__pct${pct === '(—)' ? ' arb-savings-banner__pct--muted' : ''}`}>
+        <div className="arb-savings-banner__amount-block">
+          {amountLoading ? (
+            <div
+              className="arb-savings-banner__amount-loading-wrap"
+              role="status"
+              aria-live="polite"
+              aria-label="Loading optimized total savings"
+            >
+              <div className="arb-savings-banner__amount-skeleton" aria-hidden="true" />
+            </div>
+          ) : (
+            <span className="arb-savings-banner__amount">₹{display}</span>
+          )}
+          <span
+            className={`arb-savings-banner__pct${
+              amountLoading || pct === '(—)' ? ' arb-savings-banner__pct--muted' : ''
+            }`}
+          >
             {pct}
           </span>
         </div>
@@ -73,15 +104,19 @@ export function SavingsBanner({
       <div className="arb-savings-banner__aside">
         <div className="arb-savings-banner__badges">
           {platformOrder.map((p) => (
-            <PlatformLogoToggle
-              key={p}
-              platform={p}
-              enabled={enabled[p] !== false}
-              onToggle={onTogglePlatform}
-            />
+            <div key={p} className="arb-savings-badge-stack">
+              <PlatformLogoToggle
+                platform={p}
+                enabled={enabled[p] !== false}
+                onToggle={onTogglePlatform}
+              />
+              <span className="arb-savings-badge-stack__metric">{platformSavings[p] ?? '—'}</span>
+            </div>
           ))}
         </div>
-        <p className="arb-savings-banner__caption">Best platform mix achieved</p>
+        <p className="arb-savings-banner__caption">
+          {amountLoading ? loadingHint : 'Best platform mix achieved'}
+        </p>
       </div>
     </div>
   )

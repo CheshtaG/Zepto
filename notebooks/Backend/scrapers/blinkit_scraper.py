@@ -322,8 +322,9 @@ class BlinkitScraper(BaseScraper):
             
             # Try to find first product result - wait longer and try more selectors
             print("[Blinkit] Searching for product elements...")
-            await asyncio.sleep(1)  # Give page more time to render
-            
+            await self._wait_for_spa_dom_commit(page)
+            await asyncio.sleep(0.5)
+
             product_selectors = [
                 '[data-testid*="product" i]',
                 '[data-testid*="Product" i]',
@@ -363,18 +364,13 @@ class BlinkitScraper(BaseScraper):
                         raise Exception(f"Browser/page was closed while finding product: {e}")
                     continue
             
-            # Use screenshot + OCR method to extract price
-            print("[Blinkit] Using screenshot + OCR method to extract price...")
-            
             # Create screenshot directory if it doesn't exist
             screenshot_dir = os.path.join(DATA_DIR, "blinkit")
             os.makedirs(screenshot_dir, exist_ok=True)
-            
+
             safe_name = product_name.replace(" ", "_")
-            # Single screenshot per platform: full page (what you want to inspect + what LLM sees).
             screenshot_path = os.path.join(screenshot_dir, f"{safe_name}_search.png")
-            
-            # Try to find product listing container for better screenshot
+
             product_container = None
             container_selectors = [
                 '[class*="product-list" i]',
@@ -386,7 +382,7 @@ class BlinkitScraper(BaseScraper):
                 'article',
                 'div[class*="container" i]'
             ]
-            
+
             for selector in container_selectors:
                 try:
                     containers = await page.query_selector_all(selector)
@@ -397,83 +393,46 @@ class BlinkitScraper(BaseScraper):
                             break
                     if product_container:
                         break
-                except:
+                except Exception:
                     continue
-            
-            # Recovery loop: if we hit transient error pages, reload / try again.
+
             await self._recover_from_error_page(page, max_attempts=3)
 
-            # Take the full page screenshot (single artifact per platform)
+            price_selectors = [
+                '[class*="price" i]',
+                '[class*="Price" i]',
+                'span:has-text("₹")',
+                'div:has-text("₹")',
+                '[class*="ProductPrice" i]',
+                '[class*="amount" i]',
+                '[class*="cost" i]',
+            ]
+
+            price = None
+            extraction_method = "none"
+
+            price = await self._extract_price_vdom_from_element(product_element)
+            if price is not None:
+                extraction_method = "vdom_element"
+            if price is None:
+                price = await self._extract_price_vdom_first_product_card(page)
+                if price is not None:
+                    extraction_method = "vdom_first_card"
+            if price is None:
+                price = await self._extract_price_dom_playwright(
+                    page, product_element, price_selectors
+                )
+                if price is not None:
+                    extraction_method = "dom"
+
+            # Rest (unchanged): artifact screenshot, then OCR if still no price
             try:
                 await page.screenshot(path=screenshot_path, full_page=True)
                 print(f"[Blinkit] Full page screenshot saved: {screenshot_path}")
             except Exception as exc:
                 print(f"[Blinkit] Failed full-page screenshot: {exc}")
-            
-            # Prefer DOM/text extraction for speed (OCR + tesseract is slow and can confuse
-            # pack size with price). Only run OCR if DOM extraction doesn't find a price.
-            price = None
-            extraction_method = "none"
 
-            # Traditional DOM/text extraction. Prefer it when we can find a real ₹/Rs price.
-            # This avoids OCR confusion where quantity numbers (ml/g) can be mistaken for price.
-            dom_price = None
-            try:
-                if product_element:
-                    price_selectors = [
-                        '[class*="price" i]',
-                        '[class*="Price" i]',
-                        'span:has-text("₹")',
-                        'div:has-text("₹")',
-                        '[class*="ProductPrice" i]',
-                        '[class*="amount" i]',
-                        '[class*="cost" i]',
-                    ]
-
-                    price_text = None
-                    # First try to find price within the product element
-                    try:
-                        price_in_product = await product_element.query_selector_all("span, div, p")
-                        for elem in price_in_product[:10]:
-                            try:
-                                text = await elem.inner_text()
-                                if "₹" in text or "Rs" in text.lower():
-                                    import re
-                                    if re.search(r"[₹Rs]?\s*\d+", text):
-                                        price_text = text
-                                        break
-                            except Exception:
-                                continue
-                    except Exception:
-                        pass
-
-                    # If not found in product element, try page-wide
-                    if not price_text:
-                        for selector in price_selectors:
-                            try:
-                                price_elements = await page.query_selector_all(selector)
-                                for elem in price_elements[:10]:
-                                    try:
-                                        text = await elem.inner_text()
-                                        if "₹" in text or "Rs" in text.lower():
-                                            price_text = text
-                                            break
-                                    except Exception:
-                                        continue
-                                if price_text:
-                                    break
-                            except Exception:
-                                continue
-
-                    dom_price = self._extract_price(price_text) if price_text else None
-
-            except Exception as exc:
-                print(f"[Blinkit] DOM price extraction failed: {exc}")
-
-            if dom_price is not None:
-                price = dom_price
-                extraction_method = "dom"
-            else:
+            if price is None:
                 ocr_text = self._extract_text_from_screenshot(screenshot_path)
                 price = self._extract_price_from_ocr_text(ocr_text)
                 if price is not None:
@@ -484,13 +443,26 @@ class BlinkitScraper(BaseScraper):
             
             # Get product URL
             product_url = page.url
-            image_url = await self._extract_product_image_url(page, product_element)
-            if image_url:
-                print(f"[Blinkit] Product image URL: {image_url[:120]}...")
             listing_title = await self._extract_listing_title(product_element)
             if listing_title:
                 print(f"[Blinkit] Listing title: {listing_title[:100]}...")
             quantity_label = await self._extract_quantity_label(product_element, listing_title)
+            brand = self._extract_brand_from_title(listing_title or product_name)
+            image_resolution = await self._resolve_product_image(
+                page=page,
+                root=product_element,
+                platform=Platform.BLINKIT,
+                query=product_name,
+                listing_title=listing_title,
+                quantity_label=quantity_label,
+                brand=brand,
+                product_url=product_url,
+            )
+            image_url = image_resolution.get("image_url")
+            if image_url:
+                print(f"[Blinkit] Product image URL ({image_resolution.get('image_source')}): {str(image_url)[:120]}...")
+            else:
+                print(f"[Blinkit] No confident product image; source={image_resolution.get('image_source')}")
             candidate_listings = await self._candidate_listings_with_primary(
                 page, Platform.BLINKIT, product_selectors, product_element, 10
             )
@@ -506,6 +478,10 @@ class BlinkitScraper(BaseScraper):
                 product_url=product_url,
                 listing_title=listing_title,
                 image_url=image_url,
+                image_source=image_resolution.get("image_source"),
+                image_confidence=image_resolution.get("image_confidence"),
+                image_match_reason=image_resolution.get("image_match_reason"),
+                image_debug=image_resolution.get("image_debug"),
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
                 price_extraction_method=extraction_method,
                 quantity_label=quantity_label,

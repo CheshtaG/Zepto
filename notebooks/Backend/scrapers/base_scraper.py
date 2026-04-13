@@ -8,6 +8,8 @@ import asyncio
 import os
 import shutil
 import re
+from app.core.config import get_settings
+from app.services.image_resolver import resolve_image_with_gemini_search_sync
 
 
 class BaseScraper(ABC):
@@ -135,38 +137,174 @@ class BaseScraper(ABC):
                     pass
 
         return False
+
+    async def _wait_for_spa_dom_commit(self, page: Page) -> None:
+        """Wait for the next paint after client-side rendering (React/Vue commit to real ``document``).
+
+        Framework virtual DOM is not readable from outside; this lets hydration settle before we scrape.
+        """
         try:
-            # For persistent context, browser and context are the same
-            if context and context != browser:
-                try:
-                    await context.close()
-                except Exception:
-                    pass
-            # Clean up user data dir if it exists
-            if hasattr(context, '_user_data_dir'):
-                try:
-                    shutil.rmtree(context._user_data_dir, ignore_errors=True)
-                except:
-                    pass
+            await page.evaluate(
+                """() => new Promise((resolve) => {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => resolve(null));
+                  });
+                })"""
+            )
         except Exception:
             pass
+
+    async def read_rendered_dom(
+        self, page: Page, expression: str, arg: Optional[Any] = None
+    ) -> Any:
+        """Run JS in the page context; read the **rendered** DOM (post-hydration), not static HTML."""
+        if arg is not None:
+            return await page.evaluate(expression, arg)
+        return await page.evaluate(expression)
+
+    async def _extract_price_vdom_from_element(self, root: Optional[ElementHandle]) -> Optional[float]:
+        """Tier 1 — in-page JS on the rendered tree (``element.evaluate``). Prefer before Playwright DOM."""
+        if root is None:
+            return None
         try:
-            if browser and browser != context:
-                try:
-                    await browser.close()
-                except Exception:
-                    pass
+            val = await root.evaluate(
+                """(el) => {
+                  const txt = ((el.innerText || el.textContent || '') || '').replace(/\\s+/g, ' ');
+                  const re = /(?:₹|\\u20b9|[Rr][sS]\\.?)\\s*(\\d+(?:\\.\\d+)?)/gi;
+                  const badCtx = (slice) =>
+                    /\\boff\\b|discount|save\\s|cashback|reward|coupon|applied|%\\s*off|\\d+\\s*%|mins?\\b|minutes?|delivery|arriving|km\\b|located|sponsored|extra\\s*₹/i.test(
+                      slice,
+                    );
+                  const candidates = [];
+                  let m;
+                  while ((m = re.exec(txt)) !== null) {
+                    const v = Number(m[1]);
+                    if (!Number.isFinite(v) || v < 1 || v > 10000) continue;
+                    const start = Math.max(0, m.index - 24);
+                    const end = Math.min(txt.length, m.index + m[0].length + 24);
+                    if (badCtx(txt.slice(start, end))) continue;
+                    candidates.push(v);
+                  }
+                  if (!candidates.length) return null;
+                  const plausible = candidates.filter((x) => x >= 5);
+                  const pool = plausible.length ? plausible : candidates;
+                  let chosen = Math.min(...pool);
+                  const hi = Math.max(...candidates);
+                  if (chosen < 5 && hi >= 25) {
+                    const g = pool.filter((x) => x >= 5);
+                    if (g.length) chosen = Math.min(...g);
+                  }
+                  return chosen;
+                }"""
+            )
+            if val is None:
+                return None
+            f = float(val)
+            return f if 1.0 <= f <= 10000.0 else None
         except Exception:
-            pass
+            return None
+
+    async def _extract_price_vdom_first_product_card(self, page: Page) -> Optional[float]:
+        """Tier 1 — first visible product tile via ``page.evaluate`` (rendered document)."""
         try:
-            if playwright:
-                try:
-                    await playwright.stop()
-                except Exception:
-                    pass
+            val = await page.evaluate(
+                """() => {
+                  const sels = [
+                    '[data-testid*="product" i]', '.product-card', '.product-item',
+                    '[class*="ProductCard" i]', '[class*="product-card" i]',
+                    'article', '[role="article"]', 'a[href*="product" i]'
+                  ];
+                  const vh = window.innerHeight || 900;
+                  const badCtx = (slice) =>
+                    /\\boff\\b|discount|save\\s|cashback|reward|coupon|applied|%\\s*off|\\d+\\s*%|mins?\\b|minutes?|delivery|arriving|km\\b|located|sponsored|extra\\s*₹/i.test(
+                      slice,
+                    );
+                  const rupeeVals = (txt) => {
+                    const re = /(?:₹|\\u20b9|[Rr][sS]\\.?)\\s*(\\d+(?:\\.\\d+)?)/gi;
+                    const candidates = [];
+                    let m;
+                    while ((m = re.exec(txt)) !== null) {
+                      const v = Number(m[1]);
+                      if (!Number.isFinite(v) || v < 1 || v > 10000) continue;
+                      const start = Math.max(0, m.index - 24);
+                      const end = Math.min(txt.length, m.index + m[0].length + 24);
+                      if (badCtx(txt.slice(start, end))) continue;
+                      candidates.push(v);
+                    }
+                    if (!candidates.length) return null;
+                    const plausible = candidates.filter((x) => x >= 5);
+                    const pool = plausible.length ? plausible : candidates;
+                    let chosen = Math.min(...pool);
+                    const hi = Math.max(...candidates);
+                    if (chosen < 5 && hi >= 25) {
+                      const g = pool.filter((x) => x >= 5);
+                      if (g.length) chosen = Math.min(...g);
+                    }
+                    return chosen;
+                  };
+                  for (const s of sels) {
+                    let nodes = [];
+                    try { nodes = Array.from(document.querySelectorAll(s)); } catch (e) { continue; }
+                    for (const el of nodes) {
+                      const r = el.getBoundingClientRect();
+                      if (r.width < 40 || r.height < 40) continue;
+                      if (r.bottom < 0 || r.top > vh + 200) continue;
+                      const txt = (el.innerText || el.textContent || '').replace(/\\s+/g, ' ');
+                      if (txt.length < 8) continue;
+                      const pick = rupeeVals(txt);
+                      if (pick != null) return pick;
+                    }
+                  }
+                  return null;
+                }"""
+            )
+            if val is None:
+                return None
+            f = float(val)
+            return f if 1.0 <= f <= 10000.0 else None
         except Exception:
-            pass
-    
+            return None
+
+    async def _extract_price_dom_playwright(
+        self,
+        page: Page,
+        product_element: Optional[ElementHandle],
+        price_selectors: List[str],
+    ) -> Optional[float]:
+        """Tier 2 — Playwright ``query_selector`` + ``inner_text`` (first fallback after tier 1)."""
+        price_text = None
+        if product_element:
+            try:
+                for elem in (await product_element.query_selector_all("span, div, p"))[:14]:
+                    try:
+                        text = await elem.inner_text()
+                        if "₹" in text or "Rs" in text.lower():
+                            import re
+
+                            if re.search(r"[₹Rs]?\s*\d+", text):
+                                price_text = text
+                                break
+                    except Exception:
+                        continue
+            except Exception:
+                pass
+        if not price_text:
+            for selector in price_selectors:
+                try:
+                    for elem in (await page.query_selector_all(selector))[:12]:
+                        try:
+                            text = await elem.inner_text()
+                            if "₹" in text or "Rs" in text.lower():
+                                price_text = text
+                                break
+                        except Exception:
+                            continue
+                    if price_text:
+                        break
+                except Exception:
+                    continue
+        return self._extract_price(price_text) if price_text else None
+
     def _absolute_media_url(self, page: Page, raw: Optional[str]) -> Optional[str]:
         """Turn a possibly relative image URL into an absolute https URL for the browser."""
         if not raw or not isinstance(raw, str):
@@ -230,6 +368,230 @@ class BaseScraper(ABC):
         except Exception:
             return None
         return self._absolute_media_url(page, raw)
+
+    async def _extract_product_image_candidates_from_card(
+        self, page: Page, root: Optional[ElementHandle]
+    ) -> List[Dict[str, Any]]:
+        if root is None:
+            return []
+        try:
+            raw = await root.evaluate(
+                """(el) => {
+                  const out = [];
+                  const bad = (u) => !u || typeof u !== 'string' || u.length < 8 || u.startsWith('data:');
+                  const pickBestSrcset = (s) => {
+                    if (!s) return null;
+                    const items = String(s).split(',').map((x) => x.trim()).filter(Boolean);
+                    let best = null;
+                    let bestW = -1;
+                    for (const item of items) {
+                      const p = item.split(/\\s+/);
+                      const u = p[0] || '';
+                      if (bad(u)) continue;
+                      let w = 0;
+                      const m = item.match(/(\\d+)w/);
+                      if (m) w = Number(m[1]);
+                      if (w >= bestW) { bestW = w; best = u; }
+                    }
+                    return best;
+                  };
+                  const pushCandidate = (url, kind, node, extra={}) => {
+                    if (bad(url)) return;
+                    const w = Number(node?.naturalWidth || node?.width || extra.w || 0) || 0;
+                    const h = Number(node?.naturalHeight || node?.height || extra.h || 0) || 0;
+                    out.push({
+                      url: String(url),
+                      kind,
+                      width: w,
+                      height: h,
+                      area: w * h,
+                      className: (node?.className && String(node.className)) || '',
+                      alt: (node?.getAttribute && (node.getAttribute('alt') || '')) || '',
+                    });
+                  };
+
+                  const imgs = Array.from(el.querySelectorAll('img'));
+                  for (const img of imgs) {
+                    const currentSrc = img.currentSrc || '';
+                    const src = img.getAttribute('src') || '';
+                    const srcset = pickBestSrcset(img.getAttribute('srcset'));
+                    const dataSrc = img.getAttribute('data-src') || img.getAttribute('data-original') || img.getAttribute('data-lazy-src') || '';
+                    pushCandidate(currentSrc, 'img.currentSrc', img);
+                    pushCandidate(src, 'img.src', img);
+                    pushCandidate(srcset, 'img.srcset', img);
+                    pushCandidate(dataSrc, 'img.dataSrc', img);
+                  }
+
+                  const pictureSources = Array.from(el.querySelectorAll('picture source[srcset]'));
+                  for (const s of pictureSources) {
+                    const u = pickBestSrcset(s.getAttribute('srcset'));
+                    pushCandidate(u, 'picture.srcset', s);
+                  }
+
+                  const withBg = Array.from(el.querySelectorAll('*')).slice(0, 180);
+                  const reBg = /url\\((['"]?)(.*?)\\1\\)/i;
+                  for (const n of withBg) {
+                    const style = window.getComputedStyle(n);
+                    const bg = style && style.backgroundImage ? String(style.backgroundImage) : '';
+                    if (!bg || bg === 'none') continue;
+                    const m = bg.match(reBg);
+                    if (!m || !m[2]) continue;
+                    const r = n.getBoundingClientRect();
+                    pushCandidate(m[2], 'css.backgroundImage', n, { w: r.width || 0, h: r.height || 0 });
+                  }
+                  return out;
+                }"""
+            )
+        except Exception:
+            return []
+        out: List[Dict[str, Any]] = []
+        seen: set[str] = set()
+        for row in raw or []:
+            if not isinstance(row, dict):
+                continue
+            abs_url = self._absolute_media_url(page, row.get("url"))
+            if not abs_url or abs_url in seen:
+                continue
+            seen.add(abs_url)
+            row["url"] = abs_url
+            out.append(row)
+        return out
+
+    def _score_dom_image_candidate(self, candidate: Dict[str, Any]) -> Tuple[float, str]:
+        url = str(candidate.get("url") or "")
+        low = url.lower()
+        if not (low.startswith("https://") or low.startswith("http://")):
+            return 0.0, "non_http_url"
+        if len(low) < 12:
+            return 0.0, "too_short_url"
+        if low.startswith("data:") or low.startswith("blob:"):
+            return 0.05, "data_or_blob_url"
+
+        negative = [
+            "placeholder", "sprite", "logo", "icon", "favicon", "banner", "avatar",
+            "tracking", "pixel", "spacer", "blank", "loader", "thumbnail-default",
+        ]
+        if any(x in low for x in negative):
+            return 0.08, "generic_asset_pattern"
+        if re.search(r"(1x1|16x16|24x24|32x32|48x48)", low):
+            return 0.1, "tiny_dimension_pattern"
+
+        width = float(candidate.get("width") or 0)
+        height = float(candidate.get("height") or 0)
+        area = float(candidate.get("area") or (width * height))
+        kind = str(candidate.get("kind") or "")
+        alt = str(candidate.get("alt") or "").lower()
+
+        score = 0.35
+        reason = "usable_http_candidate"
+        if "cdn" in low or "images" in low or "product" in low:
+            score += 0.18
+            reason = "cdn_productish_url"
+        if kind in ("img.currentSrc", "img.srcset", "picture.srcset"):
+            score += 0.12
+        if area >= 18000 or (width >= 120 and height >= 120):
+            score += 0.16
+        elif area > 0 and area < 3600:
+            score -= 0.22
+            reason = "very_small_candidate"
+        if alt and re.search(r"(logo|icon|brand)", alt):
+            score -= 0.15
+            reason = "alt_indicates_non_product"
+        return max(0.0, min(1.0, score)), reason
+
+    async def _resolve_product_image(
+        self,
+        *,
+        page: Page,
+        root: Optional[ElementHandle],
+        platform: Platform,
+        query: str,
+        listing_title: Optional[str],
+        quantity_label: Optional[str],
+        brand: Optional[str],
+        variant: Optional[str] = None,
+        product_url: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        debug: Dict[str, Any] = {
+            "dom_candidates": [],
+            "selected_dom_candidate": None,
+            "dom_rejections": [],
+            "gemini_invoked": False,
+            "gemini_result": None,
+        }
+
+        dom_candidates = await self._extract_product_image_candidates_from_card(page, root)
+        best: Optional[Dict[str, Any]] = None
+        best_score = -1.0
+        best_reason = "none"
+        for cand in dom_candidates[:28]:
+            score, reason = self._score_dom_image_candidate(cand)
+            entry = {
+                "url": cand.get("url"),
+                "kind": cand.get("kind"),
+                "size": [cand.get("width"), cand.get("height")],
+                "score": round(score, 4),
+                "reason": reason,
+            }
+            debug["dom_candidates"].append(entry)
+            if score > best_score:
+                best_score = score
+                best = cand
+                best_reason = reason
+        if best is not None and best_score >= 0.55:
+            debug["selected_dom_candidate"] = {
+                "url": best.get("url"),
+                "score": round(best_score, 4),
+                "reason": best_reason,
+            }
+            return {
+                "image_url": best.get("url"),
+                "image_source": "dom_card",
+                "image_confidence": round(best_score, 4),
+                "image_match_reason": f"DOM card candidate accepted ({best_reason})",
+                "image_debug": debug,
+            }
+        if best is not None:
+            debug["dom_rejections"].append(
+                {"url": best.get("url"), "score": round(best_score, 4), "reason": best_reason}
+            )
+
+        settings = get_settings()
+        debug["gemini_invoked"] = bool(
+            settings.enable_gemini_image_fallback and settings.google_api_key
+        )
+        if settings.enable_gemini_image_fallback and settings.google_api_key:
+            gemini = await asyncio.to_thread(
+                resolve_image_with_gemini_search_sync,
+                api_key=settings.google_api_key or "",
+                model_name=settings.gemini_match_model or settings.gemini_model,
+                platform=platform.value,
+                raw_query=query,
+                canonical_name=listing_title or query,
+                listing_title=listing_title,
+                brand=brand,
+                quantity_label=quantity_label,
+                unit=None,
+                variant=variant,
+                product_url=product_url,
+            )
+            debug["gemini_result"] = gemini
+            if gemini.get("accepted") and gemini.get("image_url"):
+                return {
+                    "image_url": gemini.get("image_url"),
+                    "image_source": "gemini_search",
+                    "image_confidence": float(gemini.get("confidence") or 0.0),
+                    "image_match_reason": gemini.get("reason") or "gemini_search_accepted",
+                    "image_debug": debug,
+                }
+
+        return {
+            "image_url": None,
+            "image_source": "placeholder",
+            "image_confidence": 0.0,
+            "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+            "image_debug": debug,
+        }
 
     async def _extract_listing_title(self, root: Optional[ElementHandle]) -> Optional[str]:
         """Best-effort visible product name from the chosen listing card (as on the site)."""
@@ -409,6 +771,7 @@ class BaseScraper(ABC):
         product_selectors: List[str],
         max_candidates: int = 8,
     ) -> List[Dict[str, Any]]:
+        await self._wait_for_spa_dom_commit(page)
         seen: set = set()
         roots: List[ElementHandle] = []
         for selector in product_selectors:
@@ -511,7 +874,7 @@ class BaseScraper(ABC):
             except Exception:
                 return None
         return None
-    
+
     async def _take_screenshot(self, page: Page, screenshot_path: str, selector: Optional[str] = None):
         """Take a screenshot of the page or a specific element."""
         try:

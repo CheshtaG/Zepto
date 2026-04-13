@@ -1,0 +1,8 @@
+# Notebooks workspace — use with repo-root ../.gitignore and Backend/.gitignore.
+
+# Frontend (Vite / React); paths relative to this directory
+Frontend/node_modules/
+Frontend/dist/
+Frontend/dist-ssr/
+Frontend/.vite/
+Frontend/*.tsbuildinfo

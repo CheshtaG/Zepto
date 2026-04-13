@@ -1,0 +1,689 @@
+{
+  "cached_at": "2026-04-13T19:46:05.497571",
+  "comparison": {
+    "product_name": "eggs",
+    "platforms": [
+      {
+        "platform": "instamart",
+        "price": 6.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.swiggy.com/instamart/search?custom_back=true&query=eggs",
+        "listing_title": null,
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 54.805969644s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 54\n}\n]"
+          }
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/instamart/eggs_search.png",
+        "price_extraction_method": "vdom_query_aware_body",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": null
+      },
+      {
+        "platform": "blinkit",
+        "price": 103.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://blinkit.com/s/?q=eggs",
+        "listing_title": "Eggs",
+        "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1776078343054-653.png",
+        "image_source": "dom_card",
+        "image_confidence": 0.81,
+        "image_match_reason": "DOM card candidate accepted (cdn_productish_url)",
+        "image_debug": {
+          "dom_candidates": [
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/4bf10560-0335-4667-b125-5c7b1c653c60.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/2b020950-acb0-40b4-8d5b-8f97b92f0688.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/ee34a8ea-1cd8-4488-adc2-ab876c90426b.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/7554e6e5-59b3-4916-8d66-37270d945322.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/da/cms-assets/cms/product/rc-upload-1770374312879-72.png?dpr_multiplier=3.00",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.65,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1776078343054-653.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/ui/ad_without_bg.png",
+              "kind": "img.currentSrc",
+              "size": [
+                72,
+                48
+              ],
+              "score": 0.43,
+              "reason": "very_small_candidate"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+              "kind": "img.currentSrc",
+              "size": [
+                90,
+                90
+              ],
+              "score": 0.08,
+              "reason": "generic_asset_pattern"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/4bf10560-0335-4667-b125-5c7b1c653c60.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d769413d-8708-46b7-a203-41b1290558e6.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/53f6042b-1aab-458f-9ed2-d4717800fab3.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/3c389611-62c8-4db5-845b-84999aaddabf.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/388e48ce-a97f-4fd4-82e3-3f6b7189afd9.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1770374312879-72.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/92aa8dec-9b76-45c7-afb0-0b117258bc2c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/7550db46-987d-4978-8543-1acefda9ccd3.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774248273897-24.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/d39d9c5f-5476-492f-a2bd-caab85a28b34.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/bbe589e1-d5bf-43dc-8e3b-20233f564537.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6ef638e2-4419-466f-b27e-49ad237fbd58.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/326a5be2-a93b-4975-b1b0-30a6d22b815c.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1774248273897-35.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e67158d5-5a8f-47ac-9be9-a1522cf7ef60.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e26723ee-cecf-49f5-819d-c26d48650972.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/3ca0a705-1bb5-41b1-a0a8-8393f282f2f7.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/44fd079d-f50d-4fa0-89c5-e1cb6ab24ee0.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/cf472e80-3a31-42bc-ac08-4f666f707bf2.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            },
+            {
+              "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/dc5a526d-fb51-4959-951b-0b9a47dd617b.png",
+              "kind": "img.currentSrc",
+              "size": [
+                270,
+                270
+              ],
+              "score": 0.81,
+              "reason": "cdn_productish_url"
+            }
+          ],
+          "selected_dom_candidate": {
+            "url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1776078343054-653.png",
+            "score": 0.81,
+            "reason": "cdn_productish_url"
+          },
+          "dom_rejections": [],
+          "gemini_invoked": false,
+          "gemini_result": null
+        },
+        "screenshot_path": "/Users/cheshtagupta17/Data - Cheshta/Projects/Zepto/data/blinkit/eggs_search.png",
+        "price_extraction_method": "vdom_element",
+        "quantity_label": "6 pcs",
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "blinkit-0",
+            "title": "Eggs",
+            "rawTitle": "Eggs",
+            "brand": "Eggs",
+            "quantityLabel": "6 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/db23318c-b5b7-4496-bf61-da8f4e4d154a.png",
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-2",
+            "title": "Showing results for \"eggs\"",
+            "rawTitle": "Showing results for \"eggs\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-3",
+            "title": "Abhi Gold+ Brown Eggs",
+            "rawTitle": "Abhi Gold+ Brown Eggs",
+            "brand": "Abhi Gold+",
+            "quantityLabel": "6 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/rc-upload-1776078343054-653.png",
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-4",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-5",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 12.0,
+            "inStock": true,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=90/assets/eta-icons/15-mins.png",
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-6",
+            "title": "6 pcs",
+            "rawTitle": "6 pcs",
+            "brand": "6",
+            "quantityLabel": "6 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-7",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": 94.0,
+            "inStock": true,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-8",
+            "title": null,
+            "rawTitle": null,
+            "brand": null,
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          },
+          {
+            "id": "blinkit-9",
+            "title": "Table White White Eggs",
+            "rawTitle": "Table White White Eggs",
+            "brand": "Table",
+            "quantityLabel": "10 pcs",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/4bf10560-0335-4667-b125-5c7b1c653c60.png",
+            "productUrl": "https://blinkit.com/s/?q=eggs",
+            "platform": "blinkit"
+          }
+        ]
+      },
+      {
+        "platform": "zepto",
+        "price": 44.0,
+        "availability": true,
+        "error": null,
+        "product_url": "https://www.zepto.com/search?query=eggs",
+        "listing_title": "Search",
+        "image_url": null,
+        "image_source": "placeholder",
+        "image_confidence": 0.0,
+        "image_match_reason": "no_high_confidence_dom_or_gemini_image",
+        "image_debug": {
+          "dom_candidates": [],
+          "selected_dom_candidate": null,
+          "dom_rejections": [],
+          "gemini_invoked": true,
+          "gemini_result": {
+            "accepted": false,
+            "reason": "gemini_error:429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 16.344243415s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\"\n  quota_id: \"GenerateContentInputTokensPerModelPerMinute-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\nviolations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.0-flash-lite\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n}\n, retry_delay {\n  seconds: 16\n}\n]"
+          }
+        },
+        "screenshot_path": null,
+        "price_extraction_method": "dom",
+        "quantity_label": null,
+        "quantity_base_value": null,
+        "quantity_base_unit": null,
+        "price_per_base_unit": null,
+        "quantity_comparable": null,
+        "quantity_comparison_note": null,
+        "candidate_listings": [
+          {
+            "id": "zepto-0",
+            "title": "Search",
+            "rawTitle": "Search",
+            "brand": "Search",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=eggs",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-1",
+            "title": "Login",
+            "rawTitle": "Login",
+            "brand": "Login",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=eggs",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-2",
+            "title": "Showing results for \"eggs\"",
+            "rawTitle": "Showing results for \"eggs\"",
+            "brand": "Showing results",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/fresh-white-eggs/pvid/bff6b7b2-9139-4a4f-ae21-90af16cd489d",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-3",
+            "title": "Showing results for \"eggs\"",
+            "rawTitle": "Showing results for \"eggs\"",
+            "brand": "Showing results",
+            "quantityLabel": null,
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": null,
+            "productUrl": "https://www.zepto.com/search?query=eggs",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-4",
+            "title": "Fresh White Eggs",
+            "rawTitle": "Fresh White Eggs",
+            "brand": "Fresh",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/fresh-white-eggs/pvid/bff6b7b2-9139-4a4f-ae21-90af16cd489d",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-5",
+            "title": "Eggoz Protein Rich Farm Fresh White Eggs",
+            "rawTitle": "Eggoz Protein Rich Farm Fresh White Eggs",
+            "brand": "Eggoz Protein",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/eggoz-protein-rich-farm-fresh-white-eggs/pvid/edfe97bc-aec9-47ba-a6ab-ecd6ecebf9c0",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-6",
+            "title": "Farm Made Free Range Brown Eggs - Protein Rich, Veg Feed, Non-Fertile",
+            "rawTitle": "Farm Made Free Range Brown Eggs - Protein Rich, Veg Feed, Non-Fertile",
+            "brand": "Farm Made",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/farm-made-free-range-brown-eggs-protein-rich-veg-feed-non-fertile/pvid/d259d494-f6da-43a0-810d-1ea10d6f26ac",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-7",
+            "title": "Vijay White Eggs",
+            "rawTitle": "Vijay White Eggs",
+            "brand": "Vijay",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/vijay-white-eggs/pvid/6a3a08f7-e8a1-41ec-8e3b-c825e2be04e5",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-8",
+            "title": "Suguna Delfrez Nourish White Eggs",
+            "rawTitle": "Suguna Delfrez Nourish White Eggs",
+            "brand": "Suguna Delfrez",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/suguna-delfrez-nourish-white-eggs/pvid/7e26603f-1343-427d-a539-244a7919894b",
+            "platform": "zepto"
+          },
+          {
+            "id": "zepto-9",
+            "title": "Eggoz Protein Rich Farm Fresh White Eggs",
+            "rawTitle": "Eggoz Protein Rich Farm Fresh White Eggs",
+            "brand": "Eggoz Protein",
+            "quantityLabel": "1 pack",
+            "normalizedQuantity": null,
+            "normalizedUnit": null,
+            "variant": null,
+            "category": null,
+            "price": null,
+            "inStock": false,
+            "imageUrl": "https://cdn.zeptonow.com/production/tr:w-1280,ar-28-28,pr-true,f-auto,q-40,dpr-2/inventory/product/55a80cdc-a78d-4408-9913-9d89423e171f-P3_-_Ad.png",
+            "productUrl": "https://www.zepto.com/pn/eggoz-protein-rich-farm-fresh-white-eggs/pvid/3e5b5972-959f-4862-b1f9-b478d4c710a4",
+            "platform": "zepto"
+          }
+        ]
+      }
+    ]
+  }
+}

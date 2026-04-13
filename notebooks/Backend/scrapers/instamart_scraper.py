@@ -235,7 +235,9 @@ class InstamartScraper(BaseScraper):
             except Exception:
                 # We'll fall back to the existing DOM heuristics even if we can't find a tile quickly.
                 pass
-            
+
+            await self._wait_for_spa_dom_commit(page)
+
             import re as _re_card
             query_tokens = [t.strip().lower() for t in product_name.split() if len(t.strip()) >= 3]
             product_selectors = [
@@ -365,17 +367,18 @@ class InstamartScraper(BaseScraper):
             except:
                 pass
             
-            # We'll extract the price using targeted product-card DOM selectors below.
-            # Generic page-wide text tends to pick small numbers (delivery/fees), causing
-            # errors like ₹2 instead of the actual product price.
+            # Tier 1 = in-page JS on rendered document; tier 2 = Playwright DOM; tier 3 = screenshot fallback.
             price = None
             extraction_method = "none"
+            query_tokens = [t.strip().lower() for t in product_name.split() if len(t.strip()) >= 3]
 
-            # Strategy 0: query-aware extraction directly from rendered page text.
-            # This survives dynamic layouts where product-card selectors can return zero elements.
-            if price is None:
+            def _instam_ok(p: Optional[float]) -> bool:
+                return p is not None and 5.0 <= p <= 10000.0
+
+            # ----- Tier 1: VDOM (page.evaluate) -----
+            # Strategy 0: query-aware body text.
+            if not _instam_ok(price):
                 try:
-                    query_tokens = [t.strip().lower() for t in product_name.split() if len(t.strip()) >= 3]
                     js_price = await page.evaluate(
                         """(tokens) => {
                           const bodyText = ((document.body && document.body.innerText) || '')
@@ -418,23 +421,142 @@ class InstamartScraper(BaseScraper):
                     )
                     if js_price is not None:
                         price = float(js_price)
-                        extraction_method = "dom_query_text"
+                        extraction_method = "vdom_query_aware_body"
                         print(f"[Instamart] Selected price from query-aware page-text strategy: ₹{price}")
                 except Exception as e:
                     print(f"[Instamart] Query-aware page-text strategy failed: {e}")
-            
-            # If OCR didn't find price OR returned an implausibly small value,
-            # try traditional method as fallback (OCR can confuse digits).
-            if price is None or (price is not None and price < 5.0):
+
+            if not _instam_ok(price):
+                try:
+                    tile_blob = await page.evaluate(
+                        """() => {
+                          const nodes = Array.from(document.querySelectorAll('a[href*="instamart"]'));
+                          for (const el of nodes) {
+                            const href = el.getAttribute('href') || '';
+                            if (!href.includes('/instamart/')) continue;
+                            const r = el.getBoundingClientRect();
+                            if (r.bottom < 0 || r.top > (window.innerHeight || 900)) continue;
+                            if (r.width < 72 || r.height < 72) continue;
+                            const t = (el.innerText || '').replace(/\\s+/g, ' ').trim();
+                            if (t.length > 14) return t.slice(0, 900);
+                          }
+                          return '';
+                        }"""
+                    )
+                    if isinstance(tile_blob, str) and tile_blob.strip():
+                        print(f"[Instamart] Link tile text (sample): {tile_blob[:220]}...")
+                        rupee_vals = _prices_from_rupee_text(tile_blob)
+                        if rupee_vals:
+                            price = rupee_vals[-1]
+                            extraction_method = "vdom_link_tile"
+                            print(f"[Instamart] Selected price from link tile text: ₹{price}")
+                except Exception as e:
+                    print(f"[Instamart] Evaluate link-tile extraction failed: {e}")
+
+            if not _instam_ok(price):
+                try:
+                    js_prices = await page.evaluate(
+                        """() => {
+                          const out = [];
+                          const cards = Array.from(document.querySelectorAll(
+                            'a[href*="instamart"], [data-testid*="product" i], .product-card, .product-item, article, [role="article"]'
+                          ));
+                          const vh = window.innerHeight || 900;
+                          for (const card of cards) {
+                            const r = card.getBoundingClientRect();
+                            if (r.width < 80 || r.height < 80) continue;
+                            if (r.bottom < 0 || r.top > vh + 260) continue;
+                            const txt = (card.textContent || '').replace(/\\s+/g, ' ').trim();
+                            if (txt.length < 12) continue;
+                            const nodes = Array.from(card.querySelectorAll(
+                              '[class*="price" i], [class*="amount" i], [class*="cost" i], span, div, p'
+                            ));
+                            for (const n of nodes.slice(0, 50)) {
+                              const t = (n.textContent || '').replace(/\\s+/g, ' ').trim();
+                              if (!t || t.length > 120) continue;
+                              if (/%|OFF/i.test(t)) continue;
+                              const nums = t.match(/\\d+(?:\\.\\d+)?/g) || [];
+                              for (const s of nums) {
+                                const v = Number(s);
+                                if (Number.isFinite(v) && v >= 5 && v <= 10000) out.push(v);
+                              }
+                            }
+                            if (out.length) break;
+                          }
+                          return out;
+                        }"""
+                    )
+                    if isinstance(js_prices, list):
+                        vals: List[float] = []
+                        for x in js_prices:
+                            try:
+                                fv = float(x)
+                                if 5.0 <= fv <= 10000.0:
+                                    vals.append(fv)
+                            except Exception:
+                                continue
+                        if vals:
+                            price = vals[-1]
+                            extraction_method = "vdom_js_card"
+                            print(f"[Instamart] Selected price from JS card fallback: ₹{price}")
+                except Exception as e:
+                    print(f"[Instamart] JS card fallback failed: {e}")
+
+            if not _instam_ok(price) and query_tokens:
+                try:
+                    js_price = await page.evaluate(
+                        """(tokens) => {
+                          const cards = Array.from(document.querySelectorAll(
+                            'a[href*="instamart"], [data-testid*="product" i], .product-card, .product-item, article, [role="article"]'
+                          ));
+                          const vh = window.innerHeight || 900;
+                          for (const card of cards) {
+                            const r = card.getBoundingClientRect();
+                            if (r.width < 80 || r.height < 80) continue;
+                            if (r.bottom < 0 || r.top > vh + 260) continue;
+                            const cardText = (card.innerText || card.textContent || '').toLowerCase();
+                            if (!cardText) continue;
+                            let match = false;
+                            for (const tok of tokens) {
+                              if (cardText.includes(tok)) { match = true; break; }
+                            }
+                            if (!match) continue;
+
+                            const nodes = Array.from(card.querySelectorAll('span, div, p, [class*="price" i], [class*="amount" i], [class*="cost" i]'));
+                            const vals = [];
+                            for (const n of nodes.slice(0, 60)) {
+                              const t = (n.textContent || '').replace(/\\s+/g, ' ').trim();
+                              if (!t || t.length > 120) continue;
+                              if (/%|OFF/i.test(t)) continue;
+                              const nums = t.match(/(?:₹|Rs\\.?|INR)?\\s*(\\d+(?:\\.\\d+)?)/gi) || [];
+                              for (const s of nums) {
+                                const m = s.match(/(\\d+(?:\\.\\d+)?)/);
+                                if (!m) continue;
+                                const v = Number(m[1]);
+                                if (Number.isFinite(v) && v >= 5 && v <= 10000) vals.push(v);
+                              }
+                            }
+                            if (vals.length) return vals[0];
+                          }
+                          return null;
+                        }""",
+                        query_tokens,
+                    )
+                    if js_price is not None:
+                        price = float(js_price)
+                        extraction_method = "vdom_query_card"
+                        print(f"[Instamart] Selected price from query-targeted JS fallback: ₹{price}")
+                except Exception as e:
+                    print(f"[Instamart] Query-targeted JS fallback failed: {e}")
+
+            # ----- Tier 2: Playwright DOM -----
+            if not _instam_ok(price):
                 if price is not None and price < 5.0:
-                    print(f"[Instamart] DOM price seems suspicious ({price}); retrying extraction...")
+                    print(f"[Instamart] Suspicious VDOM price ({price}); trying DOM tier...")
                     price = None
                 else:
-                    print("[Instamart] DOM didn't find price, trying traditional extraction...")
-                
-                # Try multiple strategies to find price
-                price_text = None
-                
+                    print("[Instamart] VDOM tier didn't yield a plausible price; trying DOM selectors...")
+
                 # Strategy 1: Look for price elements WITHIN the first product element
                 if product_element:
                     try:
@@ -632,85 +754,6 @@ class InstamartScraper(BaseScraper):
                         extraction_method = "dom_scoped_selector"
                         print(f"[Instamart] Selected best price from scoped DOM scan: ₹{price}")
 
-                # Strategy 2.5: First visible Instamart product link innerText (covers shadow-less React tiles).
-                if price is None:
-                    try:
-                        tile_blob = await page.evaluate(
-                            """() => {
-                              const nodes = Array.from(document.querySelectorAll('a[href*="instamart"]'));
-                              for (const el of nodes) {
-                                const href = el.getAttribute('href') || '';
-                                if (!href.includes('/instamart/')) continue;
-                                const r = el.getBoundingClientRect();
-                                if (r.bottom < 0 || r.top > (window.innerHeight || 900)) continue;
-                                if (r.width < 72 || r.height < 72) continue;
-                                const t = (el.innerText || '').replace(/\\s+/g, ' ').trim();
-                                if (t.length > 14) return t.slice(0, 900);
-                              }
-                              return '';
-                            }"""
-                        )
-                        if isinstance(tile_blob, str) and tile_blob.strip():
-                            print(f"[Instamart] Link tile text (sample): {tile_blob[:220]}...")
-                            rupee_vals = _prices_from_rupee_text(tile_blob)
-                            if rupee_vals:
-                                price = rupee_vals[-1]
-                                extraction_method = "dom_link_tile"
-                                print(f"[Instamart] Selected price from link tile text: ₹{price}")
-                    except Exception as e:
-                        print(f"[Instamart] Evaluate link-tile extraction failed: {e}")
-
-                # Strategy 2.75: JS scan of first visible card's price-like nodes.
-                # Handles cases where currency symbol is an icon and innerText misses the obvious ₹ marker.
-                if price is None:
-                    try:
-                        js_prices = await page.evaluate(
-                            """() => {
-                              const out = [];
-                              const cards = Array.from(document.querySelectorAll(
-                                'a[href*="instamart"], [data-testid*="product" i], .product-card, .product-item, article, [role="article"]'
-                              ));
-                              const vh = window.innerHeight || 900;
-                              for (const card of cards) {
-                                const r = card.getBoundingClientRect();
-                                if (r.width < 80 || r.height < 80) continue;
-                                if (r.bottom < 0 || r.top > vh + 260) continue;
-                                const txt = (card.textContent || '').replace(/\\s+/g, ' ').trim();
-                                if (txt.length < 12) continue;
-                                const nodes = Array.from(card.querySelectorAll(
-                                  '[class*="price" i], [class*="amount" i], [class*="cost" i], span, div, p'
-                                ));
-                                for (const n of nodes.slice(0, 50)) {
-                                  const t = (n.textContent || '').replace(/\\s+/g, ' ').trim();
-                                  if (!t || t.length > 120) continue;
-                                  if (/%|OFF/i.test(t)) continue;
-                                  const nums = t.match(/\\d+(?:\\.\\d+)?/g) || [];
-                                  for (const s of nums) {
-                                    const v = Number(s);
-                                    if (Number.isFinite(v) && v >= 5 && v <= 10000) out.push(v);
-                                  }
-                                }
-                                if (out.length) break;
-                              }
-                              return out;
-                            }"""
-                        )
-                        if isinstance(js_prices, list):
-                            vals: List[float] = []
-                            for x in js_prices:
-                                try:
-                                    fv = float(x)
-                                    if 5.0 <= fv <= 10000.0:
-                                        vals.append(fv)
-                                except Exception:
-                                    continue
-                            if vals:
-                                price = vals[-1]
-                                extraction_method = "dom_js_card"
-                                print(f"[Instamart] Selected price from JS card fallback: ₹{price}")
-                    except Exception as e:
-                        print(f"[Instamart] JS card fallback failed: {e}")
-                
                 # Strategy 3: Robust numeric heuristic from the tile text.
                 # Instamart sometimes renders the rupee sign as an icon, so the price may be
                 # present as a plain number without "₹" in the extracted DOM text.
@@ -773,54 +816,7 @@ class InstamartScraper(BaseScraper):
                     except Exception as e:
                         print(f"[Instamart] Error extracting numeric heuristic from tile text: {e}")
 
-                # Strategy 4: Query-targeted JS extraction from visible cards.
-                if price is None and query_tokens:
-                    try:
-                        js_price = await page.evaluate(
-                            """(tokens) => {
-                              const cards = Array.from(document.querySelectorAll(
-                                'a[href*="instamart"], [data-testid*="product" i], .product-card, .product-item, article, [role="article"]'
-                              ));
-                              const vh = window.innerHeight || 900;
-                              for (const card of cards) {
-                                const r = card.getBoundingClientRect();
-                                if (r.width < 80 || r.height < 80) continue;
-                                if (r.bottom < 0 || r.top > vh + 260) continue;
-                                const cardText = (card.innerText || card.textContent || '').toLowerCase();
-                                if (!cardText) continue;
-                                let match = false;
-                                for (const tok of tokens) {
-                                  if (cardText.includes(tok)) { match = true; break; }
-                                }
-                                if (!match) continue;
-
-                                const nodes = Array.from(card.querySelectorAll('span, div, p, [class*="price" i], [class*="amount" i], [class*="cost" i]'));
-                                const vals = [];
-                                for (const n of nodes.slice(0, 60)) {
-                                  const t = (n.textContent || '').replace(/\\s+/g, ' ').trim();
-                                  if (!t || t.length > 120) continue;
-                                  if (/%|OFF/i.test(t)) continue;
-                                  const nums = t.match(/(?:₹|Rs\\.?|INR)?\\s*(\\d+(?:\\.\\d+)?)/gi) || [];
-                                  for (const s of nums) {
-                                    const m = s.match(/(\\d+(?:\\.\\d+)?)/);
-                                    if (!m) continue;
-                                    const v = Number(m[1]);
-                                    if (Number.isFinite(v) && v >= 5 && v <= 10000) vals.push(v);
-                                  }
-                                }
-                                if (vals.length) return vals[0];
-                              }
-                              return null;
-                            }""",
-                            query_tokens,
-                        )
-                        if js_price is not None:
-                            price = float(js_price)
-                            extraction_method = "dom_query_card"
-                            print(f"[Instamart] Selected price from query-targeted JS fallback: ₹{price}")
-                    except Exception as e:
-                        print(f"[Instamart] Query-targeted JS fallback failed: {e}")
-            
+            # ----- Tier 3: screenshot (unchanged; vision/OCR may run downstream) -----
             # If extraction failed, capture a screenshot for debugging.
             if price is None:
                 try:
@@ -852,9 +848,6 @@ class InstamartScraper(BaseScraper):
                 else:
                     raise
             
-            image_url = await self._extract_product_image_url(page, product_element)
-            if image_url:
-                print(f"[Instamart] Product image URL: {image_url[:120]}...")
             listing_title = await self._extract_listing_title(product_element)
             if listing_title:
                 print(f"[Instamart] Listing title: {listing_title[:100]}...")
@@ -866,6 +859,22 @@ class InstamartScraper(BaseScraper):
                         product_url = link
                 except Exception:
                     pass
+            brand = self._extract_brand_from_title(listing_title or product_name)
+            image_resolution = await self._resolve_product_image(
+                page=page,
+                root=product_element,
+                platform=Platform.INSTAMART,
+                query=product_name,
+                listing_title=listing_title,
+                quantity_label=quantity_label,
+                brand=brand,
+                product_url=product_url,
+            )
+            image_url = image_resolution.get("image_url")
+            if image_url:
+                print(f"[Instamart] Product image URL ({image_resolution.get('image_source')}): {str(image_url)[:120]}...")
+            else:
+                print(f"[Instamart] No confident product image; source={image_resolution.get('image_source')}")
 
             return ProductInfo(
                 platform=Platform.INSTAMART,
@@ -874,6 +883,10 @@ class InstamartScraper(BaseScraper):
                 product_url=product_url,
                 listing_title=listing_title,
                 image_url=image_url,
+                image_source=image_resolution.get("image_source"),
+                image_confidence=image_resolution.get("image_confidence"),
+                image_match_reason=image_resolution.get("image_match_reason"),
+                image_debug=image_resolution.get("image_debug"),
                 screenshot_path=os.path.abspath(screenshot_path) if screenshot_path and os.path.isfile(screenshot_path) else screenshot_path,
                 price_extraction_method=extraction_method,
                 quantity_label=quantity_label,
